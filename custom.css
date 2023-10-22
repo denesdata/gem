@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round:wght@400;700&display=swap');
+body {
+    font-family: "Varela Round", Roboto, Helvetica Neue, Arial, sans-serif;
+    line-height: 1.5;
+    color: #d8d9da;
+    background-color: #161719;
+    width: 100%;
+    position: absolute
+}
+
+h1,
+h2 {
+    font-family: "Varela Round";
+    font-weight: 700;
+}
+
+div,
+span,
+td,
+a,
+text {
+    font-family: "Varela Round";
+}
+
+.logo {
+    /*filter: saturate(15);  */
+    filter: brightness(50);
+}
+
+header {
+    display: none;
+}
+
+.css-17x4n39 {
+    background: #508484;
+    background: -webkit-linear-gradient(to bottom right, #508484, #243b55);
+    background: linear-gradient(to bottom right, #508484, #243b55);
+}
+
+.panel-container {
+    background: #508484;
+    background: -webkit-linear-gradient(to bottom right, #508484, #243b55);
+    background: linear-gradient(to bottom right, #508484, #243b55);
+    border-color: #508484;
+}
+
+.panel-container--transparent {
+    background: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.grafana-tooltip {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.lang a,
+.other a {
+    text-decoration: none;
+    font-weight: bold;
+    color: lightGray;
+}
+
+.credit a {
+    text-decoration: none;
+}
+
+.panel-header:hover {
+    background: none;
+}
+
+.panel-menu-toggle {
+    display: none !important;
+}
+
+.panel-info-corner-inner {
+    border-left: 28px solid #2e7979 !important;
+}
+
+.sidemenu {
+    display: none;
+}
+
+.legend,
+.legend td,
+.legend tbody {
+    border: none !important;
+}
+
+table {
+    border: none;
+}
+
+.table-panel-header-bg {
+    background: none;
+    border: none;
+}
+
+.table-panel-table td {
+    border: none;
+}
