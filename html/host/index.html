@@ -63,6 +63,17 @@
     </style>
 
     <body>
-        <iframe allow="geolocation" src="//gem2.csaladen.es/">
-    </iframe>
+        <iframe id="mainFrame" allow="geolocation" src="//gem2.csaladen.es/"></iframe>
+        <script>
+            // Get the current path and search parameters
+            const currentPath = window.location.pathname;
+            const currentSearch = window.location.search;
+            
+            // If we have a dashboard path (starts with /d/)
+            if (currentPath.startsWith('/d/')) {
+                const iframe = document.getElementById('mainFrame');
+                iframe.src = `//gem2.csaladen.es/?url=${currentPath}${currentSearch}`;
+            }
+        </script>
     </body>
+</html>
