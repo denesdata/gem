@@ -60,20 +60,40 @@
             border: none;
             overflow: hidden;
         }
+        
+        iframe {
+            opacity: 0;
+            transition: opacity 2s linear;
+        }
     </style>
 
     <body>
-        <iframe id="mainFrame" allow="geolocation" src="//gem2.csaladen.es/"></iframe>
+        <iframe id="mainFrame" allow="geolocation"></iframe>
         <script>
-            // Get the current path and search parameters
-            const currentPath = window.location.pathname;
-            const currentSearch = window.location.search;
+            const iframe = document.getElementById('mainFrame');
             
-            // If we have a dashboard path (starts with /d/)
-            if (currentPath.startsWith('/d/')) {
-                const iframe = document.getElementById('mainFrame');
-                iframe.src = `//gem2.csaladen.es/?url=${currentPath}${currentSearch}`;
+            // For local testing with port 5500
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const baseUrl = isLocal ? '//localhost:5500' : '//gem2.csaladen.es';
+            
+            // Get the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetUrl = urlParams.get('url');
+            
+            // Set initial src
+            if (targetUrl) {
+                const encodedUrl = encodeURIComponent(targetUrl);
+                iframe.src = `${baseUrl}/?url=${encodedUrl}`;
+            } else {
+                iframe.src = baseUrl;
             }
+            
+            // Handle fade in
+            iframe.onload = function() {
+                setTimeout(() => {
+                    iframe.style.opacity = 1;
+                }, 100);
+            };
         </script>
     </body>
 </html>
