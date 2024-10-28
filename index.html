@@ -76,10 +76,34 @@
 
     <body>
         <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
-        <!-- <div>Coming soon!</div> -->
+        <script>
+            // Get the panel ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const panelId = urlParams.get('panel');
+            
+            // Handle iframe loading and scrolling
+            const iframe = document.getElementById('iframe');
+            iframe.onload = function() {
+                // Initial delay for opacity
+                setTimeout(() => {
+                    iframe.style.opacity = 1;
+                }, 100);
+
+                // Longer delay for scrolling, with retry logic
+                if (panelId) {
+                    // Try multiple times with increasing delays
+                    const delays = [500, 1000, 2000, 3000]; // milliseconds
+                    
+                    delays.forEach(delay => {
+                        setTimeout(() => {
+                            iframe.contentWindow.postMessage({
+                                type: 'scrollToPanel',
+                                panelId: panelId
+                            }, 'https://gem.csaladen.es');
+                        }, delay);
+                    });
+                }
+            };
+        </script>
     </body>
-    <script>
-        setTimeout(function() {
-            document.getElementById('iframe').style.opacity = 1;
-        }, 100)
-    </script>
+</html>
