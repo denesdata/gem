@@ -77,23 +77,29 @@
     <body>
         <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
         <script>
-            // Get the panel ID from URL parameters
+            // Get the full URL parameter
             const urlParams = new URLSearchParams(window.location.search);
-            const panelId = urlParams.get('panel');
+            const targetUrl = urlParams.get('url');
             
-            // Handle iframe loading and scrolling
+            // Get the iframe
             const iframe = document.getElementById('iframe');
+            
+            // Set the full URL as src
+            if (targetUrl) {
+                iframe.src = `//gem.csaladen.es${targetUrl}`;
+            }
+            
             iframe.onload = function() {
-                // Initial delay for opacity
                 setTimeout(() => {
                     iframe.style.opacity = 1;
                 }, 100);
 
-                // Longer delay for scrolling, with retry logic
+                // Extract panel ID from the URL if it exists
+                const targetParams = new URLSearchParams(targetUrl.split('?')[1]);
+                const panelId = targetParams.get('panel');
+                
                 if (panelId) {
-                    // Try multiple times with increasing delays
-                    const delays = [500, 1000, 2000, 3000]; // milliseconds
-                    
+                    const delays = [500, 1000, 2000, 3000];
                     delays.forEach(delay => {
                         setTimeout(() => {
                             iframe.contentWindow.postMessage({
