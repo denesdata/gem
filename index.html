@@ -63,40 +63,72 @@
             color: lightGray;
             font-family: sans-serif;
         }
-        
+
         a {
             color: royalBlue;
         }
-        
+
         iframe {
             opacity: 0;
             transition: opacity 2s linear;
         }
     </style>
 
-    <body>
-        <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
-        <script>
-            // Get the full URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const targetUrl = urlParams.get('url');
-        
-            // Get the iframe
-            const iframe = document.getElementById('iframe');
+<body>
+    <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
+    <script>
+        // Section to panel ID mapping
+        const sectionMap = {
+            'funding': '163',
+            'start': '171',
+            'ro': '161',
+            'stats': '169',
+            'aps': '179',
+            'nes': '175',
+            'news': '173'
+        };
+
+        // Get the full URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUrl = urlParams.get('url');
+
+        // Get the iframe
+        const iframe = document.getElementById('iframe');
+
+        if (targetUrl) {
+            // Split the URL into path and search parts
+            const [path, search] = targetUrl.split('?');
+            const targetParams = new URLSearchParams(search);
             
-            // Set the full URL as src
-            if (targetUrl) {
+            // Check for section parameter
+            const section = targetParams.get('section');
+            if (section && sectionMap[section]) {
+                // Replace section with panel ID
+                targetParams.delete('section');
+                targetParams.append('panel', sectionMap[section]);
+                
+                // Reconstruct URL with panel ID instead of section
+                const newUrl = `${path}?${targetParams.toString()}`;
+                iframe.src = `//gem.csaladen.es${newUrl}`;
+            } else {
+                // No section parameter or invalid section, use URL as is
                 iframe.src = `//gem.csaladen.es${targetUrl}`;
             }
-            
-            iframe.onload = function() {
-                setTimeout(() => {
-                    iframe.style.opacity = 1;
-                }, 100);
+        } else {
+            iframe.src = '//gem.csaladen.es';
+        }
 
-                // Extract panel ID from the URL if it exists
-                const targetParams = new URLSearchParams(targetUrl.split('?')[1]);
-                const panelId = targetParams.get('panel');
+        iframe.onload = function() {
+            setTimeout(() => {
+                iframe.style.opacity = 1;
+            }, 100);
+
+            // Extract panel ID from the URL if it exists
+            if (targetUrl) {
+                const search = targetUrl.split('?')[1];
+                const targetParams = new URLSearchParams(search);
+                const section = targetParams.get('section');
+                const panelId = section ? sectionMap[section] : targetParams.get('panel');
                 
                 if (panelId) {
                     const delays = [500, 1000, 2000, 3000];
@@ -109,7 +141,9 @@
                         }, delay);
                     });
                 }
-            };
-        </script>
-    </body>
+            }
+        };
+    </script>
+</body>
+
 </html>
