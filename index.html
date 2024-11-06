@@ -117,7 +117,7 @@
 
         /* Adjust iframe margin */
         iframe {
-            margin-top: 120px;
+            /* margin-top: 120px; */
             opacity: 0;
             transition: opacity 2s linear;
             /* transform: translateY(60px); */
@@ -187,7 +187,7 @@
             }
 
             iframe {
-                margin-top: 70px;
+                /* margin-top: 70px; */
             }
         }
     </style>
@@ -205,12 +205,11 @@
         <a href="#" onclick="return scrollToSection('nes')"><i class="fas fa-network-wired"></i> NES</a>
         <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
     </nav>
-
-    <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
+    <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe></div>
     <script>
         // Section to panel ID mapping
         const sectionMap = {
-            'home': '90',
+            'home': '285',
             'funding': '163',
             'start': '171',
             'ro': '161',
@@ -252,8 +251,7 @@
 
         iframe.onload = function () {
             setTimeout(() => {
-                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
-                iframe.style.opacity = 1
+                iframe.style.opacity = 1;
             }, 100);
 
             // Extract panel ID from the URL if it exists
@@ -281,21 +279,13 @@
         function scrollToSection(section) {
             const panelId = sectionMap[section];
             if (panelId) {
-                // Remove any existing transition
-                iframe.style.transition = 'none';
-                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
-                
-                // Force a reflow
-                iframe.offsetHeight;
-                
-                // Restore transition
-                iframe.style.transition = 'opacity 2s linear';
-                
                 iframe.contentWindow.postMessage({
                     type: 'scrollToPanel',
                     panelId: panelId
                 }, 'https://gem.csaladen.es');
             }
+            
+            // Prevent default anchor behavior
             return false;
         }
     </script>
