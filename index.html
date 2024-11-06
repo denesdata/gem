@@ -51,11 +51,10 @@
         iframe {
             height: 100%;
             width: 100%;
-            background: #508484;
-            /* background: #79C99E; */
-            background: -webkit-linear-gradient(to bottom right, #508484, #243b55);
-            background: linear-gradient(to bottom right, #508484, #243b55);
-            border-color: #508484;
+            background: #0b3367;
+            background: -webkit-linear-gradient(to bottom right, #0b3367, #020a11);
+            background: linear-gradient(to bottom right, #0b3367, #020a11);
+            border-color: #0b3367;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -63,7 +62,8 @@
             margin: 0;
             border: none;
             overflow: hidden;
-            color: lightGray;
+            color: #d8d9da;
+            /* Updated to match nav text color */
             font-family: sans-serif;
         }
 
@@ -83,7 +83,7 @@
             padding: 10px;
             text-align: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             height: 40px;
         }
 
@@ -117,10 +117,10 @@
 
         /* Adjust iframe margin */
         iframe {
-            /* margin-top: 120px; */
+            margin-top: 120px;
             opacity: 0;
             transition: opacity 2s linear;
-            transform: translateY(60px);
+            /* transform: translateY(60px); */
         }
 
         /* Responsive styles */
@@ -146,10 +146,9 @@
                 overflow-x: auto;
                 white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
-                background: linear-gradient(to right, 
-                    #0b3367 calc(100% - 35px),
-                    rgba(11, 51, 103, 0.3) 100%
-                );
+                background: linear-gradient(to right,
+                        #0b3367 calc(100% - 35px),
+                        rgba(11, 51, 103, 0.3) 100%);
                 padding-right: 35px;
             }
 
@@ -176,12 +175,19 @@
             }
 
             @keyframes bounce-horizontal {
-                0%, 100% { transform: translateX(0); }
-                50% { transform: translateX(5px); }
+
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+
+                50% {
+                    transform: translateX(5px);
+                }
             }
 
             iframe {
-                /* margin-top: 70px; */
+                margin-top: 70px;
             }
         }
     </style>
@@ -225,14 +231,14 @@
             // Split the URL into path and search parts
             const [path, search] = targetUrl.split('?');
             const targetParams = new URLSearchParams(search);
-            
+
             // Check for section parameter
             const section = targetParams.get('section');
             if (section && sectionMap[section]) {
                 // Replace section with panel ID
                 targetParams.delete('section');
                 targetParams.append('panel', sectionMap[section]);
-                
+
                 // Reconstruct URL with panel ID instead of section
                 const newUrl = `${path}?${targetParams.toString()}`;
                 iframe.src = `//gem.csaladen.es${newUrl}`;
@@ -244,11 +250,14 @@
             iframe.src = '//gem.csaladen.es';
         }
 
-        iframe.onload = function() {
+        iframe.onload = function () {
+            setTimeout(() => {
+                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
+            }, 100);
+
             setTimeout(() => {
                 iframe.style.opacity = 1;
-                iframe.style.transform = 'translateY(60px)';
-            }, 100);
+            }, 200);
 
             // Extract panel ID from the URL if it exists
             if (targetUrl) {
@@ -256,7 +265,7 @@
                 const targetParams = new URLSearchParams(search);
                 const section = targetParams.get('section');
                 const panelId = section ? sectionMap[section] : targetParams.get('panel');
-                
+
                 if (panelId) {
                     const delays = [400, 900, 1400, 1900];
                     delays.forEach(delay => {
