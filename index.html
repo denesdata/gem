@@ -252,12 +252,8 @@
 
         iframe.onload = function () {
             setTimeout(() => {
-                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
+                iframe.style.opacity = 1
             }, 100);
-
-            setTimeout(() => {
-                iframe.style.opacity = 1;
-            }, 200);
 
             // Extract panel ID from the URL if it exists
             if (targetUrl) {
@@ -284,12 +280,14 @@
         function scrollToSection(section) {
             const panelId = sectionMap[section];
             if (panelId) {
+                // Ensure correct margin is maintained
+                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
+                
                 iframe.contentWindow.postMessage({
                     type: 'scrollToPanel',
                     panelId: panelId
                 }, 'https://gem.csaladen.es');
             }
-            // Prevent default anchor behavior
             return false;
         }
     </script>
