@@ -117,9 +117,10 @@
 
         /* Adjust iframe margin */
         iframe {
-            margin-top: 120px;
+            /* margin-top: 120px; */
             opacity: 0;
             transition: opacity 2s linear;
+            transform: translateY(60px);
         }
 
         /* Responsive styles */
@@ -180,7 +181,7 @@
             }
 
             iframe {
-                margin-top: 70px;
+                /* margin-top: 70px; */
             }
         }
     </style>
@@ -246,7 +247,7 @@
         iframe.onload = function() {
             setTimeout(() => {
                 iframe.style.opacity = 1;
-                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
+                iframe.style.transform = 'translateY(60px)';
             }, 100);
 
             // Extract panel ID from the URL if it exists
