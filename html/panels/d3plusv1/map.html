@@ -1,0 +1,385 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="d3.js" type="text/javascript"></script>
+  <script src="d3.geo.projection.v0.min.js" type="text/javascript"></script>
+  <script src="topojson.min.js" type="text/javascript"></script>
+  <script src="d3plus.js" type="text/javascript"></script>
+
+  <style>
+    /*         @import url(//fonts.googleapis.com/css?family=Coda:400,700); */
+
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round:wght@400;700&display=swap');
+
+    body {
+      font-family: "Varela Round", Roboto, Helvetica Neue, Arial, sans-serif;
+      margin: 0;
+      overflow: hidden;
+      background: none;
+    }
+
+    div,
+    text {
+      font-family: "Varela Round" !important;
+    }
+
+    text {
+      /*             font-size:12px !important; */
+    }
+
+    :root {
+      --bg: #6495ed;
+      --font: #faf0e6;
+      --bglight: #020a11;
+      --bgdark: #0b3367;
+      --light: #99D9EA;
+    }
+
+    .d3plus_node,
+    input {
+      background-color: var(--bgdark) !important;
+      color: var(--light) !important;
+      border-color: var(--bglight) !important;
+      max-width: 300px;
+      /*       text-transform: lowercase; */
+    }
+
+    .d3plus_node:first-letter,
+    input:first-letter {
+      /*       text-transform: uppercase; */
+    }
+
+    .d3plus_drop_search,
+    .d3plus_drop_selector {
+      background-color: var(--bglight) !important;
+    }
+
+    ::placeholder {
+      color: var(--light) !important;
+      /*           opacity: 1; */
+    }
+
+    .d3plus_timeline_background,
+    .d3plus_timeline_play {
+      fill: var(--bgdark) !important;
+    }
+
+    .d3plus_timeline_play,
+    #timeline #ticks .tick line {
+      stroke: var(--bglight) !important;
+    }
+
+    #timeline #labels text,
+    .d3plus_timeline_playIcon {
+      fill: var(--light) !important;
+    }
+
+    #brush .extent {
+      fill: var(--bglight) !important;
+    }
+
+    text.d3plus_tick {
+      fill: var(--light) !important;
+    }
+
+    .d3plus_handle {
+      fill: var(--light) !important;
+    }
+
+    .d3plus_scale rect {
+      stroke: var(--bglight) !important;
+    }
+
+    rect.d3plus_tick {
+      /*             fill:var(--bglight) !important; */
+      fill: none !important;
+      stroke: none !important;
+    }
+
+    .d3plus_data {
+      /*             stroke-opacity:0 !important; */
+    }
+
+    .d3plus_tooltip_title {
+      font-weight: bold;
+      color: var(--light) !important;
+    }
+
+    .d3plus_tooltip_data_block,
+    td {
+      color: var(--light) !important;
+    }
+
+    .d3plus_tooltip_data_block a {
+      color: var(--light) !important;
+    }
+
+    #d3plus_tooltip_id_visualization_focus .d3plus_tooltip_data_block {
+      display: none;
+    }
+
+    #d3plus_tooltip_id_visualization_focus .d3plus_tooltip_title {
+      width: 180px !important;
+      margin-left: -5px;
+    }
+
+    #d3plus_tooltip_id_visualization_focus .d3plus_tooltip_container {
+      max-width: 213px !important;
+    }
+
+    #year {
+      position: absolute;
+      top: -5px;
+      right: 8px;
+    }
+
+    #year,
+    td:nth-child(2) {
+      font-weight: bold;
+      color: var(--font) !important;
+    }
+
+    #d3plus_drawer {
+      inset: -5px auto auto !important;
+    }
+
+    #d3plus_tooltip_id_visualization_focus {
+      transform: translate(-8px, 0px);
+    }
+
+    .d3plus_tooltip_data_container {
+      max-height: 500px !important;
+    }
+
+    #container {
+      transform: translate(-40px, -100px) !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="viz"></div>
+</body>
+<script type="text/javascript">
+  // Remove the hardcoded document.domain line
+    document.domain = "csaladen.es";
+    
+    // Add function to safely communicate with parent
+    function notifyParent(data) {
+        // Get parent origin from URL parameters or default to csaladen.es
+        const urlParams = new URLSearchParams(window.location.search);
+        const parentOrigin = urlParams.get('parentOrigin') || 'https://gem.csaladen.es';
+        
+        try {
+            window.parent.postMessage(data, parentOrigin);
+        } catch (e) {
+            console.error('Failed to communicate with parent:', e);
+        }
+    }
+    
+  var map = true;
+  var county = 'langcountry';
+  var value = 'value';
+  var hash = window.location.hash.slice(1);
+  var lang = hash.slice(0, hash.search('&'));
+  var theme_id_initvalue = hash.slice(hash.search('&') + 1);
+  var theme = theme_id_initvalue.slice(0, theme_id_initvalue.search('&'));
+  var id_initvalue = theme_id_initvalue.slice(theme_id_initvalue.search('&') + 1);
+  var id = id_initvalue.slice(0, id_initvalue.search('&')).toLowerCase();
+  var initvalue = id_initvalue.slice(id_initvalue.search('&') + 1);
+  var selectedValue = initvalue;
+  if (!id) id = initvalue;
+  console.log(lang, theme, id, initvalue)
+  var dark = '#0b3367';
+  var light = '#56afaf';
+  var axdark = 'lightGray';
+  var axlight = '#52545c';
+  var bgdark = getComputedStyle(document.documentElement)
+    .getPropertyValue('--bgdark');
+  var csslight = getComputedStyle(document.documentElement)
+    .getPropertyValue('--light');
+  var hide = ['GDP2020'];
+  document.documentElement.style.setProperty("--bg", (theme == 'dark') ? dark : light);
+  document.documentElement.style.setProperty("--font", (theme == 'dark') ? axdark : axlight);
+
+  // var colors = ['darkRed', 'crimson', 'orange', 'gold', 'seaGreen', 'royalBlue'] //honey yellow #F2AF29 gold?
+  // var colors = ['lavender',  'darkRed']
+  // var colors = (id == 'aps') ? ['lavender', '#F2AF29'] : ['lavender', 'steelBlue', 'midnightBlue']
+  var colors = (id == 'aps') ? ['lavender', '#FF70BB'] :
+    (id == 'nes') ? ['lavender', 'midnightBlue'] :
+      (id == 'legal') ? ['gold', '#F2AF29', 'crimson', 'darkRed'] :
+        ['lavender', 'steelBlue', 'midnightBlue', 'midnightBlue', 'midnightBlue', 'midnightBlue']
+  var font = {
+    "family": "Varela Round",
+    // "size": 15,
+    "color": (theme == 'dark') ? axdark : axlight
+  };
+  var visualization5 = d3plus.viz().container("#viz")
+  var options = [];
+  var meta;
+  var aggs = {};
+  var metaValue = '';
+  var menuK = 0;
+  var html = ''
+  var rawdata;
+  var myYEAR = (id == 'rostats') ? 2020 : (id == 'regio') ? 2020 : (id == 'legal') ? '2024-10-28' : 2022;
+
+  function custompointerevents() {
+    ctrs = d3.selectAll('.d3plus_coordinates')[0]
+    if (id != 'legal') {
+      ctrs.forEach(function (d) {
+        if (rawdata.filter(d => d['year'] == myYEAR).map(a => a.id).includes(d.children[0].id)) {
+          d.style.pointerEvents = 'all'
+        } else d.style.pointerEvents = 'none'
+      })
+    }
+  }
+
+  function tt(v) {
+    custompointerevents()
+    console.log(v)
+    r = rawdata.filter(d => d['id'] == v).filter(d => d['year'] == myYEAR)[0]
+    html = '<h3 id="year">' + myYEAR + '</h3>'
+    if (r) {
+      html = html + '<table>'
+      Object.entries(meta).forEach(([key, value]) => {
+        html = html + '<tr><td>' + value + '</td><td>' + String(r[key]).replace('null', '') + '</td></tr>'
+      });
+      html = html + '</table>'
+    }
+    return html
+  }
+
+  function filterDict(dict, hide = []) {
+    var result = {};
+    for (var key in dict)
+      if (!hide.includes(key))
+        result[key] = dict[key];
+    return result;
+  }
+
+  d3.json("../" + id + "_def.json", function (error, defs) {
+    visualization5
+      .data('../' + id + '_unstacked_' + lang + '.json', function (data) {
+        meta = filterDict(data.meta, hide)
+        metaValue = meta[initvalue]
+        rawdata = data.data;
+        Object.entries(meta).forEach(([key, value]) => {
+          d = {}
+          d[value + (((key == 'EBO') || (key == 'TEA')) ? ' (' + key + ')' : '')] = key
+          aggs[key] = 'mean'
+          aggs[value] = 'mean'
+          if (key == initvalue) {
+            menuK = Object.keys(aggs).length / 2
+          }
+          options.push(d)
+        });
+        data.data.forEach(function (d) {
+          Object.entries(meta).forEach(([key, value]) => {
+            d[value] = d[key]
+          });
+        })
+
+        // console.log(data,initvalue,options)
+        return data.data
+      })
+      // .focus('642')
+      .coords({
+        "value": id == 'legal' ? "../romania-counties.json" : id == 'rostats' ? "../romania-counties.json" : id == 'regio' ? "../romania-regio.json" : "../countries-110m-fixed.json",
+        "projection": "mercator",
+        "mute": ["010"],
+
+      }) // pass topojson coordinates
+      .type({
+        "value": "geo_map"
+      }) // visualization type
+      .id({ 'value': 'id', 'grouping': false }) // key for which our data is unique on
+      .time({
+        "value": "year",
+        "solo": [myYEAR]
+      })
+      // .timeline()
+      .legend({
+        "filters": true
+        // "size": 30
+      })
+      // .focus({
+      //     "tooltip": false
+      // })
+      .font(font)
+      .messages(false)
+      // .dev(true)
+      .format({
+        "text": function (text, params) {
+          return text;
+        },
+        "number": function (number) {
+          return parseInt(number * 10) / 10.0
+        }
+      })
+      .margin("-200px -30px 5px -40px")
+      .background("none")
+      .text(county) // key to use for display text
+      .labels({ "resize": id == 'rostats' ? false : true, "font": { "size": id == 'rostats' ? 7 : 10 } })
+      .color({
+        "value": initvalue,
+        "heatmap": colors,
+        "missing": ((theme == 'dark') ? dark : light)
+      })
+      .tooltip({ "html": tt, "stacked": true, "background": "#243b55" })
+      // .mouse({"over":function(d){if (d['id']=643) return d; else return false}})
+      .ui({
+        "font": {
+          "size": 12
+        },
+        "position": "top",
+        "value": [{
+          "method": function (value) {
+            console.log(value, meta[value])
+            selectedValue = value;
+            metaValue = meta[value];
+            visualization5
+              .color({
+                "value": metaValue,
+                "heatmap": colors
+              })
+              .draw()
+          },
+          "value": options,
+          "type": "drop",
+          "label": " "
+        }]
+
+      })
+
+    visualization5.draw()
+    setTimeout(function () {
+      custompointerevents();
+      d3.select('svg').append('use').attr('xlink:href', "#timeline")
+      d3.select('svg').append('use').attr('xlink:href', "#key")
+      d3.select('svg').append('use').attr('xlink:href', "#footer")
+
+      d3.select('.d3plus_node')[0][0].click()
+      d3.select('.d3plus_node')[0][0].click()
+      d3.selectAll('.d3plus_button_label')[0].forEach(function (d) {
+        d.title = defs[lang][d.textContent.slice(0, d.textContent.search(' \\('))]
+      })
+      visualization5.aggs(aggs)//.color(metaValue).draw()
+      if (menuK == 1) {
+        d3.selectAll('.d3plus_node')[0][2].click()
+        setTimeout(function () {
+          d3.selectAll('.d3plus_node')[0][menuK].click()
+        }, 200)
+      }
+      else {
+        d3.selectAll('.d3plus_node')[0][menuK].click()
+      }
+      d3.select('#timeline')[0].click()
+    }, 2000)
+
+  })
+</script>
+
+</html>

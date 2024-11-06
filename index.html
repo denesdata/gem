@@ -89,6 +89,7 @@
             text-align: center;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            height: 45px;
         }
 
         .nav-menu a {
@@ -119,23 +120,88 @@
             margin-right: 6px;
         }
 
-        /* Adjust iframe to account for menu */
+        /* Adjust iframe margin */
         iframe {
-            margin-top: 50px;
+            margin-top: 130px;
+            opacity: 0;
+            transition: opacity 2s linear;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-menu {
+                height: auto;
+                padding: 5px;
+            }
+
+            .nav-menu a {
+                padding: 6px 10px;
+                margin: 2px;
+                font-size: 12px;
+            }
+
+            .nav-menu i {
+                margin-right: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                background: linear-gradient(to right, 
+                    #0b3367 calc(100% - 35px),
+                    rgba(11, 51, 103, 0.3) 100%
+                );
+                padding-right: 35px;
+            }
+
+            .nav-menu:after {
+                content: '\f054';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: fixed;
+                right: 10px;
+                top: 15px;
+                color: #3bdeff;
+                animation: bounce-horizontal 2s infinite;
+                pointer-events: none;
+                font-size: 12px;
+            }
+
+            .nav-menu::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-menu {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            @keyframes bounce-horizontal {
+                0%, 100% { transform: translateX(0); }
+                50% { transform: translateX(5px); }
+            }
+
+            iframe {
+                margin-top: 70px;
+            }
         }
     </style>
+</head>
 
 <body>
     <!-- Updated navigation menu -->
     <nav class="nav-menu">
         <a href="#" class="home-btn"><i class="fas fa-home"></i> Home</a>
-        <a href="#" onclick="return scrollToSection('start')"><i class="fas fa-play"></i> Start</a>
         <a href="#" onclick="return scrollToSection('funding')"><i class="fas fa-coins"></i> Funding</a>
+        <a href="#" onclick="return scrollToSection('start')"><i class="fas fa-play"></i> Start-up</a>
+        <a href="#" onclick="return scrollToSection('ro')"><i class="fas fa-flag"></i> Romania</a>
         <a href="#" onclick="return scrollToSection('stats')"><i class="fas fa-chart-bar"></i> Statistics</a>
         <a href="#" onclick="return scrollToSection('aps')"><i class="fas fa-poll"></i> APS</a>
         <a href="#" onclick="return scrollToSection('nes')"><i class="fas fa-network-wired"></i> NES</a>
         <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
-        <a href="#" onclick="return scrollToSection('ro')"><i class="fas fa-flag"></i> Romania</a>
     </nav>
 
     <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
@@ -194,7 +260,7 @@
                 const panelId = section ? sectionMap[section] : targetParams.get('panel');
                 
                 if (panelId) {
-                    const delays = [500, 1000, 2000, 3000];
+                    const delays = [400, 900, 1400, 1900];
                     delays.forEach(delay => {
                         setTimeout(() => {
                             iframe.contentWindow.postMessage({

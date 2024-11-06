@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round:wght@400;700&display=swap');
+
+    body {
+      position: relative;
+      background-color: #0b3367;
+      /* Keep your existing body styles */
+      font-family: "Varela Round", Roboto, Helvetica Neue, Arial, sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+      color: #D8d9da;
+    }
+
+    #container {
+      padding-bottom: 40px;
+    }
+
+    body,
+    html,
+    div,
+    p,
+    button {
+      font-family: "Varela Round" !important;
+    }
+
+    .collapsible {
+      /* background-color: #777; */
+      background: linear-gradient(to bottom right, #0b3367, #50b0cb);
+      border-color: #134e5d;
+      color: #D8d9da;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 8px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      margin: 3px;
+      border-radius: 3px;
+    }
+
+    .collapsible2 {
+      filter: brightness(1.3);
+      color: #50b0cb;
+    }
+
+    .collapsible-yes {
+      filter: brightness(1.4);
+      background: linear-gradient(to bottom right, #0b3367, rgb(6, 110, 117));
+    }
+
+    .collapsible-no {
+      filter: brightness(1.4);
+      background: linear-gradient(to bottom right, #0b3367, rgb(129, 62, 109));
+    }
+
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: none;
+    }
+
+    .collapsible span:after {
+      content: '\25BE';
+      /* Nicer looking down triangle */
+      font-size: 24px;
+      line-height: 14px;
+      color: #D8d9da;
+      float: right;
+      margin-left: 8px;
+      margin-top: 4px;
+      transition: transform 0.3s ease;
+      opacity: 0.8;
+      transform: rotate(30deg);
+    }
+
+    .active span:after {
+      transform: rotate(60deg);
+      /* Smooth rotation instead of character swap */
+    }
+
+    .collapsible:hover span:after {
+      opacity: 1;
+      transform: scale(1.1);
+      /* Slight grow effect on hover */
+    }
+
+    .active:hover span:after {
+      transform: rotate(90deg) scale(1.1);
+      /* Combine rotation and scale */
+    }
+
+    .pfa,
+    .RO,
+    .HU,
+    .EN {
+      display: none;
+      opacity: 0;
+      transition: opacity .5s ease-in;
+      -moz-transition: opacity .5s ease-in;
+      -webkit-transition: opacity .5s ease-in;
+    }
+
+    a {
+      color: #99D9EA;
+      text-decoration: none;
+    }
+
+    a:hover {
+      font-weight: bold;
+    }
+
+    a:after {
+      content: " \2B08";
+    }
+
+    .collapsible {
+      display: flex;
+      align-items: center;
+    }
+
+    .collapsible i {
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .collapsible>div {
+      flex-grow: 1;
+    }
+
+    /* Ensure consistent positioning for nested collapsibles */
+    .content .collapsible span:after {
+      position: absolute;
+      right: 10px;
+      /* Adjust this value as needed */
+    }
+
+    /* Add relative positioning to nested collapsibles */
+    .content .collapsible {
+      position: relative;
+    }
+
+    /* Update scrollbar styles to match Grafana */
+    ::-webkit-scrollbar {
+      width: 8px;
+      /* Slightly thinner than before */
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(204, 204, 220, 0.05);
+      /* Very subtle light track */
+      border-radius: 0;
+      /* Remove border radius */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(204, 204, 220, 0.2);
+      /* Semi-transparent light thumb */
+      border-radius: 0;
+      /* Remove border radius */
+      border: none;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(204, 204, 220, 0.4);
+      /* Slightly more opaque on hover */
+    }
+
+    /* For Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(204, 204, 220, 0.2) rgba(204, 204, 220, 0.05);
+    }
+  </style>
+</head>
+
+<body>
+  <div id='container'>
+    <div id="PFA" class="pfa">
+      <button type="button" class="collapsible future_active">
+        <i class="fa fa-user-circle" style="margin-right: 10px;"></i>
+        <div>
+          <span class="HU">Engedélyezett természetes személy (PFA)</span>
+          <span class="RO">Persoana fizică autorizată (PFA)</span>
+          <span class="EN">Sole trader (PFA)</span>
+        </div>
+      </button>
+      <div class="content">
+        <p class="HU">Engedélyezett természetes személy: nem vállalat/jogi személy, hanem egy módszer, amely által
+          természetes személy gazdasági tevékenységet folytathat. A természetes személy a tudását és/vagy képességeit
+          hasznosítja, így a legfontosabb érték ebben a vállalkozói formában az egyén munkája. Lássunk néhány elterjedt
+          példát amelyben engedélyezett természetes személyként szolgáltatást nyújthatunk vagy gazdasági tevékenységet
+          végezhetünk.</p>
+        <p class="RO">PFA: nu este o societate/ persoană juridică, ci este o modalitate în care o persoană fizică poate
+          desfășura o activitate economică. Persoana fizică pune la dispoziție cunoștințele sau abilitățile personale,
+          așadar cea mai importantă valoare în această afacere este forța de muncă proprie. Să vedem câteva exemple în
+          care înființarea unui PFA este metoda uzuală de a presta un serviciu, de a desfășura o activitate economică.
+        </p>
+        <p class="EN">Sole trader: it is not a company / legal entity, but a way in which a natural person can carry out
+          an economic activity. The individual provides personal knowledge or skills, so the most important value in
+          this
+          business is their own workforce. Let us look at some examples in which the establishment of a sole tradership
+          is
+          the usual method of providing a service or carrying out an economic activity.</p>
+        <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+            class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+            href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a>&nbsp;&nbsp;
+        </p>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-list-alt" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Példák</span>
+            <span class="RO">Exemple</span>
+            <span class="EN">Examples</span>
+          </div>
+        </button>
+        <div class="content"><button type="button" class="collapsible"><span class="HU">Fordító (elsődleges bevételi
+              forrás)</span><span class="RO">Traducător (sursă primară de venit)</span><span class="EN">Translator
+              (primary source of income)</span></button>
+          <div class="content">
+            <p class="HU">Jancsi fordítói engedéllyel rendelkezik és szeretne pénzt keresni ezzel. Amennyiben fordítói
+              szolgáltatást nyújt, kénytelen számlát kiadni. Így hozzájut a bevételhez, amely után adózik és befizeti a
+              különböző kötelező hozzájárulásokat. Amennyiben Jancsi engedélyezett természetes személlyé vált,
+              szerződéseket köthet kliensekkel, hatóságokkal és intézményekkel, irodahelységet bérelhet. Mindezen
+              kiadások
+              leírhatóak.</p>
+            <p class="RO">Ionel și-a obținut autorizația de traducător și dorește să câștige bani din această
+              activitate.
+              Desigur, dacă prestează un serviciu de traducere, el va trebui să emită o factură pe baza căruia va încasa
+              banii câștigați, apoi va plăti impozitul și contribuțiile aferente. Dacă Ionel și-a înființat PFA-ul, el
+              va
+              putea încheia contracte cu diverși clienți, cu autorități sau instituții, își poate închiria un spațiu de
+              birou. Toate aceste cheltuieli pot fi deduse.</p>
+            <p class="EN">Ionel has obtained a translator's license and wants to earn money from this activity. If he
+              provides a translation service, he will have to issue an invoice on the basis of which he will collect the
+              money earned, then he will pay the tax and the related contributions. If Ionel has registered as a sole
+              trader, he will be able to enter into contracts with various clients, with authorities or institutions, he
+              can rent an office space. All these expenses can be deducted.</p>
+          </div><button type="button" class="collapsible collapsible2"><span class="HU">Villanyszerelő (másodlagos
+              bevételi forrás)</span><span class="RO">Electrician (sursă secundară de venit)</span><span
+              class="EN">Electrician (secondary source of income)</span></button>
+          <div class="content">
+            <p class="HU">Jancsi diplomás villanyszerelő és teljes munkaidőben alkalmazott egy cégnél. Jancsi szeretne
+              több pénzt keresni, így eldönti, hogy a teljes munkaidős állásán felül, délutánonként szerelési és
+              javítási
+              szolgáltatásokat nyújtana saját kliensei számára. Jancsi engedélyezett természetes személlyé válik, így
+              meghirdetheti szolgáltatásait és számlákat állíthat ki a kliensei számára.</p>
+            <p class="RO">Ionel are diplomă de electrician și este angajat cu un contract individual de muncă de 8 ore
+              la
+              o firmă. Ionel ar dori să câștige mai mulți bani, astfel decide ca pe lângă jobul de 8 ore, după-amiază să
+              presteze servicii de instalații și reparații electrice pentru clienți proprii. Ionel va înființa un PFA,
+              astfel va putea pune anunțuri despre serviciile sale și va putea emite facturi clienților săi.</p>
+            <p class="EN">Ionel is a qualified electrician and is employed full time with an individual employment
+              contract by a company. Ionel would like to earn more money, so he decides to provide electrical
+              installation
+              and repair services for his own clients in the afternoon, in addition to his nine-to-five job. Ionel will
+              register as a sole trader, so that he will be able to place ads about his services and be able to issue
+              invoices to his clients.</p>
+          </div><button type="button" class="collapsible"><span class="HU">Programozó (egy üzleti koncepció
+              tesztelése)</span><span class="RO">Programator (testarea unei idei de afacere)</span><span
+              class="EN">Developer (testing a business idea)</span></button>
+          <div class="content">
+            <p class="HU">Jancsinak van egy eredeti ötlete, amely megreformálna egyes informatikai eljárásokat. Szeretne
+              szolgáltatást nyújtani azon cégek számára, amelyek kipróbálnák az új technikákat. Jancsinak kétségei
+              vannak
+              az ötlete széleskörű használati lehetőségét illetően, így első lépésben engedélyezett természetes
+              személlyé
+              válik, amely által szerződéseket köthet és számlákat állíthat ki. Amennyiben a vállalkozás sikeressé
+              válik,
+              Jancsi megszűnik engedélyzetett természetes személy lenni, és alapít egy céget, amely esetében nincsenek
+              az
+              alkalmazottak vagy a végzett tevékenységek számát illető megkötések.</p>
+            <p class="RO">Ionel are o idee originală prin care va reforma unele metode informatice. Dorește să presteze
+              servicii de programare pentru firme care ar dori să încerce noile tehnici. Ionel totuși nu este foarte
+              sigur
+              că metodele sale vor funcționa pe scală largă, astfel, în primă fază înființează un PFA cu ajutorul căruia
+              poate încheia contracte și poate emite facturi. Dacă afacerea se dovedește una de succes, Ionel își va
+              radia
+              PFA-ul și va înființa un SRL, în cazul căruia nu mai este limitat numărul salariaților și numărul
+              activităților.</p>
+            <p class="EN">Ionel has an original idea that will reform some computer programing methods. He wants to
+              provide programming services for companies that would like to try his new techniques. However, Ionel is
+              not
+              very sure that his methods will work on a large scale, so in the first phase he sets himself up as a sole
+              trader, which will allow him to enter into contracts and issue invoices. If the business proves to be
+              successful, Ionel will close his sole trader business and set up an LLC, where the number of employees and
+              the number of activities are no longer limited.</p>
+          </div>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Előnyök</span>
+            <span class="RO">Avantaje</span>
+            <span class="EN">Advantages</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">
+          <ul class="HU">
+            <li>Könnyebb alapítás és alacsonyabb költségek</li>
+            <li>A könyvelést végezheti az alapító, a hivatásos könyvelő megléte nem törvényi előírás</li>
+            <li>A bevételek feletti személyes rendelkezés</li>
+            <li>Bizonyos esetekben adóügyi kedvezmények</li>
+          </ul>
+          </p>
+          <p class="RO">
+          <ul class="RO">
+            <li>Înființare mai ușoară și costuri reduse</li>
+            <li>Contabilitatea poate fi întocmită de titular, fără obligația legală de a avea un contabil</li>
+            <li>Posibilitatea de a dispune personal de venituri</li>
+            <li>Beneficii fiscale în unele cazuri</li>
+          </ul>
+          </p>
+          <p class="EN">
+          <ul class="EN">
+            <li>Easier to set up and costs less</li>
+            <li>The accounting can be done by the holder, without the legal obligation to have an accountant</li>
+            <li>The possibility to use the income directly</li>
+            <li>Tax benefits in some cases</li>
+          </ul>
+          </p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG
+              44/2008</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507"
+              target="_blank">LEGE
+              1/2017</a>&nbsp;&nbsp;</p>
+        </div>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-exclamation-circle" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Korlátok</span>
+            <span class="RO">Limite</span>
+            <span class="EN">Limits</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">
+          <ul class="HU">
+            <li>Maximum 5 engedélyezett CAEN osztály, tevékenységi forma</li>
+            <li>Maximum 3 alkalmazott</li>
+            <li>Korlátlan felelősségvállalás az alapító teljes vagyonával</li>
+          </ul>
+          </p>
+          <p class="RO">
+          <ul class="RO">
+            <li>Maxim 5 clase CAEN, forme de activități</li>
+            <li>Maxim 3 salariați</li>
+            <li>Răspundere ”nelimitată„ cu întreg patrimoniul titularului</li>
+          </ul>
+          </p>
+          <p class="EN">
+          <ul class="EN">
+            <li>Maximum five CAEN classes, forms of activities</li>
+            <li>Maximum three employees</li>
+            <li> Unlimited liability, the holder is personally liable with their entire patrimony </li>
+          </ul>
+          </p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a>&nbsp;&nbsp;
+          </p>
+          <p class="HU"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc"
+              target="_blank">Szakmák, amelyek esetében nem lehetséges engedélyezett természetes személyként
+              tevékenykedni, hanem saját törvényeik alapján működnek</a></p>
+          <p class="RO"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc"
+              target="_blank">Profesii în cazul cărora nu se înființează un PFA, ci funcționează conform legilor
+              speciale</a></p>
+          <p class="EN"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc"
+              target="_blank">Professions for which a sole tradership cannot be set up, operating in accordance with
+              their
+              own special laws</a></p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-clock-o" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Mennyi időbe telik az alapítás?</span>
+            <span class="RO">Cât durează înființarea?</span>
+            <span class="EN">How long does it take to set up?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Az iratcsomó a Kereskedelmi Jegyzékhivatalnál való bejegyzését követően az engedélyezett
+            természetes személy 3-4 napon belül bejegyzésre kerül és megkezdheti aktivitását. Mindazonáltal azt
+            ajánljuk,
+            kezdjen bele hamarabb, és ne hagyja az alapítást az utolsó pillanatra, ugyanis az iratok összegyűjtése, a
+            tevékenységgel kapcsolatos döntések meghozatala, a formanyomtatványok kitöltése, esetenként az illetékes
+            hivatal meglátogatása kötelezően megteendő lépések. Egy másik akadály, amely késlekedéshez vezethet, a
+            leadott
+            iratcsomó kiegészítésének vagy kijavításának felmerülhető szükségessége (amennyiben teljességgel biztosak
+            vagyunk benne, hogy az akta helyesen került összeállításra, ez utóbbitól nem kell tartani).</p>
+          <p class="RO">După înregistrarea dosarului la Registrul Comerțului, în 3-4 zile PFA-ul este înregistrat și
+            poți
+            începe activitatea. Cu toate acestea, îți recomandăm să demarezi procedura puțin mai repede și nu lăsa
+            înființarea pe ultima clipă, deoarece adunarea actelor, luarea unor decizii cu privire la activitate,
+            completarea formularelor, eventual deplasarea la oficiul competent sunt etape ce trebuie parcurse. Un alt
+            impediment, care ar putea duce la întârzieri, poate fi necesitatea de a completa sau corecta dosarul după ce
+            acesta a fost preluat la ghișeu (dacă suntem foarte siguri că dosarul a fost întocmit corect, nu se aplică).
+          </p>
+          <p class="EN">Three to four days after the required documents have been submitted at the Trade Register
+            Office,
+            the sole trader business is registered and you can start the activity. We recommend that you start the
+            establishment procedure in a timely manner, because gathering documents, making decisions about the
+            activity,
+            filling out forms and possibly visiting the competent office are steps that must be completed. Another
+            impediment which could lead to delays may be the need to complete or correct the required documentation
+            after
+            it has been submitted (this does not apply if you are absolutely sure that the filing has been prepared
+            correctly).</p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+              265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+              target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE
+              202/2010</a>&nbsp;&nbsp;</p>
+        </div>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-building" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Hol kell az engedélyezett természetes személyt bejegyeztetni?</span>
+            <span class="RO">Unde trebuie înregistrat PFA-ul?</span>
+            <span class="EN">Where should I register as a sole trader?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Az engedélyzetett természetes személy székhelye szerint illetékes megyei Kereskedelmi
+            Jegyzékhivatalnál. Egyes megyék nagyobb városaiban ennek vannak területi irodái is.</p>
+          <p class="RO">La Oficiul Registrului Comerțului din județul unde PFA-ul își va avea sediul. În unele județe
+            există birouri teritoriale în orașele mai mari.</p>
+          <p class="EN">At the Trade Register Office of the county where the sole tradership will have its headquarters.
+            In some counties there are territorial offices in larger cities.</p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+              265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+              target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;</p>
+          <p class="HU"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Ellenőrizze, hogy melyik a
+              legközelebbi hivatal/iorda, annak pontos címe és nyitvatartási rendje</a></p>
+          <p class="RO"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Verificați care este cel
+              mai
+              apropiat oficiu/ birou, adresa exactă și programul de lucru</a></p>
+          <p class="EN"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Check the exact address
+              and
+              working hours of the nearest office / location</a></p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-file-text" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Hogyan jegyezheti be az engedélyezett természtes személyt?</span>
+            <span class="RO">Cum înregistrez PFA-ul?</span>
+            <span class="EN">How do I register as a sole trader?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Alapvetően 3 módszer közül választhat:</p>
+          <p class="RO">În principal există trei modalități dintre care puteți alege:</p>
+          <p class="EN">There are three main ways to choose between:</p><button type="button" class="collapsible"><span
+              class="HU">1. Léteznek erre szakosodott cégek vagy ügyvédek, akik az engedélyezett természetes személy
+              bejegyzésével foglalkoznak</span><span class="RO">1. Există firme specializate sau avocați care se ocupă
+              de
+              înregistrarea PFA-urilor</span><span class="EN">1. There are specialized companies or lawyers that deal
+              with
+              the registration of sole traders</span></button>
+          <div class="content">
+            <p class="HU">Az eljárás egyszerűbb, ám ezért a szolgáltatásért fizetnie kell. Ne felejtse, az engedélyezett
+              természetes személy bejegyzéséhez nem szükséges szaktudás, és amennyiben mégis ezt a módszert választja,
+              akkor is Önnek kell a bejegyzéshez szükséges iratokat összegyűjteni, vagy a szükséges információkat
+              megadni.
+              Ezen szolgáltatás gyakran a formanyomtatványok kitöltéséből, az iratcsomó összeállításából és beadásából
+              áll, amelyhez még hozzá adódhat a konzultáció, szaktanácsadás nyújtása.</p>
+            <p class="RO">Procedura este mai simplă, însă va trebui să plătiți acest serviciu. Nu uitați totuși că
+              înregistrarea unui PFA nu necesită cunoștințe de specialitate și chiar dacă optați pentru această
+              variantă,
+              va trebui să adunați actele necesare și să oferiți informațiile necesare înregistrării. Acest serviciu
+              adesea constă din completarea formularelor, întocmirea dosarului, înregistrarea dosarului la care se mai
+              poate adăuga și serviciul de consultanță/ consiliere.</p>
+            <p class="EN">The procedure is simpler, but you will have to pay for this service. Keep in mind, however,
+              that
+              registering as a sole trader does not require specialised knowledge, and even if you choose this option,
+              you
+              will need to gather the necessary documents and provide the necessary information for registration. This
+              service often consists of filling in forms, preparing the documentation and registering the file, to which
+              a
+              consultancy or counseling fee can be added.</p>
+          </div><button type="button" class="collapsible collapsible2"><span class="HU">2. Online bejegyzés a
+              Kereskedelmi
+              Jegyzékhivatal honlapján</span><span class="RO">2. Înregistrarea on-line prin portalul Registrului
+              Comerțului</span><span class="EN">2. Online registration through the Trade Register portal</span></button>
+          <div class="content">
+            <p class="HU">Habár a legkönnyebb és legelérhetőbb módszernek tűnhet, legyen tekintettel arra, hogy ehhez a
+              módszerhez PKI elektronikus aláírásra van szüksége, minősített digitális tanúsítvánnyal. Ne vesztegesse az
+              idejét a formanyomtatványok kitöltésével, ugyanis a végén nem lesz képes ezeket aláírni. Amennyiben
+              rendelkezik elektronikus aláírási tanúsítvánnyal, lépjen be a <a
+                href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                target="_blank">ONRC</a> oldalra, hozzon létre egy ingyenes felhasználói fiókot, majd kattintson az
+              Înregistrare în RC PFA/II/IF gombra. Itt találni fog egy útmutatót (Útmutató PFA/II/IF bejegyzési
+              kérelmének
+              kitöltéséhez), amelyben részletekbe menően, közérthetően leírják a formanyomtatványok kitöltési menetét.
+            </p>
+            <p class="RO">Deși pare cea mai simplă și accesibilă metodă, atenție: necesită semnătură electronică PKI cu
+              certificat digital calificat, recunoscut de ONRC! Dacă nu dețineți un asemenea certificat, nu vă pierdeți
+              timpul cu formularele, ca după completarea acestora să nu le puteți semna. Dacă dețineți un asemenea
+              certificat de semnătură electronică, accesați pagina <a
+                href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                target="_blank">ONRC</a> creați un cont gratuit, apoi accesați butonul Înregistrare în RC PFA/II/IF.
+              Aici
+              veți găsi un ghid (Ghid de completare cerere de înregistrare PFA/II/IF) în care este explicat în detaliu
+              și
+              ușor de înțeles modalitatea de completare a formularelor.</p>
+            <p class="EN">Although it seems the simplest and most affordable method, beware: it requires a PKI
+              electronic
+              signature with a qualified digital certificate, recognized by NTRO (ONRC)! If you do not have such a
+              certificate, do not waste your time with the forms, because you cannot sign them after completing them. If
+              you have such an electronic signature certificate, go to the NTRO <a
+                href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                target="_blank">ONRC</a> website, create a free account, then go to the RC Registration button PFA / II
+              /
+              IF. Here you will find a guide (PFA / II / IF Registration Application Completion Guide) which explains in
+              a
+              detailed, easy to understand way how to fill in the forms.</p>
+            <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                target="_blank">LEGE
+                152/2015</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399"
+                target="_blank">LEGE 208/2020</a>&nbsp;&nbsp;</p>
+          </div><button type="button" class="collapsible"><span class="HU">3. Engedélyezett természetes személy
+              fizikailag
+              történő bejegyzése az alapító által</span><span class="RO">3. Înregistrarea PFA-ului în format fizic de
+              către titular</span><span class="EN">3. Registration as a sole trader in physical format by the
+              holder</span></button>
+          <div class="content">
+            <p class="HU">Ez a módszer a legelterjedtebb, nem hordoz magasabb költségeket és nem szükséges szaktudás
+              hozzá, hiszen néhány formanyomtatvány kitöltésével, az iratcsomó összeállításával és a területileg
+              illetékes
+              jegyzéki hivatalba/irodába való látogatással jár.</p>
+            <p class="RO">Această metodă este cea mai răspândită, nu implică costuri suplimentare și nu necesită
+              conoștințe de specialitate, fiind vorba doar de completarea câtorva formulare, astfel întocmirea dosarului
+              și deplasarea la oficiul sau biroul Registrului Comerțului cel mai apropiat.</p>
+            <p class="EN">This method is the most common, it does not involve additional costs and does not require
+              specialized knowledge, it only consists of the completion of a few forms, thus preparing the file and
+              visiting the office or location of the nearest Trade Register Office.</p>
+            <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                target="_blank">LEGE
+                265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;</p><button type="button"
+              class="collapsible collapsible2"><span class="HU">Első lépés: Megnevezés</span><span class="RO">Primul
+                pas:
+                Denumirea</span><span class="EN">First step: Name</span></button>
+            <div class="content">
+              <p class="HU">A természetes személy vezetéknevéből, valamint teljes keresztnevéből/keresztneveiből, vagy
+                vezetéknevéből és keresztnevének/keresztneveinek kezdőbetűiből áll, amelyet az "engedélyezett
+                természetes
+                személy" megnevezés követ. Amennyiben vezeték- és keresztnév-azonosság áll fenn egy már létező, a
+                Kereskedelmi Jegyzékbe már felvett vagy lefoglalt engedélyezett természetes személlyel, a név
+                kiegészítésre kerül az apa vagy az anya keresztnevének keződbetűjével vagy teljes keresztnevével. A
+                megnevezés ellenőrzésére vagy lefoglalására három módszer áll rendelkezésre:</p>
+              <p class="RO">Se compune din numele şi, după caz, prenumele persoanei fizice scrise în întregime sau din
+                numele şi iniţialele prenumelui/prenumelor acesteia, urmate de sintagma «persoană fizică autorizată» sau
+                PFA. În cazul în care există identitate de nume şi prenume cu o altă persoană fizică autorizată,
+                înregistrată în Registrul Comerţului ori rezervată în vederea înregistrării, firma va fi completată cu
+                iniţialele prenumelui tatălui sau al mamei sau cu prenumele întreg al acestora. În vererea verificării
+                și
+                rezervării disponibilității denumirii aveți la dispoziție trei alternative:</p>
+              <p class="EN">It shall consist of the name and, in some cases, the first name of the natural person
+                written
+                in full, or of the name and initials of their first name(s), followed by the phrase 'persoană fizică
+                autorizată', meaning sole trader (PFA). If there is a first and last name identity with another sole
+                trader, already in the trade register or reserved for registration, the company name will be completed
+                with the initials of the father or mother's first name or their full first name. In order to check and
+                reserve the availability of the name, you have three alternatives:</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/91808"
+                  target="_blank">OUG 44/2008</a>&nbsp;&nbsp;</p><button type="button" class="collapsible"><span
+                  class="HU">1. Online foglalás</span><span class="RO">1. Rezervarea on-line</span><span class="EN">1.
+                  Online reservation</span></button>
+              <div class="content">
+                <p class="HU">Lépjen az <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a>
+                  linkre és hozzon létre egy felhasználói fiókot. Kattintson a Verificări preliminare gombra, jelölje be
+                  a
+                  rezervare denumire firma mezőt, és töltse ki az online űrlapot a megnevezés lefoglalása érdekében.
+                  Figyelem: ezen szolgáltatást csak akkor tudja igénybe venni, ha rendelkezik elektromos aláírás
+                  tanúsítvánnyal.</p>
+                <p class="RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și
+                  creați un cont. Apăsați butonul Verificări preliminare, bifați căsuța rezervare denumire firmă și
+                  completați formularul online în vederea rezervării denumirii. Atenție: acest serviciu se poate accesa
+                  doar dacă dețineți certificat de semnătură electronică.</p>
+                <p class="EN">Access the NTRO <a href="https://myportal.onrc.ro/rezervation/wizard"
+                    target="_blank">(ONRC)</a> website and create a account. Click the Preliminary Checks button, check
+                  the Company Name Reservation box, and fill out the online form to reserve the name. Warning: this
+                  service can only be accessed if you have an electronic signature certificate.</p>
+                <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                    class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                    legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                    target="_blank">LEGE 152/2015</a>&nbsp;&nbsp;<a
+                    href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE
+                    208/2020</a>&nbsp;&nbsp;</p>
+              </div><button type="button" class="collapsible collapsible2"><span class="HU">2. Foglalás a Kereskedelmi
+                  Jegyzékhivatal székhelyén/irodájában</span><span class="RO">2. Rezervarea la sediul oficiului/
+                  biroului
+                  Registrului Comerțului</span><span class="EN">2. Reservation at the Trade Register office or
+                  territorial
+                  bureau</span></button>
+              <div class="content">
+                <p class="HU"><a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_target">Ezen
+                    formanyomtatványt</a> kell kitöltenie. A választott megnevezés ellenőrzésre kerül, hogy elérhető-e,
+                  vagy sem. A második eset kissé kényelmetlen, ugyanis ebben az esetben kénytelen lesz egy új
+                  formanyomtatványt kitölteni, a sort feltartani vagy újból sorba állni. Később, a többi
+                  formanyomtatvány
+                  a lefoglalt megnevezéssel való kitöltése után újból vissza kell mennie a hivatalba.</p>
+                <p class="RO">Va trebui să completați <a
+                    href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">acest</a>
+                  formular. Denumirea aleasă va fi validată dacă este liberă sau nu. Al doilea
+                  caz este puțin inconfortabil, deoarece probabil va trebui să completați un nou formular, blocați
+                  rândul
+                  sau stați din nou la rând. Apoi trebuie să vă întoarceți din nou la oficiu după ce ați completat toate
+                  actele cu denumirea rezervată.</p>
+                <p class="EN">You will need to fill out <a
+                    href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">this form</a>. The
+                  chosen name will be validated whether it is free or not. The second case is a little uncomfortable, as
+                  you'll probably need to fill out a new form, block your line, or stand in line again. You must then
+                  return to the office after completing all the documents with the reserved name.</p>
+              </div><button type="button" class="collapsible"><span class="HU">3. A megnevezés elérhetőségének online
+                  ellenőrzése és hivatali lefoglalása</span><span class="RO">3. Verficarea disponibilității on-line și
+                  rezervarea la sediul Registrului Comerțului</span><span class="EN">3. Checking for availability online
+                  and reserving at the Trade Register office</span></button>
+              <div class="content">
+                <p class="HU">Lépjen a <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a>-re
+                  és hozzon létre egy felhasználói fiókot. Kattintson a Verificări preliminare gombra, jelölje be a
+                  verificare disponibilitate denumire firma mezőt és töltse ki az online formanyomtatványt a kívánt név
+                  elérhetőségének ellenőrzése érdekében. Figyelem: ezen szolgáltatás nem igényel elektronikus aláírás
+                  tanúsítványt, de nem is garantálja, hogy a megnevezés elérhető lesz abban a pillanatban is, amikor a
+                  hivatalban lefoglalni kívánja. Ugyanakkor, amennyiben egy vagy két nappal az iratcsomó benyújtása
+                  előtt
+                  ellenőrzi a név elérhetőségét, kevés az esélye hogy azt egy másik személy lefoglalja Ön előtt. Így
+                  kitöltheti az összes formanyomtatványt az ellenőrzött névvel, majd egyszer kell elmennie a hivatalba a
+                  kitöltött iratcsomóval. Először ahhoz az ablakhoz menjen, ahol a megnevezést foglalhatja le, csatolja
+                  a
+                  kapott iratot az összeállított iratokhoz és adja le a teljes iratcsomót.</p>
+                <p class="RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și
+                  creați un cont. Apăsați butonul Verificări preliminare, bifați căsuța verificare disponibilitate
+                  denumire firmă și completați formularul online în vederea obținerii informației dacă este sau nu
+                  disponibilă denumirea aleasă. Atenție: Această metodă nu necesită certificat de semnătură electronică,
+                  dar nici nu garantează faptul că denumirea va fi disponibilă la momentul în care veți dori să o
+                  rezervați la registru. Totuși dacă o verificați cu una sau două zile înainte, este puțin probabil ca
+                  între timp să o rezerve o altă persoană. Astfel, puteți să completați toate celelalte formulare
+                  utilizând denumirea verificată, apoi vă deplasați o singură dată la oficiu cu dosarul complet. De
+                  prima
+                  dată vă adresați ghișeului la care se rezervă denumirea, atașați documentul primit la dosar și puteți
+                  înregistra dosarul complet.</p>
+                <p class="EN">Go to the NTRO <a href="https://myportal.onrc.ro/rezervation/wizard"
+                    target="_blank">(ONRC)</a> website and create an account. Click the Preliminary Checks button, check
+                  the Company Name Availability check box, and fill out the online form for information on whether or
+                  not
+                  the chosen name is available. Warning: this method does not require an electronic signature
+                  certificate,
+                  but it also does not guarantee that the name will be available at the time you wish to reserve it at
+                  the
+                  registry. However, if you check it a day or two in advance, it is unlikely that another person will
+                  reserve it in the meantime. This way, you can fill in all the other forms using the verified name, and
+                  then visit the office with the complete file only one time. At first, go to the counter where the name
+                  is reserved, attach the received document to the file and then you can register the complete file.</p>
+                <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                    class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                    legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                    target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                    href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                    265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399"
+                    target="_blank">LEGE 208/2020</a>&nbsp;&nbsp;</p>
+              </div>
+            </div><button type="button" class="collapsible"><span class="HU">Második lépés: Az iratcsomó
+                összeállításához szükséges iratok</span><span class="RO">Al doilea pas: Actele necesare în vederea
+                întocmirii dosarului</span><span class="EN">Second step: Necessary documents for preparing your
+                file</span></button>
+            <div class="content">
+              <p class="HU">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf"
+                  target="_blank">Bejegyzési kérelem</a></p>
+              <p class="RO">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf"
+                  target="_blank">Cererea de înregistrare</a></p>
+              <p class="EN">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf"
+                  target="_blank">Application for registration</a></p>
+              <p class="HU">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">Adóbejegyzéshez szükséges 1-es függelék</a></p>
+              <p class="RO">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">Anexa 1 privind înregistrarea fiscală</a></p>
+              <p class="EN">2. <a href="https://www.onrc.ro/templates/site/formulare /anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">Annex 1 regarding the fiscal registration</a></p>
+              <p class="HU">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Saját
+                  felelősségvállalásra kitöltött nyilatkozat</a> a működéshez szükséges</a>, az egészségügyi,
+                állategészségügyi, környezetvédelmi és munkavédelmi törvényi előírásoknak való megfelelésről</p>
+              <p class="RO">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Declaraţia-tip pe propria răspundere despre îndeplinirea condiţiilor legale</a> de
+                funcţionare prevăzute de legislaţia specială din domeniul sanitar, sanitar-veterinar, protecţiei
+                mediului
+                şi protecţiei muncii</p>
+              <p class="EN">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Affidavit</a> stating the fulfillment of the legal operating conditions</a> provided
+                by
+                the special legislation in the sanitary, sanitary- veterinary, environmental- and labor protection
+                fields
+              </p>
+              <p class="HU">4. A megnevezés ellenőrzését és lefoglalását tanúsító okmány</p>
+              <p class="RO">4. Dovada verificării disponibilităţii şi rezervării denumirii firmei</p>
+              <p class="EN">4. Proof of verification of availability and reservation of the company name</p>
+              <p class="HU">5. Az engedélyezett természetes személy alapítójának személyi igazolványa (másolat, amelyen
+                szerepel a "Conform cu originalul" megjegyzés és aláírás)</p>
+              <p class="RO">5. Actul de identitate al titularului PFA (în copie pe care se va menționa ”Conform cu
+                originalul” + semnătura)</p>
+              <p class="EN">5. Identity card of the registering sole trader (simple copy that will mention 'In
+                accordance
+                with the original' + signature)</p>
+              <p class="HU">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx"
+                  target="_blank">Saját felelősségvállalásra kitöltött nyilatkozat</a> arról, hogy megfelel a
+                tevékenységek engedélyezett természetes személyként történő folytatásának tövényi feltételeinek</p>
+              <p class="RO">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx"
+                  target="_blank">Declarație pe propia răspundere</a> privind îndeplinirea condițiilor legale pentru
+                desfășurarea activităților ca persoană fizică autorizată</p>
+              <p class="EN">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx"
+                  target="_blank">Affidavit </a> regarding the fulfillment of the legal conditions for carrying out the
+                activities as a sole trader</p>
+              <p class="HU">7. Okmány, amely bizonyítja a székhely feletti használati jogot (a legtöbb esetben
+                telekkönyvi
+                kivonat - amely online is kérhető -, valamint egy haszonkölcsön vagy bérleti szerződés)</p>
+              <p class="RO">7. Dovada care atestă dreptul de folosință asupra sediului profesional (în majoritatea
+                cazurilor extras CF- se poate solicita și online + contract de comodat, contract de locațiune)</p>
+              <p class="EN">7. Proof that certifies the right of use on the professional headquarters (in most cases the
+                land book (CF) extract, which can be requested online and a bailment or lease agreement)</p>
+              <p class="HU">8. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc"
+                  target="_blank">Nyilatkozat amennyiben a házastárs részt vesz az engedélyezett természetes személy
+                  tevékenységében</a></p>
+              <p class="RO">8. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc"
+                  target="_blank">Declarație în cazul în care soțul/soție participă la activitatea PFA</a></p>
+              <p class="EN">8. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc"
+                  target="_blank">Declaration if the spouse participates in the activity of the sole tradership</a></p>
+              <p class="HU">9. Amennyiben a tevékenység a székhelyen kerül folytatásra, a <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">lakóközösség
+                  véleményezése</a> és beleegyezése a kollektív lakóingatlanok felhasználási céljának megváltoztatásáról
+              </p>
+              <p class="RO">9. Dacă activitatea va fi desfășurată la sediu, <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">avizul asociaţiei de
+                  proprietari</a> și acordul vecinilor</a> privind schimbarea destinaţiei imobilelor colective cu regim
+                de
+                locuinţă</p>
+              <p class="EN">9. If the activity will be carried out at the headquarters, the <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">opinion of the
+                  owners'
+                  association</a> and the agreement of the neighbors</a> on the change of destination of the collective
+                buildings with residential regime</p>
+              <p class="HU">10. Iratok, amelyek tanúsítják a szakmai felkészültséget, amennyiben ezek szükségesek
+                (másolat, amelyen szerepel a "Conform cu originalul" megjegyzés és aláírás)</p>
+              <p class="RO">10. Documentele care atestă pregătirea profesională, dacă aceasta este cerută (în copie pe
+                care se va menționa ”Conform cu originalul” + semnătura).</p>
+              <p class="EN">10. Documents attesting the professional training, if required (simple copy with that will
+                mention “According to the original” + signature)</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                  265/2022</a>&nbsp;&nbsp;</p>
+            </div><button type="button" class="collapsible collapsible2"><span class="HU">Harmadik lépés: Az iratcsomó
+                leadása</span><span class="RO">Al treilea pas: Înregistrarea dosarului</span><span class="EN">Third
+                step:
+                Registering the file</span></button>
+            <div class="content">
+              <p class="HU">Miután az összes, a második lépésben szereplő iratot összegyűjtötte, fogja össze őket egy
+                sínes aktába és menjen el a Kereskedelmi Jegyzékhivatal legközelebbi székhelyére/irodájába (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">itt</a> ellenőrizheti az Önhöz
+                legközelebbi helyszínt és a nyitvatartási időket). Az Ön iratcsomója előzetes ellenőrzésnek lesz
+                alávetve,
+                amely után leadásra kerül. Az előzetes ellenőrzés során a hivatal egy alkalmazottja átnézi az iratokat,
+                és
+                felhívja az Ön figyelmét, amennyiben valami hiányzik vagy hibásan került kitöltésre. Amennyiben kérdései
+                vannak, vagy nem teljesen biztos abban, hogy helyesen töltötte-e ki a formanyomtatványokat, forduljon
+                bizalommal ezen alkalmazottakhoz, biztosan segíteni fognak Önnek.</p>
+              <p class="RO">După ce ați adunat toate documentele de la doilea pas, va trebui să le prindeți într-un
+                dosar
+                cu șină și să vă desplasați la cel mai apropiat oficiu/ birou al registrului comerțului (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">aici</a> puteți verifica cea mai
+                apropiată locație și programul de lucru). Dosarul Dvs. va fi supus unei verificări prealabile, după care
+                va fi înregistrat. Verificarea prealabilă constă din parcurgere dosarului de către un angajat al
+                registrului care vă va atrage atenția dacă lipsește ceva sau ceva este completat în mod greșit. Dacă
+                aveți
+                nelămuriri sau nu sunteți siguri dacă ați completat corect sau nu un formular, nu ezitați să întrebați
+                aceste persoane, cu siguranță vă vor ajuta.</p>
+              <p class="EN">Once you have gathered all necessary documents outlined above (from the second step), you
+                will
+                need to bind them in a folder and go to the nearest Trade Register Office (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">here</a> you can check the nearest
+                location and working hours). Your file will be subject to a prior verification, after which it will be
+                registered. Preliminary verification consists of a file being reviewed by a registry employee who will
+                draw your attention if something is missing or filled in incorrectly. If you are unsure about having
+                completed a form correctly, feel free to ask these employees, they will definitely help you.</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                  265/2022</a>&nbsp;&nbsp;</p>
+            </div><button type="button" class="collapsible"><span class="HU">Negyedik lépés: a bejegyzési
+                bizonyítvány átvétele</span><span class="RO">Al patrulea pas: Ridicarea certificatului de
+                înregistrare</span><span class="EN">Fourth step: Recieving the registration certificate</span></button>
+            <div class="content">
+              <p class="HU">Az iratcsomó leadásakor megtudja, hogy mennyi idő múlva veheti át a bejegyzési
+                bizonyítványt.
+                Általában ez az időtartam 3-4 nap. Amennyiben az iratcsomó teljes és helyesen volt kitöltve,
+                gratulálunk,
+                elkezdheti kitűzött tevékenységét. Amennyiben fény derült bármilyen szabálytalanságra, 15 nap fog
+                rendelkezésére állni az iratcsomó kiegészítése érdekében. Az iratcsomó állapotát <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a> is követheti. Hozzon létre
+                felhasználói fiókot, és menjen a "Stadiu dosar" részre. Az iratcsomó leadási után itt tudja követni,
+                hogy
+                a kérelmét elfogadták, vagy az még kiegészítésre szorul, vagy a kiegészítések elvégzése után
+                elfogadták-e.
+              </p>
+              <p class="RO">La înregistrarea dosarului veți afla în cât timp puteți să ridicați certificatul de
+                înregistrare. În mod obișnuit acest termen este de 3-4 zile. Dacă dosarul a fost complet și corect,
+                felicitări, puteți începe activitatea. În cazul în care a fost constatată o neregulă, veți avea la
+                dispoziție 15 zile să completați dosarul. Stadiul dosarului se poate urmări și online prin accesarea <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank">link</a>-ului, creați un cont și
+                megreți
+                la secțiunea stadiu dosar. Aici veți putea urmări după înregistrare dacă cererea a fost admisă sau
+                necesită completări, mai apoi dacă a fost admis după depunerea completărilor.</p>
+              <p class="EN">Upon registering the file, you will find out when you can pick up the registration
+                certificate. Usually this happens after a three to four days period. If the file was complete and
+                correct,
+                congratulations, you can start the activity. If an irregularity is found, you will have 15 days to
+                complete the file. The status of the file can be tracked <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a> by creating an account and
+                checking the file status section on the website.
+                Here you will be able to track if the application has been accepted or needs to be completed, or if it
+                has
+                been admitted after submitting the completions.</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE
+                  202/2010</a>&nbsp;&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="SRL" class="pfa">
+      <button type="button" class="collapsible future_active">
+        <i class="fa fa-building" style="margin-right: 10px;"></i>
+        <div>
+          <span class="HU">Korlátolt felelősségű társaság (KFT)</span>
+          <span class="RO">Societate cu răspundere limitată (SRL)</span>
+          <span class="EN">Limited Liability Company (LLC)</span>
+        </div>
+      </button>
+      <div class="content">
+        <p class="HU">KFT: egy társaság/jogi személy, amely saját vagyonnal rendelkezik és független a
+          tag(ok)/ügyvezető(k) vagyonától, így korlátolt felelősséggel rendelkezik, a saját vagyonával felel bárnilyen
+          tartozásért. A polgári és kereskedelmi forgalomban levő KFT-k egyedülálló entitások, megnevezéssel,
+          székhellyel,
+          saját azonosító jelekkel, ám a legtöbb esetben egy természetes személy képviseli őket. Fontos különbséget
+          tennünk a "Jancsi KFT", 8790 RON tőkével, Kolozsvár XYZ utca 6-os szám, 890643-as egyéni azonosítóval és
+          45/746/2012-es kereskedelmi jegyzékszámmal rendelkező entitás és Szabó János ügyintéző/képviselő/egyedüli tag
+          a
+          "Jancsi KFT"-ben, 1561224120765 személyi számú, Kolozsvár ABC utca 76-os szám lakhelyű természetes személy
+          között. Gyakran hajlamosak vagyunk összemosni a két entitást, különösen ha egy természetes személy egyedüli
+          tagja és egyben ügyvezetője is egy KFT-nek. Egy szerződés aláírása vagy egy nyomtatvány kitöltése során
+          ügyelnünk kell a jogosult személyére, még akkor is, ha a valóságban azt Szabó János fogja aláírni/kitölteni.
+          Egyáltalán nem mindegy, hogy a természetes személy vagy a jogi személy, a KFT felel a vállalt
+          kötelezettségekért. Lássunk néhány példát arra, miként jöhet létre és működhet egy korlátolt felelősségű
+          társaság.</p>
+        <p class="RO">SRL: este o societate/ persoană juridică având patrimoniu propriu și devenind independent de
+          patrimoniul asociaților sau administratorilor, astfel răspunzând doar limitat, cu patrimoniul său propriu
+          pentru
+          orice datorie. SRL-ul în circuitul civil și comercial este o entitate de sine stătătoare, cu nume, sediu, date
+          de identificare proprii, dar desigur este reprezentat de cele mai multe ori de către o persoană fizică. Este
+          foarte important să ținem cont de diferența dintre ”Ionel SRL”, având capital social de 8790 lei, sediul în
+          Cluj- Napoca, str. XYZ, nr. 6, CUI 890643 și nr. de înregistrare în Registrul Comerțului 45/746/2012 și
+          Popescu
+          Ioan, persoană fizică, administrator/ reprezentant/ asociat unic în ”Ionel SRL”, CNP 1561224120765, cu
+          domiciliul în Cluj- Napoca, str. ABC, nr. 76. Adesea suntem tentați să confundăm cele două entități, mai ales
+          dacă o persoană fizică este singurul asociat și are calitatea de administrator într-un SRL. Trebuie să avem
+          grijă în cazul semnării unor contracte sau completării unor formulare să decidem cine este titularul acelui
+          act,
+          chiar dacă în realitate tot Ionel Popescu va semna. Nu este deloc indiferent dacă persoana fizică sau persona
+          juridică, SRL-ul răspunde pentru obligațiile asumate. Să vedem câteva modalități în care poate lua ființă și
+          poate funcționa o societate cu răspundere limitată.</p>
+        <p class="EN">An LLC is a company or legal entity, which has its own patrimony, and being independent from the
+          patrimonies of its members/administrators, bears a limited liability only to the extent of its own patrimony,
+          for any debts incurred. An LLC in the civil and commercial circuit is an independent entity, with its own
+          name,
+          headquarters, identificiation, which in the majority of cases is represented by a natural person. It is really
+          important to understand the differece between Ionel LLC, with a capital of 8790 RON, headquartered in Cluj
+          Napoca, XYZ Street nr. 6, UIC 890643, Trade Registry nr. 45/746/2012 and Popescu Ioan, natural person,
+          administrator/representative/sole member of Ionel LLC, CNP 1561224120765, with his domicile in Cluj Napoca,
+          ABC
+          Street nr. 76. Sometimes we are bound to confound the two entitites, especially in the case of a natural
+          person
+          being both the sole member of the LLC and its administrator. When singing a contract or completing a form, we
+          must be vigilat as to who is the author of the act in question, even if in reality Ionel Popescu will sign it.
+          It is not at all indifferent that the natural person or the legal entity, the LLC will be liable for the
+          assumed
+          obligations. Let us see a couple of methods in which a company can come into being and function as a limited
+          liability company.</p>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-user" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Egyetlen taggal rendelkező KFT</span>
+            <span class="RO">SRL cu un singur asociat</span>
+            <span class="EN">LLC with a sole member</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">A korlátolt felelősségű társaság jelen pillanatban az egyetlen romániai jogi személy, amely
+            egyetlen személy által alapítható és nem feltételez társulást. Amennyiben szeretnénk több személyt
+            alkalmazni
+            és/vagy egyszerre több tevékenységet folytatni, még abban az esetben is, ha nincs társunk, a legjobb
+            választás
+            egy korlátolt felelősségű társaság alapítása. Figyelem! 2020 előtt egyetlen személy csak egyetlen korlátolt
+            felelősségű társaságban lehetett egyedüli tag, ám ez a megkötés a jelenleg hatályos tövények értelmében
+            többé
+            nem létezik, így egy személy több KFT-t is alapíthat egyedüli tagként. Előállhat az a kissé furcsa helyzet,
+            amikor a természetes személy, egyedüli tag és ügyvezető szerződést köt a jogi személlyel. Lássuk a
+            leggyakoribb példát. A következő részben látni fogja, hogy egy KFT alapításához szükséges egy székhely
+            létezése. Szabó János rendelkezik egy ingatlannal, és szeretné, hogy a a Jancsi KFT székhelye ott legyen.
+            Ennek érdekében Szabó János kényelen egy, az ingatlan használata feletti használati jogot biztosító
+            szerződést
+            kötnie a Jancsi KFT-vel, amelynek az ügyintézője Szabó János. Vagyis Szabó János a szerződést aláírja
+            tulajdonosi minőségében és bérlői minőségben egyaránt. Amennyiben Jancsi az egyetlen tag, a bejegyzés során
+            egy más fajta alapító okiratot kell leadnia, a tevékenységek kifejtése során pedig a "tagok közgyűlésének
+            határozatai (AGA)" helyett Jancsi "egyéni tagi döntéseket" hoz.</p>
+          <p class="RO">Societatea cu răspundere limitată este momentan singura persoană juridică în românia care poate
+            fi
+            fondată de o persoană și nu presupune o asociere. În cazul în care dorim să angajăm mai multe persoane
+            și/sau
+            să ne ocupăm de mai multe activități în paralel, chiar dacă nu avem alți asociați, cea mai bună alegere este
+            înființarea unei societăți cu răspundere limitată. Atenție! Înainte de anul 2020 o persoană putea avea
+            calitatea de acociat unic doar într-o singură societate cu răspundere limitată, însă această limitare nu mai
+            există conform legislației în vigoare, astfel o persoană poate înființa mai multe SRL-uri, fiind asociat
+            unic.
+            Poate interveni o situație puțin ciudată, în cazul în care persoana fizică, asociat unic și administrator
+            încheie un contract cu persoana juridică. Să vedem cel mai frecvent întâlnit exemplu. În următoarea secțiune
+            veți vedea că în vederea înființării SRL-ului este necesară existența unui sediu. Ionel Popescu deține o
+            locuință și dorește ca sediul SRL-ului său ”Ionel SRL” să fie acolo. În acest sens Ionel Popescu va trebui
+            să
+            încheie un contract de comodat sau închiriere cu Ionel SRL, avându-l pe Ionel Popescu administrator. Astfel
+            Ionel Popescu va semna contractul în calitate de proprietar (locator/comodant) și în calitate de
+            (locatar/comodatar). Dacă Ionel este singurul asociat, va trebui să completeze la înregistrare un act
+            constitutiv aparte, iar pe parcursul desfățurării activităților în loc de ”hotărâri ale adunării generale
+            ale
+            asociaților (AGA)”, Ionel va lua ”decizii ale asociatului unic”.</p>
+          <p class="EN">Limited liability companies are momentarily the only legal entities which can be founded in
+            Romania without the need for association. If we wish to hire more employees and/or carry out more activites
+            in
+            parallel, even is we have no associates, the best choice is founding a limited liability company. Attention!
+            Before 2020, a person could be a sole member in only one limited liability company, but this limitation no
+            longer exists in the current legislation; as such, a person can be the founder of multiple LLC as a sole
+            member. The somewhat strange situation could arise where a natural person, sole member and administrator
+            sings
+            a contract with the legal entity. Take the most common expample: in the next section you will see that in
+            order to found an LLC, it is necessary to have a headquarters. Ionel Popescu has real eastate and he wishes
+            that the headquarters of his Ionel LLC be located there. In order to achieve this, Ionel Popescu will have
+            to
+            sign a bailment or lease with Ionel LLC, which has Ionel Popescu as its administrator. As such, Ionel
+            Popescu
+            will sign the contract as both landlord and tenant. If Ionel is the sole member, he will have to submit a
+            different set of articles of incorporation, and, in carrying out the activities he will make 'decisions of
+            the
+            sole member' instead of 'decisions of the general assembly'.</p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-users" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">KFT több taggal</span>
+            <span class="RO">SRL cu mai mulți asociați</span>
+            <span class="EN">LLC with multiple members</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Ez egy korlátolt felelősségű társaságként működő jogi személy klasszikus változata. A KFT
+            legtöbb
+            50 taggal rendelkezhet, a vagyona társasági részekre van osztva, amelyeket a társaság tagjai egyenlő vagy
+            különböző mértékben birtokolnak. A legtöbb esetben az ügyvezetőt/ügyvezetőket a tagok közül nevezik ki, de
+            lehetnek a társaságon kívűl álló személyek is. A KFT működésére vonatkozó szabályok, a tagok jogai és
+            kötelezettségei az alapító okiratban találhatóak. A tagok gyűlésén hozott döntéseket "közgyűlési határozatok
+            (AGA)" hívják, és ezek kormányozzák a társaság működését.</p>
+          <p class="RO">Aceasta este varianta clasică a unei persoane juridice care funcționează în forma societății cu
+            răspundere limitată. SRL-ul poate avea un număr maxim de 50 de asociați iar patrimoniul este împărțit pe
+            părți
+            sociale, acestea fiind deținute de către asociați în diferită sau egală măsură. De cele mai multe ori
+            administratorul sau administratorii sunt numiți dintre asociați, însă pot fi persoane și dinafara
+            societății.
+            Toate regulile cu privire la funcționarea SRL-ului, drepturile și obligațiile asociaților se vor regăsi în
+            actul constitutiv. Hotărârile luate de adunarea aociaților se numesc ”hotărâri ale adunării generale ale
+            asociaților (AGA)” și acestea vor guverna funcționarea societății.</p>
+          <p class="EN">This is the classic type of legal entity functioning as a limited liability company. LLCs can
+            have
+            up to 50 members, the patrimony is divided into shares which are held by the members in equal or non-equal
+            parts. In most cases, the administrator(s) is/are named from the members, but they can be persons outside
+            the
+            company. All the rules by which the LLC functions, the rights and obligations of the members are found in
+            the
+            articles of incorporation. Decisions made are called 'decisions of the general assembly (AGA)' and these
+            govern the functioning of the company.</p>
+        </div>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-sitemap" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Jogi személy tag egy KFT-ben</span>
+            <span class="RO">Persoană juridică asociat într-un SRL</span>
+            <span class="EN">Legal entity, member of an LLC</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Egy KFT lehet tag egy másik KFT-ben? A válasz: igen. Gyakran a külföldi társaságok egy olyan KFT
+            létrehozásán keresztül szeretnének Romániában tevékenységet kifejteni, amelynek ők a tagjai. Ez egy furcsa
+            konstrukciónak tűnhet, ám ez a módszer egyáltalán nem ritka, és a fenti példa mellett hasznos lehet például
+            cégcsoportok esetében is. Egy korlátolt felelősségű társaság lehet egy másik társaság ügyvezetője is. Ezen
+            mechanizmusok komplikáltabbak, és jogi, illetve gazdasági tapasztalatra van szükség hozzájuk, ugyanakkor jó
+            ha
+            ismerjük ezt a formát abban az esetben, ha egy ilyen korlátolt felelősségű társasággal vagyunk kénytelenek
+            egy
+            szerződést aláírni.</p>
+          <p class="RO">Un SRL poate fi asociat într-un alt SRL? Răspunsul este da. Adesea societățile străine doresc
+            să-și desfășoare activitatea prin înființarea unui SRL în România în care ei sunt asociați. Poate părea o
+            construcție ciudată, însă acesată modalitate nu este deloc rară și își are utilitatea pe lângă exemplul de
+            mai
+            sus și în cazul grupărilor de societăți. O societate cu răspundere limitată poate fi și administratorul unei
+            alte societăți. Desigur aceste mecanisme sunt puțin mai complicate și adesea necesită expertiză juridică și
+            economică, însă e o variantă pe care e bine să o cunoaștem în cazul în care avem de semnat de exemplu un
+            contract cu o astfel de societate cu răspundere limitată.</p>
+          <p class="EN">Can an LLC be a member of another LLC? The answer is yes. Often foreign companies wish to carry
+            out activites in Romania by founding an LLC in which they are a member. It may seem like a strange
+            construction, but it is quite widespread and has its uses, outside the above, in the case of company groups.
+            A
+            limited liability company can be the administrator of another company. Of course, these mechanisms require
+            legal and economic expertise, but it is a method you should know about in case you have to sing a contract
+            with such an LLC.</p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-check-circle" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Előnyök</span>
+            <span class="RO">Avantaje</span>
+            <span class="EN">Advantages</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">
+          <ul class="HU">
+            <li>Korlátlan számú tevékenység</li>
+            <li>Egy vagy több tagja lehet, legtöbb 50</li>
+            <li>Korlátlan számú alkalmazottal rendelkezhet</li>
+            <li>Korlátolt felelősségvállalás, a jogi személy, vagyis a KFT vagyonának keretein belül</li>
+          </ul>
+          </p>
+          <p class="RO">
+          <ul class="RO">
+            <li>Număr de activități nelimitate</li>
+            <li>Poate avea un asociat sau mai mulți, până la 50</li>
+            <li>Poate avea un număr nelimitat de salariați</li>
+            <li>Răspundere limitată, doar în măsura patrimoniului persoanei juridice, adică al SRL-ului</li>
+          </ul>
+          </p>
+          <p class="EN">
+          <ul class="EN">
+            <li>Unlimited number of activities</li>
+            <li>May have one or more associates, up to 50</li>
+            <li>Can have an unlimited number of employees</li>
+            <li>Limited liability, only to the extent of the patrimony of the legal entity, of the LLC</li>
+          </ul>
+          </p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+              265/2022</a>&nbsp;&nbsp;</p>
+        </div>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-exclamation-circle" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Hátrányok</span>
+            <span class="RO">Limite</span>
+            <span class="EN">Limits</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">
+          <ul class="HU">
+            <li>Több formalitás és magasabb költségek a bejegyzés során</li>
+            <li>Szükséges egy könyvelő szolgáltatásainak igénybevétele - pénzbe kerül</li>
+            <li>A bevételek nem használhatóak direkt módon a tagok vagy az ügyvezető által</li>
+          </ul>
+          </p>
+          <p class="RO">
+          <ul class="RO">
+            <li>Mai mult formalități și costuri mai ridicate la înregistrare</li>
+            <li>Necesită serviciile unui contabil- contra cost</li>
+            <li>Veniturile nu pot fi utilizate în mod direct de către asociați/ administrator</li>
+          </ul>
+          </p>
+          <p class="EN">
+          <ul class="EN">
+            <li>More formalities and higher registration costs</li>
+            <li>Requires the services of an accountant - for a fee</li>
+            <li>Revenues cannot be used directly by associates or the administrator</li>
+          </ul>
+          </p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507" target="_blank">LEGE
+              1/2017</a>&nbsp;&nbsp;</p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-clock-o" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Mennyi időbe telik az alapítás?</span>
+            <span class="RO">Cât durează înființarea?</span>
+            <span class="EN">How long does it take to set up?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Az iratcsomó a Kereskedelmi Jegyzékhivatalnál való bejegyzését követően a KFT 3-4 napon belül
+            bejegyzésre kerül és megkezdheti aktivitását. Mindazonáltal azt ajánljuk, kezdjen bele hamarabb, és ne
+            hagyja
+            az alapítást az utolsó pillanatra, ugyanis az iratok összegyűjtése, a tevékenységgel kapcsolatos döntések
+            meghozatala, a formanyomtatványok kitöltése, esetenként az illetékes hivatal meglátogatása kötelezően
+            megteendő lépések. Egy másik akadály, amely késlekedéshez vezethet, a leadott iratcsomó kiegészítésének vagy
+            kijavításának felmerülhető szükségessége (amennyiben teljességgel biztosak vagyunk benne, hogy az akta
+            helyesen került összeállításra, ez utóbbitól nem kell tartani).</p>
+          <p class="RO">După înregistrarea dosarului la Registrul Comerțului, în 3-4 zile SRL-ul este înregistrat și
+            poți
+            începe activitatea. Cu toate acestea, îți recomandăm să demarezi procedura puțin mai repede și nu lăsa
+            înființarea pe ultima clipă, deoarece adunarea actelor, luarea unor decizii cu privire la activitate,
+            completarea formularelor, eventual deplasarea la oficiul competent sunt etape ce trebuie parcurse. Un alt
+            impediment, care ar putea duce la întârzieri, poate fi necesitatea de a completa sau corecta dosarul după ce
+            acesta a fost preluat la ghișeu (dacă suntem foarte siguri că dosarul a fost întocmit corect, nu se aplică).
+          </p>
+          <p class="EN">Three to four days after the required documents have been submitted at the Trade Register
+            Office,
+            the LLC is registered and you can start the activity. We recommend that you start the registration procedure
+            in a timely manner, because gathering documents, making decisions about the activity, filling out forms and
+            possibly visiting the competent office are steps that must be completed. Another impediment which could lead
+            to delays may be the need to complete or correct the required documentation after it has been submitted
+            (this
+            does not apply if you are absolutely sure that the filing has been prepared correctly).</p>
+          <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+              class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant legislation:</span>&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+              265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+              target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+              href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE
+              202/2010</a>&nbsp;&nbsp;</p>
+        </div>
+        <button type="button" class="collapsible collapsible2">
+          <i class="fa fa-map-marker" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Hol kell a KFT-t bejegyeztetni?</span>
+            <span class="RO">Unde trebuie înregistrat SRL-ul?</span>
+            <span class="EN">Where should the LLC be registered?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">A KFT székhelye szerint illetékes megyei Kereskedelmi Jegyzékhivatalnál. Egyes megyék nagyobb
+            városaiban ennek vannak területi irodái is. <a href="https://www.onrc.ro/index.php/ro/retea-onrc"
+              target="_blank">Ellenőrizze</a>, hogy melyik a legközelebbi hivatal/iorda, annak pontos címe és
+            nyitvatartási rendje.</p>
+          <p class="RO">La Oficiul Registrului Comerțului din județul unde SRL-ul își va avea sediul. În unele județe
+            există birouri teritoriale în orașele mai mari. <a href="https://www.onrc.ro/index.php/ro/retea-onrc"
+              target="_blank">Verificați</a> care este cel mai apropiat oficiu/ birou, adresa exactă și programul de
+            lucru.</p>
+          <p class="EN">At the Trade Register Office in the county where the LLC will have its headquarters. In some
+            counties there are territorial offices in larger cities. <a
+              href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Check</a> the exact address and working
+            hours of the nearest office / location</p>
+        </div>
+        <button type="button" class="collapsible">
+          <i class="fa fa-question-circle" style="margin-right: 10px;"></i>
+          <div>
+            <span class="HU">Hogyan jegyezheti be a KFT-t ?</span>
+            <span class="RO">Cum înregistrez SRL-ul?</span>
+            <span class="EN">How do I register an LLC?</span>
+          </div>
+        </button>
+        <div class="content">
+          <p class="HU">Alapvetően 3 módszer közül választhat:</p>
+          <p class="RO">În principal există trei modalități dintre care puteți alege:</p>
+          <p class="EN">There are three main ways you can choose between:</p><button type="button"
+            class="collapsible collapsible2"><span class="HU">1. Léteznek erre szakosodott cégek vagy ügyvédek, akik
+              KFT-k
+              bejegyzésével foglalkoznak</span><span class="RO">1. Există firme specializate sau avocați care se ocupă
+              de
+              înregistrarea SRL-urilor</span><span class="EN">1. There are specialized companies or lawyers which deal
+              with the registration of LLCs</span></button>
+          <div class="content">
+            <p class="HU">Az eljárás egyszerűbb, ám ezért a szolgáltatásért fizetnie kell. Ne felejtse, a KFT
+              bejegyzéséhez nem szükséges szaktudás, és amenniben mégis ezt a módszert választja, akkor is Önnek kell a
+              bejegyzéshez szükséges iratokat összegyűjteni, vagy a szükséges információkat megadni. Ezen szolgáltatás
+              gyakran a formanyomtatványok kitöltésébéől, az iratcsomó összeállításából és beadásából áll, amelyhez még
+              hozzá adódhat a konzultáció, szaktanácsadás nyújtása.</p>
+            <p class="RO">Procedura este mai simplă, însă va trebui să plătiți acest serviciu. Nu uitați totuși că
+              înregistrarea unui SRL nu necesită cunoștințe de specialitate și chiar dacă optați pentru această
+              variantă,
+              va trebui să adunați actele necesare și să oferiți informațiile necesare înregistrării. Acest serviciu
+              adesea constă din completarea formularelor, întocmirea dosarului, înregistrarea dosarului la care se mai
+              poate adăuga și serviciul de consultanță/ consiliere.</p>
+            <p class="EN">The procedure is simpler, but you will have to pay for this service. Keep in mind, however,
+              that
+              registering an LLC does not require specialised knowledge, and even if you choose this option, you will
+              need
+              to gather the necessary documents and provide the necessary information for registration. This service
+              often
+              consists of filling in forms, preparing the documentation and registering the file, to which a consultancy
+              or counseling fee can be added.</p>
+          </div><button type="button" class="collapsible"><span class="HU">2. Online bejegyzés a Kereskedelmi
+              Jegyzékhivatal honlapján</span><span class="RO">2. Înregistrarea on-line prin portalul Registrului
+              Comerțului</span><span class="EN">2. Online registration through the Trade Register portal</span></button>
+          <div class="content">
+            <p class="HU">Habár a legkönnyebb és legelérhetőbb módszernek tűnhet, lengyen tekintettel arra, hogy ehhez a
+              módszerhez PKI elektronikus aláírásra van szüksége, minősített digitális tanúsítvánnyal. Ne vesztegesse az
+              idejét a formanyomtatványok kitöltésével, ugyanis a végén nem lesz képes ezeket aláírni. Amennyiben
+              rendelkezik elektronikus aláírási tanúsítvánnyal, lépjen be az <a
+                href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> oldalra, hozzon létre egy
+              ingyenes felhasználói fiókot, majd kattintson az Înregistrare în RC si autorizare PJ gombra. Itt taláni
+              fog
+              egy útmutatót (Útmutató jogi személy bejegyzési kérelmének kitöltéséhez), amelyben részletekbe menően,
+              közérthetően leírják a formanyomtatványok kitöltési menetét.</p>
+            <p class="RO">Deși pare cea mai simplă și accesibilă metodă, atenție: necesită semnătură electronică PKI cu
+              certificat digital calificat, recunoscut de ONRC! Dacă nu dețineți un asemenea certificat, nu vă pierdeți
+              timpul cu formularele, ca după completarea acestora să nu le puteți semna. Dacă dețineți un asemenea
+              certificat de semnătură electronică, accesați pagina <a href="https://myportal.onrc.ro/rezervation/wizard"
+                target="_blank">ONRC</a> creați un cont gratuit, mai apoi accesați butonul Înregistrare în RC și
+              autorizare PJ. Aici veți găsi un ghid (Ghid de completare Cerere de înregistrare PJ ) în care este
+              explicat
+              în detaliu și ușor de înțeles modalitatea de completare a formularelor.</p>
+            <p class="EN">Although it seems the simplest and most affordable method, beware: it requires a PKI
+              electronic
+              signature with a qualified digital certificate, recognized by the NTRO (ONRC)! If you do not have such a
+              certificate, do not waste your time filling out the forms, because you cannot sign them after completing
+              them. If you have such an electronic signature certificate, go to the <a
+                href="https://myportal.onrc.ro/rezervation/wizard" target="_blank"> NTRO (ONRC)</a> website create a
+              free
+              account, then go to the RC Registration and PJ Authorization button. Here you will find a guide (PJ
+              Registration Application Completion Guide ) which explaines in a detailed, easy to understand way how to
+              fill in the forms.</p>
+            <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                target="_blank">LEGE
+                152/2015</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399"
+                target="_blank">LEGE 208/2020</a>&nbsp;&nbsp;</p>
+          </div><button type="button" class="collapsible collapsible2"><span class="HU">3. KFT fizikailag történő
+              bejegyzése az alapító által</span><span class="RO">3. Înregistrarea SRL-ului în format fizic de către
+              administrator</span><span class="EN">3. Registration of the LLC in physical format by the
+              administrator</span></button>
+          <div class="content">
+            <p class="HU">Ez a módszer a legelterjedtebb, nem hordoz magasabb költségeket és nem szükséges szaktudás
+              hozzá, hiszen néhány formanyomtatvány kitöltésével, az iratcsomó összeállításával és a legközelebbi
+              kereskedelmi jegyzéki hivatalba/irodába való látogatással jár.</p>
+            <p class="RO">Această metodă este cea mai răspândită, nu implică costuri suplimentare și nu necesită
+              conoștințe de specialitate, fiind vorba doar de completarea câtorva formulare sau acte, astfel întocmirea
+              dosarului și deplasarea la oficiul sau biroul Registrului Comerțului cel mai apropiat.</p>
+            <p class="EN">This method is the most common, it does not involve additional costs and does not require
+              specialized knowledge, it only consists of the completion of a few forms, thus preparing the file and
+              visiting the office or location of the nearest Trade Register Office.</p>
+            <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                target="_blank">LEGE
+                265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;</p><button type="button" class="collapsible"><span
+                class="HU">Első lépés: Megnevezés</span><span class="RO">Primul pas: Denumirea</span><span
+                class="EN">First step: Name</span></button>
+            <div class="content">
+              <p class="HU">A cég nevét latin betűkkel kell írni, első sorban román nyelven, és nem kelthet
+                zavarodottságot más, a Kereskedelmi Jegyzékbe korábban bejegyzett cégekkel vagy megnevezésekkel. A
+                megnevezés nyomtatott nagy betűkkel és ékezetekkel kerül bejegyzésre a Kereskedelmi Jegyzékbe, valamint
+                a
+                bejegyzésről szóló tanúsítványba. Figyelem! A következő esetek nem számítanak egy másik cégtől való
+                megkülönböztető elemeknek: szavak tagolása; egy bejegyzett vagy lefoglalt cég megnevezésében szereplő
+                szavak sorrendjének megváltoztatása; egy bejegyzett vagy lefoglalt cég megnevezésében szereplő betűk
+                vagy
+                számok megduplázása; határozószavak, névelők, kötőszavak, számok, írásjelek vagy egyéb homályos
+                jelentéssel bíró hasonló sajátosságok, valamint a név jelentését nem megváltoztató rövidítések
+                hozzáadása
+                vagy elvétele; jelentéstanilag eltérő, de fonetikusan hasonló szavak használata; olyan rövidítések
+                használata, amely szerepel egy bejegyzett vagy lefoglalt cég megnevezésében; betűknek és szavaknak
+                megfelelő írásjelek használata, mint például @, #, n, % stb; ékezetek használata/nem használata; a
+                bejegyzett vagy lefoglalt megnevezés egy részének hozzáadása, elvétele vagy cseréje, amennyiben a
+                hozzáadás, elvétel vagy csere nem változtatja meg a megnevezés értelmét, vagy a "grup", "holding",
+                "company", "trust", "com", "trans" vagy hasonló szavak használata; a "Romania" szó hozzáadása, a
+                használt
+                nyelvtől függetlenül. A megnevezés ellenőrzésére vagy lefoglalására három módszer áll rendelkezésre:</p>
+              <p class="RO">Firma trebuie să fie scrisă cu caractere latine, în primul rând în limba română, şi să nu
+                producă confuzie cu alte firme sau denumiri înregistrate anterior în registrul comerţului. Firma se
+                înscrie în registrul comerţului, în certificatul de înregistrare şi în celelalte documente eliberate de
+                registrul comerţului cu litere majuscule şi cu diacritice. Atenție! Următoarele cazuri nu sunt elemente
+                distinctive de o altă firmă: articularea cuvintelor; inversarea ordinii cuvintelor care au intrat în
+                componenţa unei firme înregistrate sau rezervate; dublarea uneia sau mai multora dintre literele ori
+                cifrele care au intrat în componenţa unei firme înregistrate sau rezervate; adăugarea sau eliminarea
+                adverbelor, prepoziţiilor, conjuncţiilor, numerelor, semnelor de punctuaţie şi a altor particularităţi
+                similare, având o semnificaţie vagă, precum şi a abrevierilor care nu sunt de natură să schimbe
+                înţelesul
+                denumirii; utilizarea unor cuvinte diferite din punct de vedere semantic, dar identice fonetic;
+                folosirea
+                unor prescurtări ale cuvintelor care intră în componenţa unei firme înregistrate sau rezervate;
+                utilizarea
+                simbolurilor echivalente literelor şi cuvintelor, de exemplu, @, #, n, % etc.; utilizarea/neutilizarea
+                diacriticelor; adăugarea, eliminarea sau înlocuirea unei părţi din denumirea înregistrată sau rezervată,
+                dacă adăugarea, eliminarea sau înlocuirea nu schimbă înţelesul firmei sau utilizarea cuvintelor
+                "grup","holding", "company", "trust", "corn", "trans" ori altele asemenea; adăugarea cuvântului
+                "România"
+                indiferent de limba în care este redat. În vererea verificării și rezervării disponibilității denumirii
+                aveți la dispoziție trei alternative:</p>
+              <p class="EN">The company name must be written in Latin characters, primarily in Romanian, and it must not
+                cause confusion with other companies or names previously registered in the Trade Register. The company
+                name is entered into the Trade Register, the registration certificate and in the other documents issued
+                by
+                the Trade Register Office in capital letters and with diacritics. Attention! The following cases are not
+                distinguishable enough elements from another company: the duplication of one or more of the letters or
+                figures of an registered or reserved company name; articulation of words; the addition or deletion of
+                adverbs, prepositions, conjunctions, numbers, punctuation; reversing the order of the words in the name
+                of
+                an already registered or reserved company name; the use of abbreviations that are part of an already
+                registered or reserved company name; the use of semantically different but phonetically identical words;
+                usage of symbols equivalent to letters and words, for example, @, #, n,% etc .; use / non-use of
+                diacritics; the addition, deletion or replacement of a part of an already registered or reserved name,
+                if
+                the addition, deletion or replacement does not change the meaning of the company name; or the use of the
+                words 'group', 'holding', 'company', 'trust', 'com', 'trans' or others like that; or adding the word
+                'Romania', regardless of the language in which it is rendered. In order to check and reserve the
+                availability of the name, you have three alternatives:</p><button type="button"
+                class="collapsible collapsible2"><span class="HU">1. Online foglalás</span><span class="RO">1.
+                  Rezervarea
+                  on-line</span><span class="EN">1. Online reservation</span></button>
+              <div class="content">
+                <p class="HU">Lépjen a <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a>
+                  linkre és hozzon létre egy felhasználói fiókot. Kattintson a Verificări preliminare gombra, jelölje be
+                  a
+                  rezervare denumire firma mezőt, és töltse ki az online űrlapot a megnevezés lefoglalása érdekében.
+                  Figyelem: ezen szolgáltatást csak akkor tudja igénybe venni, ha rendelkezik elektromos aláírás
+                  tanúsítvánnyal.</p>
+                <p class="RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și
+                  creați un cont. Apăsați butonul Verificări preliminare, bifați căsuța rezervare denumire firmă și
+                  completați formularul online în vederea rezervării denumirii. Atenție: acest serviciu se poate accesa
+                  doar dacă dețineți certificat de semnătură electronică.</p>
+                <p class="EN">Access the <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank"> NTRO
+                    (ONRC) </a> website and create an account. Click the Preliminary Checks button, check the Company
+                  Name
+                  Reservation box, and fill out the online form to reserve the name. Warning: this service can only be
+                  accessed if you have an electronic signature certificate.</p>
+              </div><button type="button" class="collapsible"><span class="HU">2. Foglalás a Kereskedelmi Jegyzékhivatal
+                  székhelyén/irodájában</span><span class="RO">2. Rezervarea la sediul oficiului/ biroului registrului
+                  comerțului</span><span class="EN">2. Reservation at the Trade Register office or territorial
+                  bureau</span></button>
+              <div class="content">
+                <p class="HU"><a https://www.onrc.ro/templates/site/formulare/11-10-181.pdf> Ezen</a> formanyomtatványt
+                  kell kitöltenie. A választott megnevezés ellenőrzésre kerül, hogy elérhető-e, vagy sem. A második eset
+                  kissé kényelmetlen, ugyanis ebben az esetben kénytelen lesz egy új formanyomtatványt kitölteni, a sort
+                  feltartani vagy újból sorba állni. Később, a többi formanyomtatvány a lefoglalt megnevezéssel való
+                  kitöltése után újból vissza kell mennie a hivatalba. A foglalás egy hónapig érvényes.</p>
+                <p class="RO">Va trebui să completați https://www.onrc.ro/templates/site/formulare/11-10-181.pdf.
+                  Denumirea aleasă va fi validată dacă este liberă sau nu. Al doilea caz este puțin inconfortabil,
+                  deoarece probabil va trebui să completați un nou formular, blocați rândul sau stați din nou la rând.
+                  Mai
+                  apoi trebuie să vă întoarceți din nou la oficiu după ce ați completat toate actele cu denumirea
+                  rezervată. Dovada eliberată este valabilă pentru o perioadă de 1 lună de la data rezervării şi poate
+                  fi
+                  prelungită succesiv, la cererea formulată de solicitant înainte de expirarea acesteia.</p>
+                <p class="EN">You will need to fill out <a https://www.onrc.ro/templates/site/formulare/11-10-181.pdf>
+                    this </a> form. The chosen name will be validated whether it is free or not. The second case is a
+                  little uncomfortable, as you'll probably need to fill out a new form, block your line, or stand in
+                  line
+                  again. You must then return to the office after completing all the documents with the reserved name.
+                  The
+                  proof issued is valid for a period of one month from the date of reservation, and may be extended
+                  successively, at the request of the applicant before its expiry.</p>
+                <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                    class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                    legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                    target="_blank">LEGE 152/2015</a>&nbsp;&nbsp;<a
+                    href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE
+                    208/2020</a>&nbsp;&nbsp;</p>
+              </div><button type="button" class="collapsible collapsible2"><span class="HU">3. A megnevezés
+                  elérhetőségének online ellenőrzése és hivatali lefoglalása</span><span class="RO">3. Verficarea
+                  disponibilității on-line și rezervarea la sediul registrului comerțului</span><span class="EN">3.
+                  Checking online availability and booking at the trade register</span></button>
+              <div class="content">
+                <p class="HU">Lépjen a <a
+                    href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                    target="_blank">ONRC</a> linkre és hozzon létre egy felhasználói fiókot. Kattintson a Verificări
+                  preliminare gombra, jelölje be a verificare disponibilitate denumire firma mezőt és töltse ki az
+                  online
+                  formanyomtatványt a kívánt név elérhetőségének ellenőrzése érdekében. Figyelem: ezen szolgáltatás nem
+                  igényel elektronikus aláírás tanúsítványt, de nem is garantálja, hogy a megnevezés elérhető lesz abban
+                  a
+                  pillanatban is, amikor a hivatalban lefoglalni kívánja. Ugyanakkor, amennyiben egy vagy két nappal az
+                  iratcsomó benyújtása előtt ellenőrzi a név elérhetőségét, kevés az esélye hogy azt egy másik személy
+                  lefoglalja Ön előtt. Így kitöltheti az összes formanyomtatványt az ellenőrzött névvel, majd egyszer
+                  kell
+                  elmennie a hivatalba a kitöltött iratcsomóval. Először ahhoz az ablakhoz menjen, ahol a megnevezést
+                  foglalhatja le, csatolja a kapott iratot az összeállított iratokhoz és adja le a teljes iratcsomót.
+                </p>
+                <p class="RO">Accesați <a
+                    href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                    target="_blank">ONRC</a> și creați un cont. Apăsați butonul Verificări preliminare, bifați căsuța
+                  verificare disponibilitate denumire firmă și completați formularul online în vederea obținerii
+                  informației dacă este sau nu disponibilă denumirea aleasă. Atenție: Această metodă nu necesită
+                  certificat de semnătură electronică, dar nici nu garantează faptul că denumirea va fi disponibilă la
+                  momentul în care veți dori să o rezervați la registru. Totuși dacă o verificați cu una sau două zile
+                  înainte, este puțin probabil ca între timp să o rezerve o altă persoană. Astfel, puteți să completați
+                  toate celelalte formulare utilizând denumirea verificată, mai apoi vă deplasați o singură dată la
+                  oficiu
+                  cu dosarul complet. De prima dată vă adresați ghișeului la care se rezervă denumirea, atașați
+                  documentul
+                  primit la dosar și puteți înregistra dosarul complet.</p>
+                <p class="EN">Go to <a
+                    href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala"
+                    target="_blank"> NTRO (ONRC)</a> website and create an account. Click the Preliminary Checks button,
+                  check the Company Name Availability check box, and fill out the online form for information on whether
+                  or not the chosen name is available. Warning: this method does not require an electronic signature
+                  certificate, but it also does not guarantee that the name will be available at the time you wish to
+                  reserve it at the registry. However, if you check it a day or two in advance, it is unlikely that
+                  another person will reserve it in the meantime. This way, you can fill in all the other forms using
+                  the
+                  verified name, and then visit the office with the complete file only one time. At first, go to the
+                  counter where the name is reserved, attach the received document to the file and then you can register
+                  the complete file.</p>
+                <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                    class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                    legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                    target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                    href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                    265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                    target="_blank">LEGE 152/2015</a>&nbsp;&nbsp;<a
+                    href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE
+                    208/2020</a>&nbsp;&nbsp;</p>
+              </div>
+            </div><button type="button" class="collapsible collapsible2"><span class="HU">Második lépés: Az iratcsomó
+                összeállításához
+                szükséges iratok</span><span class="RO">Al doilea pas: Actele necesare în vederea întocmirii
+                dosarului</span><span class="EN">Second step: Necessary documents for preparing your
+                file</span></button>
+            <div class="content">
+              <p class="HU">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf"
+                  target="_blank">Bejegyzési kérelem</a></p>
+              <p class="RO">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf "
+                  target="_blank">Cererea de înregistrare</a></p>
+              <p class="EN">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf"
+                  target="_blank">Application for registration</a></p>
+              <p class="HU">2. Adóbejegyzéshez szükséges <a
+                  href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">1-es függelék</a>, amennyiben rendelkezik <a
+                  href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf"
+                  target="_blank">külföldi befektetővel</a> (akik a KFT tagjai), akkor a 2-es függelék is</p>
+              <p class="RO">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">Anexa 1</a> privind înregistrarea fiscală sau dacă aveți <a
+                  href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf "
+                  target="_blank">investitori străini</a> (asociați în SRL)</p>
+              <p class="EN">2. <a href="https://www.onrc.ro/templates/site/formulare /anexa_1_inregistrare_fiscala.pdf"
+                  target="_blank">Annex 1</a> regarding the fiscal registration or if you have <a
+                  href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf"
+                  target="_blank">foreign investors</a> (associated in the LLC)</p>
+              <p class="HU">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Saját
+                  felelősségvállalásra kitöltött nyilatkozat</a> a működéshez szükséges</a>, az egészségügyi,
+                állategészségügyi, környezetvédelmi és munkavédelmi törvényi előírásoknak való megfelelésről</p>
+              <p class="RO">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Declaraţia-tip pe propria răspundere despre îndeplinirea condiţiilor legale</a> de
+                funcţionare prevăzute de legislaţia specială din domeniul sanitar, sanitar-veterinar, protecţiei
+                mediului
+                şi protecţiei muncii</p>
+              <p class="EN">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf"
+                  target="_blank">Affidavit</a> stating the fulfillment of the legal operating conditions prescribed by
+                the special legislation of the sanitary, sanitary-veterinary, environmental- and labor protection fields
+              </p>
+              <p class="HU">4. A megnevezés ellenőrzését és lefoglalását tanúsító okmány</p>
+              <p class="RO">4. Dovada verificării disponibilităţii şi rezervării denumirii firmei</p>
+              <p class="EN">4. Proof of verification of availability and reservation of company name</p>
+              <p class="HU">5. A KFT alapító irata (Actul constitutiv)</p>
+              <p class="RO">5. Actul constitutiv SRL</p>
+              <p class="EN">5. Articles of incorporation of the LLC (Actul constitutiv)</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocument/109884" target="_blank">CC
+                  17/07/2009</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658"
+                  target="_blank">LEGE 152/2015</a>&nbsp;&nbsp;</p>
+              <p class="HU">6. Okmány, amely bizonyítja a székhely feletti használati jogot (a legtöbb esetben
+                telekkönyvi
+                kivonat - amely online is kérhető -, valamint egy haszonkölcsön vagy bérleti szerződés. Figyelem!
+                Függetlenül attól, hogy természetes személyként Ön a székhely tulajdonosa, kénytelen egy, a székhely
+                feletti használati jogot biztosító szerződést kötni az alapítás alatt álló KFT-vel</p>
+              <p class="RO">6. Dovada care atestă dreptul de folosință asupra sediului profesional (în majoritatea
+                cazurilor extras CF- se poate solicita și online + contract de comodat, contract de locațiune) Atenție!
+                Chiar dacă în calitate de persoană fizică sunteți proprietarul sediului, va trebui să încheiați un
+                contract care atestă dreptul de folosință cu SRL-ul în curs de înființare.</p>
+              <p class="EN">6. Proof of the right to use the headquarters (in most cases the land book (CF) extract -
+                can
+                be requested online and a bailment or lease agreement) Attention! Even if you are the owner of the
+                premises as a natural person, you will have to enter into a contract attesting the right of use with the
+                nascent LLC</p>
+              <p class="HU">7. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf "
+                  target="_blank">Saját felelősségvállalásra kitöltött nyilatkozatok</a> az
+                alapító(k)/ügyvezető(k)/cenzor(ok) vagy a jogi személy ügyvezetőjeként/cenzoraként kijelölt
+                feljogosított
+                természetes személyek részéről arról, hogy megfelelnek ezen tisztségek betöltésére szabott tövényi
+                feltételeinek. Figyelem! A készenléti állapot ideje alatt ezen dokumentumok magánokirat formájában is
+                letehetőek, más feltételeknek való megfelelés nélkül, ám normális esetben ezek közokirat formáját kell
+                öltsék (közjegyzői irat), vagy ügyvéd által hitelesítettnek, vagy a Területi Kereskedelmi Jegyzék
+                munkatárasai által tanúsítottnak kell lenniük</p>
+              <p class="RO">7. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf"
+                  target="_blank">Declaraţiile date pe propria răspundere</a>, după caz, de către
+                fondatori/administratori/cenzori sau persoane fizice reprezentante ale persoanei juridice numită
+                administrator sau cenzor, din care să rezulte că îndeplinesc condiţiile legale pentru deţinerea acestor
+                calităţi. Atenție! În starea de alertă, aceste documente pot fi depuse sub semnătură privată, fără alte
+                cerințe, însă în mod obișnuit acestea vor avea formă autentică (notar), formă atestată de avocat sau
+                certificate de personalul desemnat al ORCT</p>
+              <p class="EN">7. <a
+                  href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf "
+                  target="_blank">Affidavits</a>, as the case may be, by the founders / administrators / censors or
+                natural persons representing the legal person appointed administrator or censor, showing that they meet
+                the legal conditions for holding these qualities. Careful! During the state of alert declared due to the
+                coronavirus pandemic, these documents could be submitted under private signature, without other
+                requirements, but usually they have to be notarized, attested by a lawyer or certified by the designated
+                NTRO (ONRC) staff</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/225620"
+                  target="_blank">LEGE 55/2020</a>&nbsp;&nbsp;</p>
+              <p class="HU">8. A természetes személy alapító(k)/ügyvezető(k)/cenzor(ok) vagy auditor(ok) személyi
+                igazolványai (másolatok, amelyek tartalmazzák a "Conform cu originalul" megjegyzést és aláírást)</p>
+              <p class="RO">8. Actele de identitate ale fondatorilor, administratorilor, cenzorilor sau auditorilor
+                persoane fizice (în copie pe care se va menționa ”Conform cu originalul” + semnătura).</p>
+              <p class="EN">8. Identity documents of the founders, administrators, censors or auditors of individuals
+                (simple copy which will mention 'In accordance with the original' + signature)</p>
+              <p class="HU">9. Amennyiben a KFT-nek külföldi állampolgársággal rendelkező tagja van, szükség lesz egy
+                közjegyző előtt tett nyilatkozatra, amely helyettesíti a pénzügyi erkölcsi bizonyítványban feltüntetett
+                információkat</p>
+              <p class="RO">9. Dacă aveți un asociat, cetățean străin, va trebui să dea o declarație notarială, care va
+                înlocui informațiile din cazierul fiscal.</p>
+              <p class="EN">9. If you have an associate who is a foreign citizen, you will have to give a notarized
+                statement, which will replace the information provided by the tax offence record</p>
+              <p class="HU">10. Amennyiben a tevékenység a székhelyen kerül folytatásra, a <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">lakóközösség
+                  véleményezése</a> és a <a
+                  href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx"
+                  target="_blank">szomszédok beleegyezése</a> a kollektív lakóingatlanok felhasználási céljának
+                megváltoztatásáról</p>
+              <p class="RO">10 Dacă activitatea va fi desfășurată la sediu, <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">avizul asociaţiei de
+                  proprietari</a> și <a
+                  href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx"
+                  target="_blank">acordul vecinilor</a> privind schimbarea destinaţiei imobilelor colective cu regim de
+                locuinţă</p>
+              <p class="EN">10. If the activity will be carried out at the headquarters, the <a
+                  href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">opinion of the
+                  owners'
+                  association</a> and the <a
+                  href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx"
+                  target="_blank">agreement of the neighbors</a> on the change of destination of the collective
+                buildings
+                with residential regime</p>
+              <p class="HU">11. Amennyiben a KFT valamelyik tagja/ügyvezetője/cenzora jogi személy (például egy másik
+                KFT), le kell tennie ezek alapító okiratát</p>
+              <p class="RO">11. Dacă aveți asociați, administrator sau cenzor, persoană juridică (de ex. un alt SRL) se
+                depun actele de înregistrare ale acestora.</p>
+              <p class="EN">11. If an associate, administrator or censor is legal entity (e.g. another LLC), their
+                registration documents have to be submitted</p>
+              <p class="HU">12. A valós kedvezményezettekről szóló <a
+                  href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf"
+                  target="_blank">nyilatkozat</a></p>
+              <p class="RO">12. <a
+                  href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf"
+                  target="_blank">Declarație</a> privind beneficiarii reali</p>
+              <p class="EN">12. <a
+                  href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf"
+                  target="_blank">Declaration</a> regarding the real beneficiaries</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/216157"
+                  target="_blank">LEGE 129/2019</a>&nbsp;&nbsp;</p>
+              <p class="HU">13. Románia Hivatalos Közlönyében történő megjelentetési illeték (130 RON, kifizethető
+                személyesen a jegyzékhivatalban vagy <a href="https://www.onrc.ro/index.php/ro/conturi-iban"
+                  target="_blank">banki átutalással</a>)</p>
+              <p class="RO">13. Taxa de publicare în Monitorul Oficial ( aproximativ 130 lei se poate achita pe loc la
+                registru sau prin <a href="https://www.onrc.ro/index.php/ro/conturi-iban" target="_blank">virament
+                  bancar</a>)</p>
+              <p class="EN">13. Fee of publication in the Official Gazette (130 RON, which can be paid on the spot at
+                the
+                registery or by <a href="https://www.onrc.ro/index.php/ro/conturi-iban" target="_blank">wire
+                  transfer</a>)
+              </p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507"
+                  target="_blank">LEGE 1/2017</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                  265/2022</a>&nbsp;&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;</p>
+              <p class="HU">Megjegyzés a második lépéshez: Amennyiben egyes dokumentumok vagy nyilatkozatok kitöltése
+                közben nehézségekbe ütközik, igénybe veheti a Kereskedelmi Jegyzékhivatal keretén belül működő ingyenes
+                vagy fizetéses <a
+                  href="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta"
+                  target="_blank">ügyfélszolgálati segítséget</a>.</p>
+              <p class="RO">Mențiune la pasul doi: Dacă vă confruntați cu dificultăți la completarea sau redactarea unor
+                documente, aveți posibilitatea de a solicita <a
+                  herf="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta"
+                  target="_blank">serviciul de asistență</a> gratuit sau contra cost, care funcțiuonează în cadrul
+                  registrului comerțului.</p>
+              <p class="EN">Note for step two: if you are having difficulty completing or drafting documents, you can
+                request the help of the free or paid <a
+                  href="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta"
+                  target="_blank">support service</a> which operates within the Trade Register.</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;</p>
+            </div><button type="button" class="collapsible"><span class="HU">Harmadik lépés: Az iratcsomó
+                leadása</span><span class="RO">Al treilea pas: Înregistrarea dosarului</span><span class="EN">Third
+                step:
+                Registering the file</span></button>
+            <div class="content">
+              <p class="HU">Miután az összes, a második lépésben szereplő iratot összegyűjtötte, fogja össze őket egy
+                sínes aktába és menjen el a Kereskedelmi Jegyzékhivatal legközelebbi székhelyére/irodájába (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">itt</a> ellenőrizheti az Önhöz
+                legközelebbi helyszínt és a nyitvatartási időket). Az Ön iratcsomója előzetes ellenőrzésnek lesz
+                alávetve,
+                amely után leadásra kerül. Az előzetes ellenőrzés során a hivatal egy alkalmazottja átnézi az iratokat,
+                és
+                felhívja az Ön figyelmét, amennyiben valami hiányzik vagy hibásan került kitöltésre. Amennyiben kérdései
+                vannak, vagy nem teljesen biztos abban, hogy helyesen töltötte-e ki a formanyomtatványokat, forduljon
+                bizalommal ezen alkalmazottakhoz, biztosan segíteni fognak Önnek.</p>
+              <p class="RO">După ce ați adunat toate documentele de la doilea pas, va trebui să le prindeți într-un
+                dosar
+                cu șină și să vă desplasați la cel mai apropiat oficiu/ birou al registrului comerțului (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">aici</a> puteți verifica cea mai
+                apropiată locație și programul de lucru) Dosarul Dvs. va fi supus unei verificări prealabile, după care
+                va
+                fi înregistrat. Verificarea prealabilă constă din parcurgere dosarului de către un angajat al
+                registrului
+                care vă va atrage atenția dacă lipsește ceva sau ceva este completat în mod greșit. Dacă aveți
+                nelămuriri
+                sau nu sunteți siguri dacă ați completat corect sau nu un formular, nu ezitați să întrebați aceste
+                persoane, cu siguranță vă vor ajuta.</p>
+              <p class="EN">Once you have gathered all necessary documents outlined above, you will need to bind them in
+                a
+                folder and go to the nearest Trade Register Office (<a
+                  href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">here</a> you can check the nearest
+                location and working hours). Your file will be
+                subject to a prior verification, after which it will be registered. Preliminary verification consists of
+                a
+                file being reviewed by a registry employee who will draw your attention if something is missing or
+                filled
+                in incorrectly. If you are unsure about having completed a form correctly, feel free to ask these
+                employees, they will definitely help you.</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE
+                  265/2022</a>&nbsp;&nbsp;</p>
+            </div><button type="button" class="collapsible collapsible2"><span class="HU">Negyedik lépés: a bejegyzési bizonyítvány
+                átvétele</span><span class="RO">Al patrulea pas: Ridicarea certificatului de înregistrare</span><span
+                class="EN">Fourth step: Recieving the registration certificate</span></button>
+            <div class="content">
+              <p class="HU">Az iratcsomó leadásakor megtudja, hogy mennyi idő múlva veheti át a bejegyzési
+                bizonyítványt.
+                Általában ez az időtartam 3-4 nap. Amennyiben az iratcsomó teljes és helyesen volt kitöltve,
+                gratulálunk,
+                elkezdheti kitűzött tevékenységét. Amennyiben fény derült bármilyen szabálytalanságra, 15 nap fog
+                rendelkezésére állni az iratcsomó kiegészítése érdekében. Az iratcsomó állapotát <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a> is követheti. Hozzon létre
+                felhasználói fiókot, és menjen a "Stadiu dosar" részre. Az iratcsomó leadási után itt tudja követni,
+                hogy
+                a kérelmét elfogadták, vagy az még kiegészítésre szorul, vagy a kiegészítések elvégzése után
+                elfogadták-e.
+              </p>
+              <p class="RO">La înregistrarea dosarului veți afla în cât timp puteți să ridicați certificatul de
+                înregistrare. În mod obișnuit acest termen este de 3-4 zile. Dacă dosarul a fost complet și corect,
+                felicitări, puteți începe activitatea. În cazul în care a fost constatată o neregulă, veți avea la
+                dispoziție 15 zile să completați dosarul. Stadiul dosarului se poate urmări și <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>, creați un cont și megreți
+                la
+                secțiunea stadiu dosar. Aici veți putea urmări după înregistrare dacă cererea a fost admisă sau necesită
+                completări, mai apoi dacă a fost admis după depunerea completărilor.</p>
+              <p class="EN">Upon registering the file, you will find out when you can pick up the registration
+                certificate. Usually this happens after a three to four days period. If the file was complete and
+                correct,
+                congratulations, you can start the activity. If an irregularity is found, you will have 15 days to
+                complete the file. The status of the file can be tracked online by accessing <a
+                  href="https://myportal.onrc.ro/dossier-status" target="_blank"> NTRO (ONRC)</a> website, creating an
+                account and checking the file status section of the website. Here you will be able to track if the
+                application has been accepted or needs to be completed, or if it has been admitted after submitting the
+                completions.</p>
+              <p><i class="fa fa-gavel"></i>&nbsp;&nbsp;<span class="RO inline">Legislație relevantă:</span><span
+                  class="HU inline">Vonatkozó törvények:</span><span class="EN inline">Relevant
+                  legislation:</span>&nbsp;<a href="https://legislatie.just.ro/Public/DetaliiDocument/257835"
+                  target="_blank">LEGE 265/2022</a>&nbsp;&nbsp;<a
+                  href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE
+                  202/2010</a>&nbsp;&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Test" class="pfa">
+      <button type="button" class="collapsible future_active"><i class="fa fa-balance-scale"
+          style="margin-right: 10px;"></i>
+        <div>
+          <span class="HU">ETSZ (PFA) vagy KFT?</span><span class="RO">PFA sau SRL?</span><span class="EN">Sole traider
+            or
+            LLC?</span>
+        </div>
+      </button>
+      <div class="content">
+        <div style="display: flex; align-items: center; margin-bottom:-18px;">
+          <i class="fa fa-users"></i>&nbsp;&nbsp;
+          <p class="HU"><b>Szeretné, hogy több, mint 3 alkalmazottja legyen?</b></p>
+          <p class="RO"><b>Doriți să aveți mai mult de 3 salariați?</b></p>
+          <p class="EN"><b>Do you want to have more than three employees?</b></p>
+        </div>
+        <p class="HU">Az engedélyezett természetes személy legfeljebb 3 fővel köthet egyéni munkaszerződést. Ha több
+          alkalmazottat szeretne, KFT-t kell létrehoznia.</p>
+        <p class="RO">Persoana fizică autorizată poate încheia contract individual de muncă doar cu maxim 3 salariați.
+          În
+          cazul în care doriți să aveți mai mulți angajați, va trebui să înființați un SRL.</p>
+        <p class="EN">The sole trader can conclude an individual employment contract only with a maximum of three
+          employees. If you want to have more employees, you will have to set up an LLC.</p><button type="button"
+          class="collapsible collapsible-yes"><i class="fa fa-check-circle"></i>
+          <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+        </button>
+        <div class="content">
+          <div style="display: flex; align-items: center; margin-bottom:-2px;">
+            <i class="fa fa-users"></i>&nbsp;&nbsp;
+            <p class="HU">KFT</p>
+            <p class="RO">SRL</p>
+            <p class="EN">LLC</p>
+          </div>
+        </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+          <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+        </button>
+        <div class="content">
+          <div style="display: flex; align-items: center; margin-bottom:-18px;">
+            <i class="fa fa-tasks"></i>&nbsp;&nbsp;
+            <p class="HU"><b>Szeretne több, mint 5 tevékenységet folytatni?</b></p>
+            <p class="RO"><b>Doriți să vă ocupați cu mai mult de 5 activități?</b></p>
+            <p class="EN"><b>Do you want to have more than five activities?</b></p>
+            <p class="HU">Az engedélyezett természetes személy csak 5 fajta tevékenységet végezhet, a tevékenység
+              tárgyában
+              csak 5 különböző osztályú TEÁOR kód lehet. Ha ennél több tevékenységet szeretne végezni, KFT-t kell
+              létrehoznia. Mielőtt meghozná ezt a döntést, javasoljuk, hogy tekintse át a TEÁOR (<a
+                href="https://www.caen.ro" target="_blank">CAEN</a>) kódok listáját.</p>
+          </div>
+          <p class="RO">Persoana fizică autorizată poate derula doar 5 tipuri de activități, poate avea în obiectul de
+            activitate doar 5 clase de coduri CAEN. În cazul în care doriți să vă ocupați de mai multe activități, va
+            trebui să înființați un SRL. Înainte de a lua această decizie vă recomandăm să consiltați lista codurilor <a
+              href="https://www.caen.ro" target="_blank">CAEN</a>.</p>
+          <p class="EN">The sole trader can carry out only five types of activities, meaning it can have only five
+            classes
+            of NACE codes to define the object of its activity. If you want to do more activites, you will need to set
+            up
+            an LLC. Before making this decision, we recommend that you consult the list of NACE (<a
+              href="https://www.caen.ro" target="_blank">CAEN</a>)codes.</p><button type="button"
+            class="collapsible collapsible-yes"><i class="fa fa-check-circle"></i>
+            <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+          </button>
+          <div class="content">
+            <div style="display: flex; align-items: center; margin-bottom:-2px;">
+              <i class="fa fa-users"></i>&nbsp;&nbsp;
+              <p class="HU">KFT</p>
+              <p class="RO">SRL</p>
+              <p class="EN">LLC</p>
+            </div>
+          </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+            <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+          </button>
+          <div class="content">
+            <div style="display: flex; align-items: center; margin-bottom:-18px;">
+              <i class="fa fa-briefcase"></i>&nbsp;&nbsp;
+              <p class="HU"><b>Szeretné, hogy tevékenységét inkább a saját munkaerejére alapozza?</b></p>
+              <p class="RO"><b>Doriți să vă bazați activitatea în principal pe propria forță de muncă?</b></p>
+              <p class="EN"><b>Do you want to base your work primarily on your own workforce?</b></p>
+              <p class="HU">Ez a kritérium nem zárja ki a KFT alapításának jogi lehetőségét, viszont ha az elvégzett
+                tevékenység elsősorban az Ön tudásán, készségén, munkáján alapul, javasoljuk, hogy hozzon létre ETSZ-t.
+              </p>
+            </div>
+            <p class="RO">Acest criteriu nu exclude posibilitatea legală de a înființa un SRL.În cazul în care
+              activitatea
+              desfășurată se va baza în principal pe cunoștințele, aptitudinile, munca depusă de Dvs., vă recomandăm să
+              înființați un PFA.</p>
+            <p class="EN">This criterion does not exclude the legal possibility of setting up an LLC. If the activity
+              carried out will be based mainly on the knowledge, skills or work done by you, we recommend that you set
+              up
+              a sole trader business.</p><button type="button" class="collapsible  collapsible-yes"><i
+                class="fa fa-check-circle"></i>
+              <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+            </button>
+            <div class="content">
+              <div style="display: flex; align-items: center; margin-bottom:-2px;">
+                <i class="fa fa-user"></i>&nbsp;&nbsp;
+                <p class="HU">ETSZ (PFA)</p>
+                <p class="RO">PFA</p>
+                <p class="EN">Sole trader</p>
+              </div>
+            </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+              <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+            </button>
+            <div class="content">
+              <div style="display: flex; align-items: center; margin-bottom:-18px;">
+                <i class="fa fa-line-chart"></i>&nbsp;&nbsp;
+                <p class="HU"><b>Szeretné vállalkozását több taggal működtetni?</b></p>
+                <p class="RO"><b>Doriți să conduceți afacerea cu mai mulți asociați?</b></p>
+                <p class="EN"><b>Do you want to run a business with multiple partners?</b></p>
+                <p class="HU">Az engedélyezett természetes személynek csak egy tagja/ "tulajdonosa" lehet. Amennyiben
+                  társakat szeretne, KFT-t kell létrehoznia.</p>
+              </div>
+              <p class="RO">Persoana fizică autorizată poate avea ca titular o singură persoană. În cazul în care doriți
+                să aveți asociați va trebui să înființați un SRL.</p>
+              <p class="EN">The sole trader may have only one person as holder. If you want to have associates, you will
+                have to set up an LLC.</p><button type="button" class="collapsible collapsible-yes"><i
+                  class="fa fa-check-circle"></i>
+                <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+              </button>
+              <div class="content">
+                <div style="display: flex; align-items: center; margin-bottom:-2px;">
+                  <i class="fa fa-users"></i>&nbsp;&nbsp;
+                  <p class="HU">KFT</p>
+                  <p class="RO">SRL</p>
+                  <p class="EN">LLC</p>
+                </div>
+              </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+                <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+              </button>
+              <div class="content">
+                <div style="display: flex; align-items: center; margin-bottom:-18px;">
+                  <i class="fa fa-shield"></i>&nbsp;&nbsp;
+                  <p class="HU"><b>Szeretne egy üzleti koncepciót tesztelni, amely sikerességéről még nincs teljességgel
+                      megbizonyosodva?</b></p>
+                  <p class="RO"><b>Doriți să testați o idee de afaceri pe care o aveți și încă nu sunteți sigur dacă va
+                      funcționa?</b></p>
+                  <p class="EN"><b>Do you want to test your business idea but you are not sure of its viabiliy?</b></p>
+                  <p class="HU">Ez a kritérium nem zárja ki a KFT létrehozását, de az ETSZ könnyebben létrehozható és
+                    bezárható. Ha működik a vállalkozás és szeretné tovább fejleszteni, akkor később is alapíthat KFT-t,
+                    viszont ha nem válik be az ötlet, akkor könnyebben be lehet zárni egy ETSZ-t.</p>
+                </div>
+                <p class="RO">Acest criteriu nu exclude înființarea unui SRL, însă PFA-ul se poate înființa și închide
+                  mai
+                  ușor. Dacă ideea de afaceri funcționează și doriți să o dezvoltați mai mult, veți putea înființa un
+                  SRL,
+                  însă în cazul în care nu funcționează, un PFA se poate închide mai simplu.</p>
+                <p class="EN">This criterion does not exclude the establishment of an LLC, but a sole tradership can be
+                  set up or closed more easily. If the business is working and you want to develop it further, you will
+                  be
+                  able to set up an LLC, but if it does not work, a sole tradership can be closed more easily.</p>
+                <button type="button" class="collapsible collapsible-yes"><i class="fa fa-check-circle"></i>
+                  <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+                </button>
+                <div class="content">
+                  <div style="display: flex; align-items: center; margin-bottom:-2px;">
+                    <i class="fa fa-user"></i>&nbsp;&nbsp;
+                    <p class="HU">ETSZ (PFA)</p>
+                    <p class="RO">PFA</p>
+                    <p class="EN">Sole trader</p>
+                  </div>
+                </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+                  <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+                </button>
+                <div class="content">
+                  <div style="display: flex; align-items: center; margin-bottom:-18px;">
+                    <i class="fa fa-id-card"></i>&nbsp;&nbsp;
+                    <p class="HU"><b>Van egy szakmája és szeretne szolgáltatást nyújtani a meglévő állása mellett?</b>
+                    </p>
+                    <p class="RO"><b>Aveți o profesie și doriți să prestați un serviciu pe lângă jobul Dvs.?</b></p>
+                    <p class="EN"><b>Do you have a profession and want to work in addition to your job?</b></p>
+                    <p class="HU">Ez a kritérium nem zárja ki a KFT létrehozását, de az ETSZ ebben az esetben
+                      kényelmesebb
+                      és hatékonyabb módszer. Az ETSZ adminisztrációja sokkal egyszerűbb könyvelés, alapítás, esetleg
+                      lezárás szempontjából.</p>
+                  </div>
+                  <p class="RO">Acest criteriu nu exclude înființarea unui SRL, însă PFA-ul este o modalitate mai comodă
+                    și mai eficientă în acest caz. Administrarea unui PFA este mult mai simplă din punctul de vedere al
+                    contabilității, înființării sau eventual închiderii.</p>
+                  <p class="EN">This criterion does not exclude the establishment of an LLC, but establishing a sole
+                    tradership is a more convenient and efficient way in this case. The administration of a sole
+                    tradership is much simpler in terms of accounting, setting up or possibly closing than that of an
+                    LLC.
+                  </p><button type="button" class="collapsible collapsible-yes"><i class="fa fa-check-circle"></i>
+                    <div><span class="HU">Igen</span><span class="RO">Da</span><span class="EN">Yes</span></div>
+                  </button>
+                  <div class="content">
+                    <div style="display: flex; align-items: center; margin-bottom:-2px;">
+                      <i class="fa fa-user"></i>&nbsp;&nbsp;
+                      <p class="HU">ETSZ (PFA)</p>
+                      <p class="RO">PFA</p>
+                      <p class="EN">Sole trader</p>
+                    </div>
+                  </div><button type="button" class="collapsible collapsible-no"><i class="fa fa-times-circle"></i>
+                    <div><span class="HU">Nem</span><span class="RO">Nu</span><span class="EN">No</span></div>
+                  </button>
+                  <div class="content">
+                    <div style="display: flex; align-items: center; margin-bottom:-2px;">
+                      <i class="fa fa-users"></i>&nbsp;&nbsp;
+                      <p class="HU">KFT</p>
+                      <p class="RO">SRL</p>
+                      <p class="EN">LLC</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+    var hash = window.location.hash.slice(1);
+    var lang = hash.slice(0, hash.search('&'));
+    var theme = hash.slice(hash.search('&') + 1);
+    setTimeout(() => {
+      document.querySelectorAll('.' + lang).forEach(function (d) {
+        d.style.display = 'block';
+      })
+      document.querySelectorAll('.' + lang + '.inline').forEach(function (d) {
+        d.style.display = 'inline';
+      })
+      document.getElementById(theme).style.display = 'block';
+    }, 100);
+
+    setTimeout(() => {
+      document.querySelectorAll('.' + lang).forEach(function (d) {
+        d.style.opacity = 1;
+      })
+      document.getElementById(theme).style.opacity = 1;
+      document.querySelectorAll('.future_active').forEach(function (d) {
+        d.click();
+      })
+    }, 200);
+
+    // Set background image and gradient based on theme
+    function setBackground(theme) {
+      const backgroundImages = {
+        'PFA': '../img/pfa.png',
+        'SRL': '../img/srl.png',
+        'Test': '../img/legal.png',
+        // Add more theme-to-image mappings as needed
+      };
+
+      const image = backgroundImages[theme] || '';
+
+      // Apply both gradient and image directly to body
+      document.body.style.background = `
+      linear-gradient(
+        to bottom right,
+        rgba(11, 51, 103, 1),
+        rgba(11, 51, 103, 0.9)
+      ),
+      url('${image}')
+    `;
+
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundAttachment = 'fixed';
+    }
+
+    setTimeout(() => {
+      // ... existing setTimeout code ...
+      setBackground(theme);
+    }, 100);
+  </script>
+
+</body>
+
+</html>
