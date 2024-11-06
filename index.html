@@ -252,6 +252,7 @@
 
         iframe.onload = function () {
             setTimeout(() => {
+                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
                 iframe.style.opacity = 1
             }, 100);
 
@@ -280,8 +281,15 @@
         function scrollToSection(section) {
             const panelId = sectionMap[section];
             if (panelId) {
-                // Ensure correct margin is maintained
+                // Remove any existing transition
+                iframe.style.transition = 'none';
                 iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
+                
+                // Force a reflow
+                iframe.offsetHeight;
+                
+                // Restore transition
+                iframe.style.transition = 'opacity 2s linear';
                 
                 iframe.contentWindow.postMessage({
                     type: 'scrollToPanel',
