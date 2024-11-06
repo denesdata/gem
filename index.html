@@ -71,11 +71,6 @@
             color: royalBlue;
         }
 
-        iframe {
-            opacity: 0;
-            transition: opacity 2s linear;
-        }
-
         /* Updated navigation styles to match Grafana */
         .nav-menu {
             position: fixed;
@@ -251,6 +246,7 @@
         iframe.onload = function() {
             setTimeout(() => {
                 iframe.style.opacity = 1;
+                iframe.style.marginTop = window.innerWidth <= 480 ? '70px' : '120px';
             }, 100);
 
             // Extract panel ID from the URL if it exists
