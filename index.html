@@ -385,7 +385,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             const initialLang = getLanguageFromUrl(targetUrl);
             console.log(initialLang, 'lanugage detected..')
-            updateMenuLanguage(initialLang);
+            setTimeout(() => {
+                updateMenuLanguage(initialLang);
+            }, 100);
         });
     </script>
 </body>
