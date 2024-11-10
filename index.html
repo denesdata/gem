@@ -207,6 +207,7 @@
         <a href="#" onclick="return scrollToSection('aps')"><i class="fas fa-poll"></i> APS</a>
         <a href="#" onclick="return scrollToSection('nes')"><i class="fas fa-network-wired"></i> NES</a>
         <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
+        <a href="#" onclick="return scrollToSection('about')"><i class="fas fa-person"></i> About</a>
     </nav>
     <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe></div>
     <script>
@@ -219,7 +220,8 @@
             'stats': '169',
             'aps': '179',
             'nes': '175',
-            'news': '173'
+            'news': '173',
+            'about': '66'
         };
 
         // Get the URL parameters
@@ -257,11 +259,11 @@
                 // iframe.src = `//gem.csaladen.es${newUrl}`;
                 const newUrl = `//gem.csaladen.es/d/${lang}/?${targetParams.toString()}`;
                 iframe.src = newUrl;
-                console.log('Using the URL parameter as lang=', lang, ', targetParams=', targetParams)
+                console.log('Using the URL parameter as lang=', lang, ',targetParams=', targetParams)
             } else {
                 // No section parameter or invalid section, use URL as is
                 iframe.src = `//gem.csaladen.es${targetUrl}`;
-                console.log('Using the URL parameter as is.. ', targetUrl)
+                console.log('Using the URL parameter as is..', targetUrl)
             }
         } else {
             iframe.src = '//gem.csaladen.es';
@@ -317,7 +319,8 @@
                 stats: 'Statistics',
                 aps: 'APS',
                 nes: 'NES',
-                news: 'News'
+                news: 'News',
+                about: 'About us'
             },
             ro: {
                 home: 'Acasă',
@@ -327,7 +330,8 @@
                 stats: 'Statistici',
                 aps: 'APS',
                 nes: 'NES',
-                news: 'Știri'
+                news: 'Știri',
+                about: 'Despre noi'
             },
             hu: {
                 home: 'Kezdőlap',
@@ -337,7 +341,8 @@
                 stats: 'Statisztika',
                 aps: 'APS',
                 nes: 'NES',
-                news: 'Hírek'
+                news: 'Hírek',
+                about: 'Rólunk'
             }
         };
 
@@ -379,7 +384,7 @@
         // Initialize menu with language from URL
         document.addEventListener('DOMContentLoaded', () => {
             const initialLang = getLanguageFromUrl(targetUrl);
-            console.log(initialLang, ' lanugage detected..')
+            console.log(initialLang, 'lanugage detected..')
             updateMenuLanguage(initialLang);
         });
     </script>
