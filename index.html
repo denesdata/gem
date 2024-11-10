@@ -220,52 +220,44 @@
             'about': '66'
         };
 
-        // Get the full URL parameter
+        // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const fullUrl = window.location.search;
+        
+        // Get the raw url parameter value and clean it up
+        let targetUrl = '';
+        if (fullUrl.includes('url=')) {
+            targetUrl = decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4));
+            // Remove any leading question marks
+            targetUrl = targetUrl.replace(/^\?+/, '');
+        }
+        console.log('targetUrl after cleanup:', targetUrl);  // Debug
 
-        // Get the raw url parameter value without URLSearchParams parsing
-        const targetUrl = fullUrl.includes('url=') ?
-            decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4)) : '';
-        console.log('targetUrl:', targetUrl);
-
-        // Parse the target URL parameters
-        const targetParams = targetUrl ?
-            new URLSearchParams(targetUrl.replace(/^\?+/, '')) :
+        // Parse the parameters
+        const targetParams = targetUrl ? 
+            new URLSearchParams(targetUrl) : 
             urlParams;
-        console.log('targetParams entries:', [...targetParams.entries()]);
+        console.log('targetParams entries:', [...targetParams.entries()]);  // Debug
 
-        // Get the iframe
-        const iframe = document.getElementById('iframe');
-
-        // Get language and section from target parameters
+        // Get language and section
         const lang = targetParams.get('lang') || 'ro';
         const section = targetParams.get('section')?.replace(/=$/, '');
+        console.log('Parsed values:', { lang, section });  // Debug
 
         // Construct query string with all additional parameters
         const queryParams = [];
-
+        
         // Add panel if section exists
         if (section && sectionMap[section]) {
             queryParams.push(`panel=${sectionMap[section]}`);
         }
 
-        // Add parameters from either targetUrl or direct URL
-        if (targetUrl) {
-            // If we have a targetUrl, use its parameters
-            targetParams.forEach((value, key) => {
-                if (key !== 'lang' && key !== 'section') {
-                    queryParams.push(`${key}=${value}`);
-                }
-            });
-        } else {
-            // Otherwise use direct URL parameters
-            urlParams.forEach((value, key) => {
-                if (key !== 'lang' && key !== 'section' && key !== 'url') {
-                    queryParams.push(`${key}=${value}`);
-                }
-            });
-        }
+        // Add any other parameters (including theme)
+        targetParams.forEach((value, key) => {
+            if (key !== 'lang' && key !== 'section' && key !== 'url') {
+                queryParams.push(`${key}=${value}`);
+            }
+        });
 
         const queryString = queryParams.join('&');
         const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
