@@ -292,16 +292,79 @@
             return false;
         }
 
+        // Add language translations
+        const menuTranslations = {
+            en: {
+                home: 'Home',
+                funding: 'Funding',
+                start: 'Start-up',
+                ro: 'Romania',
+                stats: 'Statistics',
+                aps: 'APS',
+                nes: 'NES',
+                news: 'News'
+            },
+            ro: {
+                home: 'Acasă',
+                funding: 'Finanțare',
+                start: 'Start-up',
+                ro: 'România',
+                stats: 'Statistici',
+                aps: 'APS',
+                nes: 'NES',
+                news: 'Știri'
+            },
+            hu: {
+                home: 'Kezdőlap',
+                funding: 'Finanszírozás',
+                start: 'Start-up',
+                ro: 'Románia',
+                stats: 'Statisztika',
+                aps: 'APS',
+                nes: 'NES',
+                news: 'Hírek'
+            }
+        };
+
+        // Function to update menu language
+        function updateMenuLanguage(lang) {
+            const translations = menuTranslations[lang] || menuTranslations.ro;
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                const section = link.getAttribute('onclick').match(/scrollToSection\('(.+?)'\)/)[1];
+                const icon = link.querySelector('i').outerHTML;
+                link.innerHTML = `${icon} ${translations[section]}`;
+            });
+        }
+
+        // Update the message event listener
         window.addEventListener('message', function (event) {
             // Verify the message is from our Grafana domain
             if (event.origin !== 'https://gem.csaladen.es') return;
 
             if (event.data.type === 'grafanaNavigation') {
                 console.log('Grafana navigated to:', event.data.url);
-                // Add your custom handling here
+                
+                // Extract language from URL
+                const url = event.data.url;
+                let lang = 'ro'; // default language
+                
+                if (url.includes('/d/ro')) {
+                    lang = 'ro';
+                } else if (url.includes('/d/en')) {
+                    lang = 'en';
+                } else if (url.includes('/d/hu')) {
+                    lang = 'hu';
+                }
+                
+                // Update menu language
+                updateMenuLanguage(lang);
             }
         });
-        
+
+        // Initialize with default language (ro)
+        document.addEventListener('DOMContentLoaded', () => {
+            updateMenuLanguage('ro');
+        });
     </script>
 </body>
 
