@@ -223,18 +223,16 @@
         // Get the full URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const fullUrl = window.location.search;
-        
+
         // Get the raw url parameter value without URLSearchParams parsing
-        const targetUrl = fullUrl.includes('url=') ? 
+        const targetUrl = fullUrl.includes('url=') ?
             decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4)) : '';
         console.log('targetUrl:', targetUrl);
 
-        // Get direct language parameter if it exists
-        const directLang = urlParams.get('lang');
-        const directSection = urlParams.get('section');
-        
         // Parse the target URL parameters
-        const targetParams = new URLSearchParams(targetUrl.replace(/^\?+/, ''));
+        const targetParams = targetUrl ?
+            new URLSearchParams(targetUrl.replace(/^\?+/, '')) :
+            urlParams;
         console.log('targetParams entries:', [...targetParams.entries()]);
 
         // Get the iframe
@@ -246,7 +244,7 @@
 
         // Construct query string with all additional parameters
         const queryParams = [];
-        
+
         // Add panel if section exists
         if (section && sectionMap[section]) {
             queryParams.push(`panel=${sectionMap[section]}`);
