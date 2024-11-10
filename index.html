@@ -232,9 +232,9 @@
         // Function to extract language from URL
         function getLanguageFromUrl(url) {
             if (!url) return 'ro';
-            if (url.includes('/d/en/')) return 'en';
-            if (url.includes('/d/hu/')) return 'hu';
-            if (url.includes('/d/ro/')) return 'ro';
+            if (url.includes('/d/en')) return 'en';
+            if (url.includes('/d/hu')) return 'hu';
+            if (url.includes('/d/ro')) return 'ro';
             return 'ro'; // default
         }
 
@@ -256,11 +256,13 @@
                 // Reconstruct URL with panel ID instead of section
                 // const newUrl = `${path}?${targetParams.toString()}`;
                 // iframe.src = `//gem.csaladen.es${newUrl}`;
-                const newUrl = `//gem.csaladen.es/d/${lang}?${targetParams.toString()}`;
+                const newUrl = `//gem.csaladen.es/d/${lang}/?${targetParams.toString()}`;
                 iframe.src = newUrl;
+                console.log('Using the URL parameter as lang=',lang, ', targetParams=', targetParams)
             } else {
                 // No section parameter or invalid section, use URL as is
                 iframe.src = `//gem.csaladen.es${targetUrl}`;
+                console.log('Using the URL parameter as is.. ',targetUrl)
             }
         } else {
             iframe.src = '//gem.csaladen.es';
