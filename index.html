@@ -223,7 +223,7 @@
         // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const targetUrl = urlParams.get('url');
-        const targetParams = new URLSearchParams(targetUrl || '');
+        const targetParams = new URLSearchParams(targetUrl?.replace('?', '') || '');
 
         // Get direct language parameter if it exists
         const directLang = urlParams.get('lang');
@@ -236,48 +236,25 @@
         const lang = directLang || targetParams.get('lang') || 'ro';
         const section = directSection || targetParams.get('section');
 
-        if (targetUrl) {
-            // Handle URL parameter case
-            let queryString = '';
-            
-            // Get the part after '?' from targetUrl if it exists
-            const targetUrlParts = targetUrl.split('?');
-            if (targetUrlParts.length > 1) {
-                queryString = targetUrlParts[1];
-            }
-
-            // Add panel parameter if section exists
-            if (section && sectionMap[section]) {
-                queryString = queryString ? 
-                    `${queryString}&panel=${sectionMap[section]}` : 
-                    `panel=${sectionMap[section]}`;
-            }
-
-            const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
-            iframe.src = newUrl;
-            console.log('Constructed URL from target:', newUrl, 'lang:', lang, 'section:', section);
-        } else {
-            // Handle direct parameters case
-            let queryString = '';
-            
-            // Copy all parameters except lang, section, and url
-            const paramPairs = [];
-            urlParams.forEach((value, key) => {
-                if (key !== 'lang' && key !== 'section' && key !== 'url') {
-                    paramPairs.push(`${key}=${value}`);
-                }
-            });
-
-            // Add panel parameter if section exists
-            if (section && sectionMap[section]) {
-                paramPairs.push(`panel=${sectionMap[section]}`);
-            }
-
-            queryString = paramPairs.join('&');
-            const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
-            iframe.src = newUrl;
-            console.log('Constructed URL from direct params:', newUrl, 'lang:', lang, 'section:', section);
+        // Construct query string with all additional parameters
+        const queryParams = [];
+        
+        // Add panel if section exists
+        if (section && sectionMap[section]) {
+            queryParams.push(`panel=${sectionMap[section]}`);
         }
+
+        // Add parameters from targetUrl (except lang, section)
+        targetParams.forEach((value, key) => {
+            if (key !== 'lang' && key !== 'section') {
+                queryParams.push(`${key}=${value}`);
+            }
+        });
+
+        const queryString = queryParams.join('&');
+        const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
+        iframe.src = newUrl;
+        console.log('Constructed URL from target:', newUrl, 'lang:', lang, 'section:', section);
 
         iframe.onload = function () {
             setTimeout(() => {
