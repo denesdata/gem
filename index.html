@@ -380,6 +380,7 @@
         // Initialize menu with language from URL
         document.addEventListener('DOMContentLoaded', () => {
             const initialLang = getLanguageFromUrl(targetUrl);
+            console.log(initialLang,' lanugage detected..')
             updateMenuLanguage(initialLang);
         });
     </script>
