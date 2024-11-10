@@ -246,13 +246,13 @@
 
             // Check for section parameter
             const section = targetParams.get('section');
-            
+
             // Prepare new URL parameters
             const newParams = new URLSearchParams();
             if (section && sectionMap[section]) {
                 newParams.append('panel', sectionMap[section]);
             }
-            
+
             // Copy any other parameters except 'section' and 'lang'
             targetParams.forEach((value, key) => {
                 if (key !== 'section' && key !== 'lang') {
@@ -264,7 +264,7 @@
             const queryString = newParams.toString();
             const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
             iframe.src = newUrl;
-            console.log('Constructed URL:', newUrl, 'lang:', lang, 'params:', newParams.toString());
+            console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', section, 'params:', newParams.toString());
         } else {
             iframe.src = '//gem.csaladen.es';
         }
@@ -276,9 +276,9 @@
 
             // Extract panel ID from the URL if it exists
             if (targetUrl) {
-                const search = targetUrl.split('?')[1];
-                const targetParams = new URLSearchParams(search);
-                const section = targetParams.get('section');
+                // const search = targetUrl.split('?')[1];
+                // const targetParams = new URLSearchParams(search);
+                // const section = targetParams.get('section');
                 const panelId = section ? sectionMap[section] : targetParams.get('panel');
 
                 if (panelId) {
@@ -385,9 +385,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const initialLang = getLanguageFromUrl(targetUrl);
             console.log(initialLang, 'language detected..')
-            setTimeout(() => {
-                updateMenuLanguage(initialLang);
-            }, 100);
+            updateMenuLanguage(initialLang);
         });
     </script>
 </body>
