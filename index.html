@@ -249,22 +249,25 @@
 
             // Check for section parameter
             const section = targetParams.get('section');
+            
+            // Prepare new URL parameters
+            const newParams = new URLSearchParams();
             if (section && sectionMap[section]) {
-                // Replace section with panel ID
-                targetParams.delete('section');
-                targetParams.append('panel', sectionMap[section]);
-
-                // Reconstruct URL with panel ID instead of section
-                // const newUrl = `${path}?${targetParams.toString()}`;
-                // iframe.src = `//gem.csaladen.es${newUrl}`;
-                const newUrl = `//gem.csaladen.es/d/${lang}/?${targetParams.toString()}`;
-                iframe.src = newUrl;
-                console.log('Using the URL parameter as lang=', lang, ',targetParams=', targetParams)
-            } else {
-                // No section parameter or invalid section, use URL as is
-                iframe.src = `//gem.csaladen.es${targetUrl}`;
-                console.log('Using the URL parameter as is..', targetUrl)
+                newParams.append('panel', sectionMap[section]);
             }
+            
+            // Copy any other parameters except 'section' and 'lang'
+            targetParams.forEach((value, key) => {
+                if (key !== 'section' && key !== 'lang') {
+                    newParams.append(key, value);
+                }
+            });
+
+            // Construct final URL
+            const queryString = newParams.toString();
+            const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
+            iframe.src = newUrl;
+            console.log('Constructed URL:', newUrl, 'lang:', lang, 'params:', newParams.toString());
         } else {
             iframe.src = '//gem.csaladen.es';
         }
