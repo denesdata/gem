@@ -236,9 +236,9 @@
         }
 
         if (targetUrl) {
-            // Split the URL into path and search parts
-            const [path, search] = targetUrl.split('?');
-            const targetParams = new URLSearchParams(search);
+            // Remove the initial '?' if present
+            const searchString = targetUrl.startsWith('?') ? targetUrl.substring(1) : targetUrl;
+            const targetParams = new URLSearchParams(searchString);
 
             // Extract language from the target URL
             const lang = getLanguageFromUrl(targetUrl);
