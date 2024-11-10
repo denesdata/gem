@@ -222,17 +222,29 @@
             'news': '173'
         };
 
-        // Get the full URL parameter
+        // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const targetUrl = urlParams.get('url');
 
         // Get the iframe
         const iframe = document.getElementById('iframe');
 
+        // Function to extract language from URL
+        function getLanguageFromUrl(url) {
+            if (!url) return 'ro';
+            if (url.includes('/d/en/')) return 'en';
+            if (url.includes('/d/hu/')) return 'hu';
+            if (url.includes('/d/ro/')) return 'ro';
+            return 'ro'; // default
+        }
+
         if (targetUrl) {
             // Split the URL into path and search parts
             const [path, search] = targetUrl.split('?');
             const targetParams = new URLSearchParams(search);
+
+            // Extract language from the target URL
+            const lang = getLanguageFromUrl(targetUrl);
 
             // Check for section parameter
             const section = targetParams.get('section');
@@ -242,8 +254,10 @@
                 targetParams.append('panel', sectionMap[section]);
 
                 // Reconstruct URL with panel ID instead of section
-                const newUrl = `${path}?${targetParams.toString()}`;
-                iframe.src = `//gem.csaladen.es${newUrl}`;
+                // const newUrl = `${path}?${targetParams.toString()}`;
+                // iframe.src = `//gem.csaladen.es${newUrl}`;
+                const newUrl = `//gem.csaladen.es/d/${lang}?${targetParams.toString()}`;
+                iframe.src = newUrl;
             } else {
                 // No section parameter or invalid section, use URL as is
                 iframe.src = `//gem.csaladen.es${targetUrl}`;
@@ -361,9 +375,10 @@
             }
         });
 
-        // Initialize with default language (ro)
+        // Initialize menu with language from URL
         document.addEventListener('DOMContentLoaded', () => {
-            updateMenuLanguage('ro');
+            const initialLang = getLanguageFromUrl(targetUrl);
+            updateMenuLanguage(initialLang);
         });
     </script>
 </body>
