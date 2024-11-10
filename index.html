@@ -228,8 +228,10 @@
         let targetUrl = '';
         if (fullUrl.includes('url=')) {
             targetUrl = decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4));
-            // Remove any leading question marks
-            targetUrl = targetUrl.replace(/^\?+/, '');
+            // Remove any leading question marks and convert pipes to ampersands
+            targetUrl = targetUrl
+                .replace(/^\?+/, '')
+                .replace(/\|/g, '&');
         }
         console.log('targetUrl after cleanup:', targetUrl);  // Debug
 
