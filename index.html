@@ -223,50 +223,60 @@
         // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const targetUrl = urlParams.get('url');
+        const targetParams = new URLSearchParams(targetUrl || '');
+
+        // Get direct language parameter if it exists
+        const directLang = urlParams.get('lang');
+        const directSection = urlParams.get('section');
 
         // Get the iframe
         const iframe = document.getElementById('iframe');
 
-        // Function to extract language from URL
-        // function getLanguageFromUrl(url) {
-        //     if (!url) return 'ro';
-        //     const params = new URLSearchParams(url.split('?')[1]);
-        //     const lang = params.get('lang');
-        //     return ['en', 'hu', 'ro'].includes(lang) ? lang : 'ro';
-        // }
+        // Determine language and section from either direct parameters or target URL
+        const lang = directLang || targetParams.get('lang') || 'ro';
+        const section = directSection || targetParams.get('section');
 
         if (targetUrl) {
-            // Remove the initial '?' if present
-            // const searchString = targetUrl.startsWith('?') ? targetUrl.substring(1) : targetUrl;
-            const targetParams = new URLSearchParams(targetUrl);
-
-            // Extract language from the target URL
-            // const lang = getLanguageFromUrl(targetUrl);
-            const lang = targetParams.get('lang');
-
-            // Check for section parameter
-            const section = targetParams.get('section');
-
-            // Prepare new URL parameters
-            const newParams = new URLSearchParams();
-            if (section && sectionMap[section]) {
-                newParams.append('panel', sectionMap[section]);
+            // Handle URL parameter case
+            let queryString = '';
+            
+            // Get the part after '?' from targetUrl if it exists
+            const targetUrlParts = targetUrl.split('?');
+            if (targetUrlParts.length > 1) {
+                queryString = targetUrlParts[1];
             }
 
-            // Copy any other parameters except 'section' and 'lang'
-            targetParams.forEach((value, key) => {
-                if (key !== 'section' && key !== 'lang') {
-                    newParams.append(key, value);
+            // Add panel parameter if section exists
+            if (section && sectionMap[section]) {
+                queryString = queryString ? 
+                    `${queryString}&panel=${sectionMap[section]}` : 
+                    `panel=${sectionMap[section]}`;
+            }
+
+            const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
+            iframe.src = newUrl;
+            console.log('Constructed URL from target:', newUrl, 'lang:', lang, 'section:', section);
+        } else {
+            // Handle direct parameters case
+            let queryString = '';
+            
+            // Copy all parameters except lang, section, and url
+            const paramPairs = [];
+            urlParams.forEach((value, key) => {
+                if (key !== 'lang' && key !== 'section' && key !== 'url') {
+                    paramPairs.push(`${key}=${value}`);
                 }
             });
 
-            // Construct final URL
-            const queryString = newParams.toString();
+            // Add panel parameter if section exists
+            if (section && sectionMap[section]) {
+                paramPairs.push(`panel=${sectionMap[section]}`);
+            }
+
+            queryString = paramPairs.join('&');
             const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
             iframe.src = newUrl;
-            console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', section, 'params:', newParams.toString());
-        } else {
-            iframe.src = '//gem.csaladen.es';
+            console.log('Constructed URL from direct params:', newUrl, 'lang:', lang, 'section:', section);
         }
 
         iframe.onload = function () {
@@ -381,11 +391,10 @@
             }
         });
 
-        // Initialize menu with language from URL
+        // Initialize menu with language
         document.addEventListener('DOMContentLoaded', () => {
-            const initialLang = getLanguageFromUrl(targetUrl);
-            console.log(initialLang, 'language detected..')
-            updateMenuLanguage(initialLang);
+            console.log(lang, 'language detected..');
+            updateMenuLanguage(lang);
         });
     </script>
 </body>
