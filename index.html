@@ -220,10 +220,14 @@
             'about': '66'
         };
 
-        // Get the URL parameters
+        // Get the full URL parameter
         const urlParams = new URLSearchParams(window.location.search);
-        const targetUrl = urlParams.get('url');
+        const fullUrl = window.location.search;
+        const targetUrl = fullUrl.substring(fullUrl.indexOf('url=') + 4);
+        //console.log('targetUrl:', targetUrl);  // Should show ?lang=hu&section=start&theme=light
+        
         const targetParams = new URLSearchParams(targetUrl?.replace('?', '') || '');
+        //console.log('targetParams entries:', [...targetParams.entries()]);  
 
         // Get direct language parameter if it exists
         const directLang = urlParams.get('lang');
@@ -244,17 +248,27 @@
             queryParams.push(`panel=${sectionMap[section]}`);
         }
 
-        // Add parameters from targetUrl (except lang, section)
-        targetParams.forEach((value, key) => {
-            if (key !== 'lang' && key !== 'section') {
-                queryParams.push(`${key}=${value}`);
-            }
-        });
+        // Add parameters from either targetUrl or direct URL
+        if (targetUrl) {
+            // If we have a targetUrl, use its parameters
+            targetParams.forEach((value, key) => {
+                if (key !== 'lang' && key !== 'section') {
+                    queryParams.push(`${key}=${value}`);
+                }
+            });
+        } else {
+            // Otherwise use direct URL parameters
+            urlParams.forEach((value, key) => {
+                if (key !== 'lang' && key !== 'section' && key !== 'url') {
+                    queryParams.push(`${key}=${value}`);
+                }
+            });
+        }
 
         const queryString = queryParams.join('&');
         const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
         iframe.src = newUrl;
-        console.log('Constructed URL from target:', newUrl, 'lang:', lang, 'section:', section);
+        console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', section);
 
         iframe.onload = function () {
             setTimeout(() => {
