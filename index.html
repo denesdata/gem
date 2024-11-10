@@ -291,6 +291,17 @@
             // Prevent default anchor behavior
             return false;
         }
+
+        window.addEventListener('message', function (event) {
+            // Verify the message is from our Grafana domain
+            if (event.origin !== 'https://gem.csaladen.es') return;
+
+            if (event.data.type === 'grafanaNavigation') {
+                console.log('Grafana navigated to:', event.data.url);
+                // Add your custom handling here
+            }
+        });
+        
     </script>
 </body>
 
