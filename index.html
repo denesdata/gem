@@ -228,20 +228,21 @@
         const iframe = document.getElementById('iframe');
 
         // Function to extract language from URL
-        function getLanguageFromUrl(url) {
-            if (!url) return 'ro';
-            const params = new URLSearchParams(url.split('?')[1]);
-            const lang = params.get('lang');
-            return ['en', 'hu', 'ro'].includes(lang) ? lang : 'ro';
-        }
+        // function getLanguageFromUrl(url) {
+        //     if (!url) return 'ro';
+        //     const params = new URLSearchParams(url.split('?')[1]);
+        //     const lang = params.get('lang');
+        //     return ['en', 'hu', 'ro'].includes(lang) ? lang : 'ro';
+        // }
 
         if (targetUrl) {
             // Remove the initial '?' if present
-            const searchString = targetUrl.startsWith('?') ? targetUrl.substring(1) : targetUrl;
+            // const searchString = targetUrl.startsWith('?') ? targetUrl.substring(1) : targetUrl;
             const targetParams = new URLSearchParams(searchString);
 
             // Extract language from the target URL
-            const lang = getLanguageFromUrl(targetUrl);
+            // const lang = getLanguageFromUrl(targetUrl);
+            const lang = targetParams.get('lang');
 
             // Check for section parameter
             const section = targetParams.get('section');
@@ -383,7 +384,7 @@
         // Initialize menu with language from URL
         document.addEventListener('DOMContentLoaded', () => {
             const initialLang = getLanguageFromUrl(targetUrl);
-            console.log(initialLang, 'lanugage detected..')
+            console.log(initialLang, 'language detected..')
             setTimeout(() => {
                 updateMenuLanguage(initialLang);
             }, 100);
