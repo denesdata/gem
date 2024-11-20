@@ -309,6 +309,14 @@
             targetUrl = targetUrl
                 .replace(/^\?+/, '')
                 .replace(/\|/g, '&');
+
+            // Check if this is a PDF URL pattern
+            if (targetUrl.startsWith('html=')) {
+                const pdfPath = targetUrl.replace('html=', '');
+                window.location.href = `https://gem-html.csaladen.es/${pdfPath}`;
+                // Stop further execution
+                throw new Error('Redirecting to HTML');
+            }
         }
         console.log('targetUrl after cleanup:', targetUrl);  // Debug
 
