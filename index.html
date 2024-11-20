@@ -225,6 +225,35 @@
             font-family: "Abyssinica SIL", sans-serif;
             font-weight: 400;
             color: #d8d9da;
+            position: relative;
+            /* Add this */
+            display: inline-block;
+            /* Add this */
+        }
+
+        /* Add circular loader styles */
+        .center-logo div:after {
+            content: '';
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 25px;
+            border: 3px solid rgba(59, 255, 206, 0.2);
+            border-top: 3px solid #3bffce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -242,7 +271,7 @@
         <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
         <a href="#" onclick="return scrollToSection('about')"><i class="fas fa-person"></i> About</a>
     </nav>
-    <video style="position: absolute; left:0px; top:0px; min-width: 100%;
+    <video id="bg-video" style="position: absolute; left:0px; top:0px; min-width: 100%;
   min-height: 100%;" loop muted autoplay poster="https://descoanalytics.com/img/bg.jpg">
         <source src="https://descoanalytics.com/vid/5b.mp4" type="video/mp4">
     </video>
@@ -322,9 +351,10 @@
             setTimeout(() => {
                 document.querySelector('.center-logo').style.opacity = 0;
             }, 500);
-            
+
             setTimeout(() => {
                 document.querySelector('.nav-menu').style.opacity = 1;
+                document.querySelector('#bg-video').style.opacity = 0;
             }, 2000);
 
             // Extract panel ID from the URL if it exists
