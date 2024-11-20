@@ -199,17 +199,6 @@
             z-index: 900;
         }
 
-        /* Add this new rule to hide the loading bar */
-        iframe::after,
-        iframe:after {
-            display: none !important;
-        }
-
-        /* Also add this to ensure any loading bars within the iframe are hidden */
-        :root {
-            --loadingBar-gradient: transparent !important;
-        }
-
         /* Add new logo styles */
         .center-logo {
             position: absolute;
@@ -282,7 +271,7 @@
         <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
         <a href="#" onclick="return scrollToSection('about')"><i class="fas fa-person"></i> About</a>
     </nav>
-    <video id="bg-video" style="position: absolute; left:0px; top:0px; min-width: 100%;
+    <!-- <video id="bg-video" style="position: absolute; left:0px; top:0px; min-width: 100%;
   min-height: 100%;" loop muted autoplay poster="https://descoanalytics.com/img/bg.jpg">
         <source src="https://descoanalytics.com/vid/5b.mp4" type="video/mp4">
     </video>
@@ -292,7 +281,7 @@
     <div class="center-logo">
         <img src="https://www.gemconsortium.org/images/new-logo-white.png" alt="GEM Logo">
         <div>Romania</div>
-    </div>
+    </div> -->
     <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
     <script>
         // Section to panel ID mapping
