@@ -199,6 +199,17 @@
             z-index: 900;
         }
 
+        /* Add this new rule to hide the loading bar */
+        iframe::after,
+        iframe:after {
+            display: none !important;
+        }
+
+        /* Also add this to ensure any loading bars within the iframe are hidden */
+        :root {
+            --loadingBar-gradient: transparent !important;
+        }
+
         /* Add new logo styles */
         .center-logo {
             position: absolute;
