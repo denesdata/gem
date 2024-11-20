@@ -310,7 +310,7 @@
                 .replace(/^\?+/, '')
                 .replace(/\|/g, '&');
 
-            // Check if this is a PDF URL pattern
+            // Check if this is a HTML URL pattern
             if (targetUrl.startsWith('html=')) {
                 const pdfPath = targetUrl.replace('html=', '');
                 window.location.href = `https://gem-html.csaladen.es/${pdfPath}`;
