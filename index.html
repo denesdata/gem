@@ -305,6 +305,13 @@
         let targetUrl = '';
         if (fullUrl.includes('url=')) {
             targetUrl = decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4));
+
+            // Check for hardcoded shortcut
+            if (targetUrl === 'Raport2024') {
+                window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/Raport%20de%20tara%202022-2023_final.pdf';
+                throw new Error('Redirecting to 2024 Report');
+            }
+
             // Remove any leading question marks and convert pipes to ampersands
             targetUrl = targetUrl
                 .replace(/^\?+/, '')
