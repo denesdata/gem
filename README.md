@@ -42,5 +42,5 @@ https://econ.ubbcluj.ro/entrepreneurship/, last accessed on: ...
 - 🇭🇺 BBTE-KGTK (2024): Global Entrepreneurship Monitor Románia,  
 https://econ.ubbcluj.ro/entrepreneurship/, utolsó betöltés dátuma: ...
 
-## Stargazers over time
+## 💫 Stars over time
 [![Stargazers over time](https://starchart.cc/denesdata/gem.svg?variant=adaptive)](https://starchart.cc/denesdata/gem)
