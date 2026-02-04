@@ -1,0 +1,82 @@
+/* GEM Color Scheme CSS - Shared across all panels */
+/* This file provides color variables based on the selected color scheme */
+
+:root {
+  /* Colorful scheme (default) */
+  --accent-1: #FF70BB; /* Pink */
+  --accent-2: #ebbc5a; /* Gold */
+  --accent-3: #afa2dc; /* Purple */
+  --accent-4: #99D9EA; /* Cyan */
+  --accent-5: #ffa349; /* Orange */
+  --accent-6: #7EC844; /* Green */
+  --primary: #7EC844;
+  --primary-hover: #5FA832;
+  --teal: #3D8B70;
+  
+  /* Dark theme background */
+  --bg-primary: #0a0f14;
+  --bg-card: #12181f;
+  --bg-elevated: #1a222b;
+  --text-primary: #F8FAF9;
+  --text-secondary: #B8C5C0;
+  --text-muted: #6B7D77;
+  --border: rgba(126, 200, 68, 0.2);
+}
+
+/* Light theme */
+[data-theme="light"], .light {
+  --bg-primary: #F8FAFA;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --text-primary: #1A1F24;
+  --text-secondary: #4A5562;
+  --text-muted: #9AA5B1;
+  --border: rgba(0, 0, 0, 0.1);
+}
+
+/* Green color scheme overrides */
+[data-colors="green"], .green-scheme {
+  --accent-1: #3D8B70; /* Teal */
+  --accent-2: #4A9F31; /* Dark Green */
+  --accent-3: #5FA832; /* Medium Green */
+  --accent-4: #7EC844; /* Primary Green */
+  --accent-5: #9AD864; /* Light Green */
+  --accent-6: #BBF7D0; /* Pale Green */
+  --primary: #3D8B70;
+  --primary-hover: #2D6B55;
+  --teal: #2D6B55;
+}
+
+/* Chart color array for D3/visx */
+.colorful-colors {
+  --chart-colors: #FF70BB, #ebbc5a, #afa2dc, #99D9EA, #ffa349, #7EC844;
+}
+
+.green-colors {
+  --chart-colors: #3D8B70, #4A9F31, #5FA832, #7EC844, #9AD864, #BBF7D0;
+}
+
+/* Utility classes */
+.bg-primary { background-color: var(--primary); }
+.bg-accent-1 { background-color: var(--accent-1); }
+.bg-accent-2 { background-color: var(--accent-2); }
+.bg-accent-3 { background-color: var(--accent-3); }
+.bg-accent-4 { background-color: var(--accent-4); }
+.bg-accent-5 { background-color: var(--accent-5); }
+.bg-accent-6 { background-color: var(--accent-6); }
+
+.text-primary { color: var(--primary); }
+.text-accent-1 { color: var(--accent-1); }
+.text-accent-2 { color: var(--accent-2); }
+.text-accent-3 { color: var(--accent-3); }
+.text-accent-4 { color: var(--accent-4); }
+.text-accent-5 { color: var(--accent-5); }
+.text-accent-6 { color: var(--accent-6); }
+
+body {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}

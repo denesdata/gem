@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrepreneurial Attitudes</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <style>
+    .attitudes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      height: 100%;
+      align-content: center;
+    }
+    
+    .attitude-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    
+    .attitude-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .attitude-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .attitude-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke-width: 1.5;
+      fill: none;
+    }
+    
+    .attitude-value {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+    
+    .attitude-label {
+      font-size: 10px;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.3;
+      max-width: 100px;
+    }
+    
+    @media (max-width: 500px) {
+      .attitudes-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .attitude-card:nth-child(4),
+      .attitude-card:nth-child(5) {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="panel-container">
+    <div id="attitudes" class="attitudes-grid"></div>
+  </div>
+
+  <script>
+    const attitudes = [
+      { 
+        icon: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        value: '45.5%',
+        label: 'Knows an entrepreneur'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`,
+        value: '55.7%',
+        label: 'Sees opportunities'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+        value: '52.6%',
+        label: 'Has skills & knowledge'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
+        value: '59.0%',
+        label: 'Fear of failure'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+        value: '36.0%',
+        label: 'Easy to start'
+      }
+    ];
+
+    function render() {
+      const container = document.getElementById('attitudes');
+      const colors = window.getGemColors();
+      
+      container.innerHTML = attitudes.map((item, i) => {
+        const color = colors[i % colors.length];
+        return `
+          <div class="attitude-card animate-in" style="animation-delay: ${i * 80}ms">
+            <div class="attitude-icon" style="color: ${color}; stroke: ${color}">
+              ${item.icon}
+            </div>
+            <div class="attitude-value" style="color: ${color}">${item.value}</div>
+            <div class="attitude-label">${item.label}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

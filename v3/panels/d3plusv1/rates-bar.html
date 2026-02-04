@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrepreneurial Activity Rates</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+</head>
+<body>
+  <div class="panel-container">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title" id="title">Activity Rates</div>
+        <div class="panel-subtitle">% of adult population</div>
+      </div>
+    </div>
+    
+    <div class="chart-area" id="chart"></div>
+  </div>
+
+  <script>
+    // Data - would be loaded from JSON in production
+    const data = [
+      { key: 'tea', value: 10.8, fullName: 'Total Early-Stage Entrepreneurial Activity' },
+      { key: 'ebo', value: 7.2, fullName: 'Established Business Ownership' },
+      { key: 'intent', value: 23.5, fullName: 'Entrepreneurial Intentions' },
+      { key: 'neci', value: 4.3, fullName: 'National Entrepreneurship Context Index' },
+    ];
+
+    function render() {
+      const container = document.getElementById('chart');
+      const colors = window.getGemColors();
+      const maxValue = Math.max(...data.map(d => d.value)) * 1.1;
+      
+      container.innerHTML = data.map((item, i) => `
+        <div class="bar-row animate-in" style="animation-delay: ${i * 100}ms">
+          <div class="bar-label">${item.key.toUpperCase()}</div>
+          <div class="bar-track">
+            <div class="bar-fill accent-${(i % 6) + 1}" 
+                 style="width: ${(item.value / maxValue) * 100}%"
+                 title="${item.fullName}">
+              <span class="bar-value">${item.value}%</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Wait for color-scheme.js to initialize
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    // Re-render on settings change
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

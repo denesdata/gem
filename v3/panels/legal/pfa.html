@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFA Information</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <style>
+    .info-container {
+      height: 100%;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    
+    .info-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-2);
+    }
+    
+    .info-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .info-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .info-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .info-item {
+      padding: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    
+    .info-item.full {
+      grid-column: span 2;
+    }
+    
+    .info-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .info-value.highlight {
+      color: var(--primary);
+    }
+    
+    .pros-cons {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    
+    .pros, .cons {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+    
+    .pros {
+      background: rgba(126, 200, 68, 0.1);
+      border: 1px solid rgba(126, 200, 68, 0.2);
+    }
+    
+    .cons {
+      background: rgba(255, 112, 187, 0.1);
+      border: 1px solid rgba(255, 112, 187, 0.2);
+    }
+    
+    .pros-title, .cons-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .pros-title { color: var(--primary); }
+    .cons-title { color: var(--accent-1); }
+    
+    .list-item {
+      padding: 3px 0;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    
+    .list-item::before {
+      content: '•';
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="info-container" id="content"></div>
+
+  <script>
+    const translations = {
+      RO: {
+        title: 'Persoană Fizică Autorizată',
+        subtitle: 'Formă simplificată pentru antreprenori individuali',
+        capital: 'Capital necesar',
+        capitalValue: '0 LEI',
+        tax: 'Impozit pe venit',
+        taxValue: '10% sau 1-3%',
+        liability: 'Răspundere',
+        liabilityValue: 'Nelimitată',
+        registration: 'Înregistrare',
+        registrationValue: '~3 zile',
+        pros: 'Avantaje',
+        cons: 'Dezavantaje',
+        prosList: ['Înregistrare simplă', 'Costuri reduse', 'Contabilitate simplificată', 'Fără capital social'],
+        consList: ['Răspundere personală', 'Un singur asociat', 'Limitări activități', 'Credibilitate redusă']
+      },
+      EN: {
+        title: 'Sole Trader (PFA)',
+        subtitle: 'Simplified form for individual entrepreneurs',
+        capital: 'Required capital',
+        capitalValue: '0 LEI',
+        tax: 'Income tax',
+        taxValue: '10% or 1-3%',
+        liability: 'Liability',
+        liabilityValue: 'Unlimited',
+        registration: 'Registration',
+        registrationValue: '~3 days',
+        pros: 'Advantages',
+        cons: 'Disadvantages',
+        prosList: ['Simple registration', 'Low costs', 'Simplified accounting', 'No share capital'],
+        consList: ['Personal liability', 'Single owner only', 'Activity limitations', 'Lower credibility']
+      },
+      HU: {
+        title: 'Egyéni Vállalkozó (PFA)',
+        subtitle: 'Egyszerűsített forma egyéni vállalkozóknak',
+        capital: 'Szükséges tőke',
+        capitalValue: '0 LEI',
+        tax: 'Jövedelemadó',
+        taxValue: '10% vagy 1-3%',
+        liability: 'Felelősség',
+        liabilityValue: 'Korlátlan',
+        registration: 'Regisztráció',
+        registrationValue: '~3 nap',
+        pros: 'Előnyök',
+        cons: 'Hátrányok',
+        prosList: ['Egyszerű regisztráció', 'Alacsony költségek', 'Egyszerű könyvelés', 'Nincs jegyzett tőke'],
+        consList: ['Személyes felelősség', 'Csak egy tulajdonos', 'Tevékenységi korlátok', 'Alacsonyabb hitelesség']
+      }
+    };
+
+    function render() {
+      const container = document.getElementById('content');
+      const settings = window.getGemSettings();
+      const t = translations[settings.lang] || translations.EN;
+      
+      container.innerHTML = `
+        <div class="info-header">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <div class="info-title">${t.title}</div>
+            <div class="info-subtitle">${t.subtitle}</div>
+          </div>
+        </div>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">${t.capital}</div>
+            <div class="info-value highlight">${t.capitalValue}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">${t.tax}</div>
+            <div class="info-value">${t.taxValue}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">${t.liability}</div>
+            <div class="info-value">${t.liabilityValue}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">${t.registration}</div>
+            <div class="info-value">${t.registrationValue}</div>
+          </div>
+        </div>
+        
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">✓ ${t.pros}</div>
+            ${t.prosList.map(item => `<div class="list-item">${item}</div>`).join('')}
+          </div>
+          <div class="cons">
+            <div class="cons-title">✗ ${t.cons}</div>
+            ${t.consList.map(item => `<div class="list-item">${item}</div>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemSettings) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

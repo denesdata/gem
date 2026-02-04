@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble Chart</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .chart-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+    
+    .chart-header {
+      margin-bottom: 12px;
+    }
+    
+    .size-by-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    
+    .size-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .size-option {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    
+    .size-option.active {
+      color: white;
+    }
+    
+    .size-option:not(.active) {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    
+    .size-option:not(.active):hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .bubble-container {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    
+    .bubble-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .bubble {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    
+    .bubble:hover {
+      opacity: 0.8;
+    }
+    
+    .bubble-label {
+      font-size: 10px;
+      fill: white;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+      font-weight: 500;
+    }
+    
+    .bubble-label-small {
+      font-size: 8px;
+      fill: rgba(255,255,255,0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-wrapper">
+    <div class="chart-header">
+      <div class="size-by-label">Size by:</div>
+      <div class="size-options" id="options"></div>
+    </div>
+    <div class="bubble-container" id="chart"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const chartType = params.get('type') || 'profiles';
+    
+    const datasets = {
+      profiles: {
+        title: 'Entrepreneurial Profiles',
+        options: [
+          { id: 'intent', label: 'Entrepreneurial Intentions', color: 0 },
+          { id: 'tea', label: 'Total early-stage entrepreneurial activity rate', color: 1 },
+          { id: 'ebo', label: 'Established business ownership', color: 2 }
+        ],
+        groups: [
+          {
+            label: 'Income',
+            bubbles: [
+              { label: 'Upper 33%ile', value: 50, sub: '' },
+              { label: 'Middle 33%ile', value: 35, sub: '' },
+              { label: 'Lower 33%ile', value: 15, sub: '' }
+            ]
+          },
+          {
+            label: 'Age',
+            bubbles: [
+              { label: '25-34', value: 30, sub: '' },
+              { label: '35-44', value: 40, sub: '' },
+              { label: '45-54', value: 20, sub: '' },
+              { label: '55-64', value: 10, sub: '' }
+            ]
+          },
+          {
+            label: 'Gender',
+            bubbles: [
+              { label: 'Male', value: 61, sub: '' },
+              { label: 'Female', value: 39, sub: '' }
+            ]
+          },
+          {
+            label: 'Education',
+            bubbles: [
+              { label: 'Graduate experience', value: 47, sub: '' },
+              { label: 'Some secondary', value: 35, sub: '' },
+              { label: 'Primary only', value: 18, sub: '' }
+            ]
+          }
+        ]
+      },
+      motives: {
+        title: 'Motives & Exit Reasons',
+        options: [
+          { id: 'tea', label: 'Total early-stage entrepreneurial activity rate', color: 0 },
+          { id: 'ebo', label: 'Established business ownership', color: 1 }
+        ],
+        groups: [
+          {
+            label: 'Motive to start a business',
+            bubbles: [
+              { label: 'To earn a living because jobs are scarce', value: 32, sub: '' },
+              { label: 'To make a difference in the world', value: 22, sub: '' },
+              { label: 'To build great wealth or a very high income', value: 28, sub: '' },
+              { label: 'To continue a family tradition', value: 18, sub: '' }
+            ]
+          },
+          {
+            label: 'Exit reasons',
+            bubbles: [
+              { label: 'Another opportunity', value: 25, sub: 'AO' },
+              { label: 'Business not profitable', value: 35, sub: 'NP' },
+              { label: 'Personal reasons', value: 25, sub: 'PR' },
+              { label: 'Retirement', value: 15, sub: 'RT' }
+            ]
+          }
+        ]
+      },
+      characteristics: {
+        title: 'Business Characteristics',
+        options: [
+          { id: 'tea', label: 'Total early-stage entrepreneurial activity rate', color: 0 },
+          { id: 'ebo', label: 'Established business ownership', color: 1 }
+        ],
+        groups: [
+          {
+            label: 'Technology Level',
+            bubbles: [
+              { label: 'No/low technology', value: 70, sub: '' },
+              { label: 'Medium tech', value: 20, sub: '' },
+              { label: 'High tech', value: 10, sub: '' }
+            ]
+          },
+          {
+            label: 'Sector',
+            bubbles: [
+              { label: 'Consumer services', value: 40, sub: '' },
+              { label: 'Business services', value: 25, sub: 'B2B' },
+              { label: 'Transforming', value: 20, sub: '' },
+              { label: 'Extractive', value: 15, sub: '' }
+            ]
+          },
+          {
+            label: 'Novelty',
+            bubbles: [
+              { label: 'Not new product', value: 60, sub: '' },
+              { label: 'New to area', value: 25, sub: '' },
+              { label: 'New to world', value: 15, sub: '' }
+            ]
+          }
+        ]
+      }
+    };
+    
+    const dataset = datasets[chartType] || datasets.profiles;
+    let activeOption = 0;
+
+    function render() {
+      const optionsEl = document.getElementById('options');
+      const chartEl = document.getElementById('chart');
+      const colors = window.getGemColors();
+      
+      // Render options
+      optionsEl.innerHTML = dataset.options.map((opt, i) => `
+        <button class="size-option ${i === activeOption ? 'active' : ''}" 
+                data-index="${i}"
+                style="${i === activeOption ? `background: ${colors[opt.color % colors.length]}` : ''}">
+          ${opt.label}
+        </button>
+      `).join('');
+      
+      // Clear and get dimensions
+      chartEl.innerHTML = '';
+      const rect = chartEl.getBoundingClientRect();
+      const width = rect.width || 400;
+      const height = rect.height || 300;
+      
+      const svg = d3.select('#chart')
+        .append('svg')
+        .attr('class', 'bubble-svg')
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+      
+      // Position groups horizontally
+      const groups = dataset.groups;
+      const groupWidth = width / groups.length;
+      
+      groups.forEach((group, gi) => {
+        const groupX = groupWidth * gi + groupWidth / 2;
+        const groupColor = colors[gi % colors.length];
+        
+        // Create pack layout for bubbles
+        const packData = {
+          children: group.bubbles.map(b => ({ ...b, r: Math.sqrt(b.value) * 8 }))
+        };
+        
+        const pack = d3.pack()
+          .size([groupWidth * 0.85, height * 0.75])
+          .padding(4);
+        
+        const root = d3.hierarchy(packData)
+          .sum(d => d.value);
+        
+        const nodes = pack(root).leaves();
+        
+        // Draw bubbles
+        const groupG = svg.append('g')
+          .attr('transform', `translate(${groupX - groupWidth * 0.85 / 2}, ${height * 0.1})`);
+        
+        // Group label
+        svg.append('text')
+          .attr('x', groupX)
+          .attr('y', height - 10)
+          .attr('text-anchor', 'middle')
+          .attr('font-size', '10px')
+          .attr('fill', 'var(--text-muted)')
+          .text(group.label);
+        
+        nodes.forEach(node => {
+          const g = groupG.append('g')
+            .attr('class', 'bubble')
+            .attr('transform', `translate(${node.x}, ${node.y})`);
+          
+          g.append('circle')
+            .attr('r', node.r)
+            .attr('fill', groupColor)
+            .attr('opacity', 0.85);
+          
+          if (node.r > 20) {
+            g.append('text')
+              .attr('class', 'bubble-label')
+              .attr('y', node.data.sub ? -5 : 0)
+              .text(node.data.label.length > 15 ? node.data.label.slice(0, 12) + '...' : node.data.label);
+            
+            if (node.data.sub) {
+              g.append('text')
+                .attr('class', 'bubble-label bubble-label-small')
+                .attr('y', 8)
+                .text(node.data.sub);
+            }
+          }
+        });
+      });
+    }
+
+    // Event listeners
+    document.getElementById('options').addEventListener('click', (e) => {
+      const btn = e.target.closest('.size-option');
+      if (btn) {
+        activeOption = parseInt(btn.dataset.index);
+        render();
+      }
+    });
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('resize', render);
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

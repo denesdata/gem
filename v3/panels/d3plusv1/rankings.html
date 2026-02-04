@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEM Rankings</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <style>
+    .rankings-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .rankings-title {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    
+    .rankings-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      flex: 1;
+      align-content: start;
+    }
+    
+    .ranking-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 6px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .ranking-card:hover {
+      transform: scale(1.05);
+      border-color: var(--border-accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .ranking-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .ranking-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 1.5;
+      fill: none;
+    }
+    
+    .ranking-position {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+    
+    .ranking-label {
+      font-size: 9px;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+    
+    .rankings-footer {
+      text-align: center;
+      padding-top: 12px;
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+    }
+    
+    .rankings-footer-text {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .rankings-footer-highlight {
+      font-weight: 600;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="panel-container">
+    <div class="rankings-container">
+      <div class="rankings-title">Romania's Position in Europe (out of 24 countries)</div>
+      <div id="rankings" class="rankings-grid"></div>
+      <div class="rankings-footer">
+        <span class="rankings-footer-text">National Entrepreneurship Context Index: </span>
+        <span class="rankings-footer-highlight">4.3 / 10</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const rankings = [
+      {
+        icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>`,
+        position: '7th',
+        label: 'Financing'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+        position: '15th',
+        label: 'Programs'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+        position: '8th',
+        label: 'Education'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>`,
+        position: '3rd',
+        label: 'Infrastructure'
+      },
+      {
+        icon: `<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+        position: '6th',
+        label: 'Market'
+      }
+    ];
+
+    function render() {
+      const container = document.getElementById('rankings');
+      const colors = window.getGemColors();
+      
+      container.innerHTML = rankings.map((item, i) => {
+        const color = colors[i % colors.length];
+        return `
+          <div class="ranking-card animate-in" style="animation-delay: ${i * 60}ms">
+            <div class="ranking-icon" style="color: ${color}; stroke: ${color}">
+              ${item.icon}
+            </div>
+            <div class="ranking-position" style="color: ${color}">${item.position}</div>
+            <div class="ranking-label">${item.label}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

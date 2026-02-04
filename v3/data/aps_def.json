@@ -1,0 +1,38 @@
+{
+  "HU": {
+    "Lehetőség felismerők aránya": "A 18-64 éves népesség százalékos aránya (a vállalkozói tevékenység bármely szakaszában részt vevő személyek nélkül), akik jó lehetőséget látnak arra, hogy a lakóhelyükön vállalkozást alapítsanak.",
+    "Érzékelt képességek aránya": "A 18-64 éves népesség százalékos aránya (a vállalkozási tevékenység bármely szakaszában részt vevő személyek nélkül), akik úgy vélik, hogy rendelkeznek a vállalkozás indításához szükséges képességekkel és ismeretekkel.",
+    "Kudarctól való félelem aránya": "A 18-64 éves népesség százalékos aránya, akik azt nyilatkozták, hogy a kudarctól való félelem megakadályozná őket abban, hogy vállalkozást alapítsanak.",
+    "Potenciális vállalkozók": "A 18-64 éves népesség százalékos aránya, akik potenciális vállalkozók és három éven belül vállalkozást akarnak indítani.",
+    "Korai fázisú vállalkozói ráta": "A 18-64 éves népesség százalékos aránya, akik vagy kezdő vállalkozók vagy egy új vállalkozás (maximum 42 hónapos) tulajdonosai és menedzserei.",
+    "Megállapodott vállalkozói ráta": "A 18-64 éves népesség százalékos aránya, akik egy 42 hónapnál régebb óta működő vállalkozás tulajdonos-menedzserei.",
+    "Nő/férfi TEA arány": "A női és férfi korai fázisú ráta aránya.",
+    "Innovációs ráta": "Azon korai fázisú vállalkozók aránya, akik azt jelzik, hogy termékük vagy szolgáltatásuk legalább néhány ügyfél számára új.",
+    "Magas növekedési várakozású vállalkozók aránya": "Azon korai fázisú vállalkozók aránya, akik 5 éven belül 6 vagy több munkahely létrehozására számítanak.",
+    "Nemzeti vállalkozói környezet index": "A NECI a 13 keretfeltételre vonatkozó összesített szakértői pontszámok átlaga."
+  },
+  "RO": {
+    "Rata oportunității percepute": "Procentul populației cu vârsta cuprinsă între 18 și 64 de ani care consideră că există oportunități bune de a înființa o întreprindere în zona în care locuiesc.",
+    "Rata capacităților percepute": "Procentul populației cu vârsta cuprinsă între 18 și 64 de ani care consideră că au competențele și cunoștințele necesare pentru a începe o afacere.",
+    "Rata fricii de eșec": "Procentul populației cu vârsta cuprinsă între 18 și 64 de ani care indică faptul că teama de eșec este un obstacol în demararea unei afaceri.",
+    "Intenții antreprenoriale": "Procentul populației cu vârsta cuprinsă între 18 și 64 de ani care sunt antreprenori potențiali și care intenționează să înființeze o afacere în următorii trei ani.",
+    "Rata activității antreprenoriale în stadiu incipient": "Procentul din populația cu vârsta cuprinsă între 18 și 64 de ani care este fie antreprenor debutant, fie proprietar-manager al unei noi întreprinderi.",
+    "Rata proprietarilor de afaceri consacrați": "Procentul din populația cu vârsta cuprinsă între 18 și 64 de ani care este în prezent proprietar-manager al unei întreprinderi consacrate.",
+    "Raportul TEA feminin/masculin": "Procentul populației feminine cu vârsta cuprinsă între 18 și 64 de ani care este fie antreprenor debutant, împărțit la procentul echivalent pentru omologii lor de sex masculin.",
+    "Rata de inovație": "Procentul celor implicați în TEA care indică faptul că produsul sau serviciul lor este nou pentru cel puțin o parte din clienți.",
+    "Proporția antreprenorilor cu așteptări mari de dezvoltare": "Procentul celor implicați în TEA care se așteaptă să creeze 6 sau mai multe locuri de muncă în 5 ani.",
+    "Indicele național al contextului antreprenorial": "NECI reprezintă media scorurilor acordate de experți pentru cele 13 condiții-cadru."
+  },
+  "EN": {
+    "Perceived opportunities rate": "Percentage of 18-64 population who see good opportunities to start a firm in the area where they live.",
+    "Perceived capabilities rate": "Percentage of 18-64 population who believe they have the required skills and knowledge to start a business.",
+    "Fear of failure rate": "Percentage of 18-64 population who indicate that fear of failure would prevent them from setting up a business.",
+    "Entrepreneurial intentions": "Percentage of 18-64 population who are latent entrepreneurs and who intend to start a business within three years.",
+    "Total early-stage entrepreneurial activity rate": "Percentage of 18-64 population who are either a nascent entrepreneur or owner-manager of a new business.",
+    "Established business ownership": "Percentage of 18-64 population who are currently an owner-manager of an established business.",
+    "Female/Male TEA rate": "Percentage of female 18-64 population who are either a nascent entrepreneur, divided by the equivalent percentage for their male counterparts.",
+    "Innovation rate": "Percentage of those involved in TEA who indicate that their product or service is new to at least some customers.",
+    "High job creation expectation rate": "Percentage of those involved in TEA who expect to create 6 or more jobs in 5 years.",
+    "National Entrepreneurial Context Index": "The NECI is the average of the pooled expert scores across the 13 framework conditions."
+  }
+}

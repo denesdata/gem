@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEM Reports</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <style>
+    .carousel-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .carousel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .carousel-nav {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .nav-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-glow);
+    }
+    
+    .nav-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .carousel-track-wrapper {
+      flex: 1;
+      overflow: hidden;
+      padding: 16px;
+    }
+    
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+    }
+    
+    .report-card {
+      flex: 0 0 260px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+    
+    .report-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow);
+    }
+    
+    .report-cover {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .report-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary-glow), transparent);
+    }
+    
+    .report-year {
+      font-size: 64px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--primary);
+      opacity: 0.3;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .report-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .report-content {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .report-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    
+    .report-description {
+      font-size: 12px;
+      color: var(--text-muted);
+      flex: 1;
+      line-height: 1.5;
+    }
+    
+    .report-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .report-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    
+    .report-download {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    
+    .report-download:hover {
+      opacity: 0.8;
+    }
+    
+    .report-download svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+    <div class="carousel-header">
+      <div class="panel-title">GEM Reports Library</div>
+      <div class="carousel-nav">
+        <button class="nav-btn" id="prevBtn">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="nav-btn" id="nextBtn">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track" id="track"></div>
+    </div>
+    
+    <div class="carousel-dots" id="dots"></div>
+  </div>
+
+  <script>
+    const reports = [
+      { year: 2024, title: 'GEM Romania National Report', type: 'National', date: '2024-12', pdf: '#' },
+      { year: 2024, title: 'GEM Global Report', type: 'Global', date: '2024-03', pdf: 'https://gemconsortium.org' },
+      { year: 2023, title: 'GEM Romania National Report', type: 'National', date: '2023-12', pdf: '#' },
+      { year: 2023, title: 'Women\'s Entrepreneurship Report', type: 'Special', date: '2023-09', pdf: '#' },
+      { year: 2022, title: 'GEM Romania National Report', type: 'National', date: '2022-12', pdf: '#' },
+      { year: 2022, title: 'GEM Global Report', type: 'Global', date: '2022-03', pdf: 'https://gemconsortium.org' },
+      { year: 2021, title: 'GEM Romania National Report', type: 'National', date: '2021-12', pdf: '#' },
+      { year: 2020, title: 'COVID Impact on Entrepreneurship', type: 'Special', date: '2020-09', pdf: '#' },
+    ];
+
+    let currentIndex = 0;
+    const cardsPerView = 3;
+
+    function render() {
+      const track = document.getElementById('track');
+      const dotsContainer = document.getElementById('dots');
+      const colors = window.getGemColors();
+      
+      const typeColors = {
+        'National': colors[0],
+        'Global': colors[1],
+        'Special': colors[3]
+      };
+      
+      track.innerHTML = reports.map((report, i) => `
+        <div class="report-card animate-in" style="animation-delay: ${i * 50}ms">
+          <div class="report-cover" style="background: linear-gradient(135deg, ${typeColors[report.type]}22, var(--bg-card))">
+            <span class="report-year">${report.year}</span>
+            <span class="report-badge" style="background: ${typeColors[report.type]}33; color: ${typeColors[report.type]}">${report.type}</span>
+          </div>
+          <div class="report-content">
+            <div class="report-title">${report.title}</div>
+            <div class="report-description">Comprehensive analysis of entrepreneurial activity, attitudes, and aspirations in ${report.type === 'Global' ? 'participating economies' : 'Romania'}.</div>
+            <div class="report-footer">
+              <span class="report-date">${report.date}</span>
+              <a href="${report.pdf}" target="_blank" class="report-download">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Dots
+      const numDots = Math.ceil(reports.length / cardsPerView);
+      dotsContainer.innerHTML = Array(numDots).fill(0).map((_, i) => 
+        `<div class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+      ).join('');
+    }
+
+    function slide(direction) {
+      const track = document.getElementById('track');
+      const maxIndex = Math.ceil(reports.length / cardsPerView) - 1;
+      
+      currentIndex = Math.max(0, Math.min(maxIndex, currentIndex + direction));
+      
+      const cardWidth = 260 + 16; // card width + gap
+      track.style.transform = `translateX(-${currentIndex * cardWidth * cardsPerView}px)`;
+      
+      // Update dots
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+        
+        document.getElementById('prevBtn').addEventListener('click', () => slide(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => slide(1));
+        
+        document.getElementById('dots').addEventListener('click', (e) => {
+          if (e.target.classList.contains('dot')) {
+            currentIndex = parseInt(e.target.dataset.index);
+            slide(0);
+          }
+        });
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

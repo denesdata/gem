@@ -1,0 +1,47 @@
+{
+  "HU": {
+    "Vállalkozások finanszírozása": "A kis- és középvállalkozások (kkv-k) számára rendelkezésre álló pénzügyi források.",
+    "Kormányzati politikák: Támogatás és fontosság": "A vállalkozást támogató közpolitikák szintje.",
+    "Kormányzati politikák: Adók és bürokrácia": "Az állami politikák milyen mértékben támogatják a vállalkozói tevékenységet.",
+    "Kormányzati vállalkozási programok": "A kkv-kat közvetlenül segítő programok jelenléte és minősége.",
+    "Vállalkozói ismeretek oktatása az iskolában": "A kkv-k létrehozásával vagy irányításával kapcsolatos képzés beépítése az alap- és középfokú oktatási rendszerbe.",
+    "Vállalkozói oktatás a felsőoktatásban": "A kkv-k létrehozásával vagy irányításával kapcsolatos képzés beépítése a felsőoktatási rendszerbe.",
+    "K+F transzfer": "A nemzeti kutatás és fejlesztés milyen mértékben vezet új kereskedelmi lehetőségekhez.",
+    "Kereskedelmi és jogi infrastruktúra": "A tulajdonjogi, kereskedelmi, számviteli és egyéb jogi szolgáltatások jelenléte.",
+    "A belső piac dinamikája": "A piacok éves változásának mértéke.",
+    "Belső piaci terhek vagy belépési szabályozás": "Az új cégek belépési joga a meglévő piacokra.",
+    "Fizikai infrastruktúra": "Könnyű hozzáférés a fizikai erőforrásokhoz.",
+    "Kulturális és szociális normák": "A társadalmi és szociális normák milyen mértékben ösztönzik a vállalkozói tevékenységet.",
+    "Nemzeti vállalkozói környezet index": "A NECI a 13 keretfeltételre vonatkozó összesített szakértői pontszámok átlaga."
+  },
+  "RO": {
+    "Finanțarea antreprenorială": "Disponibilitatea resurselor financiare pentru întreprinderile mici și mijlocii (IMM-uri).",
+    "Politici guvernamentale: Sprijin și relevanță": "Măsura în care politicile publice sprijină spiritul antreprenorial.",
+    "Politici guvernamentale: Impozite și birocrație": "Măsura în care politicile publice sprijină antreprenoriatul.",
+    "Programe guvernamentale pentru antreprenoriat": "Prezența și calitatea programelor de asistență pentru IMM-uri.",
+    "Educația antreprenorială în școală": "Măsura în care formarea în domeniul creării sau gestionării IMM-urilor este integrată în sistemul de educație la nivel primar și secundar.",
+    "Educația antreprenorială în învățământul superior": "Măsura în care formarea în domeniul creării sau gestionării IMM-urilor este integrată în sistemul de educație din învățământul superior.",
+    "Transfer de cercetare și dezvoltare": "Măsura în care cercetarea și dezvoltarea la nivel național vor genera noi oportunități comerciale.",
+    "Infrastructura comercială și profesională": "Prezența drepturilor de proprietate, a serviciilor comerciale și a altor servicii juridice.",
+    "Dinamica pieței interne": "Gradul de schimbare a piețelor de la un an la altul.",
+    "Greutăți de intrare pe piața internă": "Măsura în care noile firme sunt libere să intre pe piețele existente.",
+    "Infrastructura fizică": "Ușurința accesului la resurse fizice.",
+    "Norme culturale și sociale": "Măsura în care normele sociale și culturale încurajează activitățile antreprenoriale.",
+    "Indicele național al contextului antreprenorial": "NECI reprezintă media scorurilor acordate de experți pentru cele 13 condiții-cadru."
+  },
+  "EN": {
+    "Entrepreneurial Finance": "The availability of financial resources for small and medium enterprises (SMEs).",
+    "Governmental Policies: Support and Relevance": "The extent to which public policies support entrepreneurship.",
+    "Government Policies: Taxes and Bureaucracy": "The extent to which public policies support entrepreneurship through taxation.",
+    "Government Entrepreneurship Programs": "The presence and quality of programs directly assisting SMEs.",
+    "Entrepreneurial Education at School Stage": "The extent to which training in creating or managing SMEs is incorporated at primary and secondary levels.",
+    "Entrepreneurial Education at Post School Stage": "The extent to which training in creating or managing SMEs is incorporated in higher education.",
+    "R&D Transfer": "The extent to which national research and development leads to new commercial opportunities.",
+    "Commercial and Legal Infrastructure": "The presence of property rights, commercial, accounting and other legal services.",
+    "Internal Market Dynamics": "The level of change in markets from year to year.",
+    "Internal Market Burdens or Entry Regulation": "The extent to which new firms are free to enter existing markets.",
+    "Physical Infrastructure": "Ease of access to physical resources.",
+    "Cultural and Social Norms": "The extent to which social and cultural norms encourage entrepreneurial activities.",
+    "National Entrepreneurial Context Index": "The NECI is the average of the pooled expert scores across the 13 framework conditions."
+  }
+}

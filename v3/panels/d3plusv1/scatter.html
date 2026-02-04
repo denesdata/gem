@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APS Scatter Plot</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .chart-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    .country-dot {
+      cursor: pointer;
+      transition: r 0.2s, opacity 0.2s;
+    }
+    
+    .country-dot:hover {
+      opacity: 1 !important;
+    }
+    
+    .country-label {
+      font-size: 10px;
+      fill: var(--text-muted);
+      pointer-events: none;
+    }
+    
+    .country-label.highlight {
+      font-weight: 600;
+      fill: var(--text-primary);
+    }
+    
+    .axis text {
+      font-size: 10px;
+      fill: var(--text-muted);
+    }
+    
+    .axis line,
+    .axis path {
+      stroke: var(--border);
+    }
+    
+    .grid line {
+      stroke: var(--border);
+      stroke-opacity: 0.5;
+      stroke-dasharray: 2,2;
+    }
+    
+    .axis-label {
+      font-size: 11px;
+      fill: var(--text-secondary);
+    }
+    
+    .romania-highlight {
+      stroke-width: 3;
+      stroke: var(--primary);
+      stroke-opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel-container">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">TEA vs NECI</div>
+        <div class="panel-subtitle">European Countries Comparison</div>
+      </div>
+    </div>
+    <div class="chart-container" id="chart"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <script>
+    // Sample data - European countries
+    const data = [
+      { country: 'Romania', code: 'RO', tea: 10.8, neci: 4.3, region: 'Eastern' },
+      { country: 'Hungary', code: 'HU', tea: 8.7, neci: 4.1, region: 'Eastern' },
+      { country: 'Poland', code: 'PL', tea: 6.2, neci: 4.5, region: 'Eastern' },
+      { country: 'Croatia', code: 'HR', tea: 9.1, neci: 4.0, region: 'Southern' },
+      { country: 'Slovenia', code: 'SI', tea: 7.5, neci: 4.4, region: 'Southern' },
+      { country: 'Slovakia', code: 'SK', tea: 5.8, neci: 3.9, region: 'Eastern' },
+      { country: 'Latvia', code: 'LV', tea: 12.4, neci: 4.2, region: 'Northern' },
+      { country: 'Netherlands', code: 'NL', tea: 11.2, neci: 5.1, region: 'Western' },
+      { country: 'Spain', code: 'ES', tea: 6.4, neci: 4.6, region: 'Southern' },
+      { country: 'Italy', code: 'IT', tea: 5.2, neci: 4.0, region: 'Southern' },
+      { country: 'Germany', code: 'DE', tea: 7.1, neci: 5.0, region: 'Western' },
+      { country: 'France', code: 'FR', tea: 7.8, neci: 4.8, region: 'Western' },
+      { country: 'Sweden', code: 'SE', tea: 8.5, neci: 5.2, region: 'Northern' },
+      { country: 'Norway', code: 'NO', tea: 5.6, neci: 5.4, region: 'Northern' },
+    ];
+
+    const regions = ['Eastern', 'Western', 'Northern', 'Southern'];
+
+    function render() {
+      const container = document.getElementById('chart');
+      const legendContainer = document.getElementById('legend');
+      const colors = window.getGemColors();
+      const regionColors = {};
+      regions.forEach((r, i) => regionColors[r] = colors[i % colors.length]);
+
+      const rect = container.getBoundingClientRect();
+      const width = rect.width || 400;
+      const height = rect.height || 300;
+      const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+
+      // Clear
+      container.innerHTML = '';
+
+      const svg = d3.select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      const g = svg.append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+      // Scales
+      const xScale = d3.scaleLinear()
+        .domain([3.5, 5.6])
+        .range([0, innerWidth]);
+
+      const yScale = d3.scaleLinear()
+        .domain([4, 14])
+        .range([innerHeight, 0]);
+
+      // Grid
+      g.append('g')
+        .attr('class', 'grid')
+        .selectAll('line.h')
+        .data(yScale.ticks(5))
+        .enter()
+        .append('line')
+        .attr('x1', 0)
+        .attr('x2', innerWidth)
+        .attr('y1', d => yScale(d))
+        .attr('y2', d => yScale(d));
+
+      g.append('g')
+        .attr('class', 'grid')
+        .selectAll('line.v')
+        .data(xScale.ticks(5))
+        .enter()
+        .append('line')
+        .attr('x1', d => xScale(d))
+        .attr('x2', d => xScale(d))
+        .attr('y1', 0)
+        .attr('y2', innerHeight);
+
+      // Axes
+      g.append('g')
+        .attr('class', 'axis')
+        .attr('transform', `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(xScale).ticks(5));
+
+      g.append('g')
+        .attr('class', 'axis')
+        .call(d3.axisLeft(yScale).ticks(5));
+
+      // Axis labels
+      g.append('text')
+        .attr('class', 'axis-label')
+        .attr('x', innerWidth / 2)
+        .attr('y', innerHeight + 40)
+        .attr('text-anchor', 'middle')
+        .text('NECI (National Conditions)');
+
+      g.append('text')
+        .attr('class', 'axis-label')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -innerHeight / 2)
+        .attr('y', -35)
+        .attr('text-anchor', 'middle')
+        .text('TEA (Early-Stage Activity %)');
+
+      // Dots
+      const dots = g.selectAll('.country-dot')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'country-dot')
+        .attr('cx', d => xScale(d.neci))
+        .attr('cy', d => yScale(d.tea))
+        .attr('r', d => d.code === 'RO' ? 10 : 6)
+        .attr('fill', d => regionColors[d.region])
+        .attr('opacity', d => d.code === 'RO' ? 1 : 0.7)
+        .attr('stroke', d => d.code === 'RO' ? 'white' : 'none')
+        .attr('stroke-width', 2);
+
+      // Labels for select countries
+      const labeledCountries = ['RO', 'HU', 'NL', 'LV', 'DE'];
+      g.selectAll('.country-label')
+        .data(data.filter(d => labeledCountries.includes(d.code)))
+        .enter()
+        .append('text')
+        .attr('class', d => `country-label ${d.code === 'RO' ? 'highlight' : ''}`)
+        .attr('x', d => xScale(d.neci) + (d.code === 'RO' ? 14 : 8))
+        .attr('y', d => yScale(d.tea) + 4)
+        .text(d => d.code);
+
+      // Legend
+      legendContainer.innerHTML = regions.map(region => `
+        <div class="legend-item">
+          <div class="legend-dot" style="background: ${regionColors[region]}"></div>
+          <span>${region} Europe</span>
+        </div>
+      `).join('');
+    }
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('resize', render);
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Chart</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    body {
+      /* Subtle top-left to bottom-right gradient overlay */
+      background: 
+        linear-gradient(135deg, 
+          rgba(126, 200, 68, 0.03) 0%, 
+          transparent 40%,
+          rgba(61, 139, 112, 0.02) 100%
+        ),
+        var(--bg-card);
+    }
+    
+    .chart-container {
+      width: 100%;
+      height: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chart-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .chart-title::before {
+      content: 'ℹ';
+      font-size: 11px;
+      opacity: 0.5;
+    }
+    
+    .chart-area {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+    
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .axis text {
+      font-size: 10px;
+      fill: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    
+    .axis line,
+    .axis path {
+      stroke: var(--border);
+      stroke-opacity: 0.5;
+    }
+    
+    .grid line {
+      stroke: var(--border);
+      stroke-opacity: 0.3;
+      stroke-dasharray: 2,3;
+    }
+    
+    /* Animated gradient keyframes */
+    @keyframes gradientShift {
+      0%, 100% { 
+        stop-opacity: 0.6; 
+      }
+      50% { 
+        stop-opacity: 0.35; 
+      }
+    }
+    
+    @keyframes gradientPulse {
+      0%, 100% { 
+        transform: translateY(0); 
+      }
+      50% { 
+        transform: translateY(-2px); 
+      }
+    }
+    
+    .area-path {
+      animation: gradientPulse 4s ease-in-out infinite;
+    }
+    
+    .gradient-stop-top {
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+    
+    .gradient-stop-bottom {
+      animation: gradientShift 3s ease-in-out infinite 1.5s;
+    }
+    
+    .line-path {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    
+    .data-point {
+      transition: r 0.2s, opacity 0.2s;
+    }
+    
+    .data-point:hover {
+      r: 6;
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+    
+    .tooltip.visible {
+      opacity: 1;
+    }
+    
+    .tooltip-label {
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    
+    .tooltip-value {
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+    
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    
+    .legend-item:hover {
+      opacity: 0.7;
+    }
+    
+    .legend-line {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-container">
+    <div class="chart-title" id="title">Persoane ocupate în întreprinderi active</div>
+    <div class="chart-area" id="chart"></div>
+    <div class="legend" id="legend"></div>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+  <script>
+    // Get chart config from URL
+    const params = new URLSearchParams(window.location.search);
+    const chartType = params.get('type') || 'employees';
+    
+    const datasets = {
+      employees: {
+        title: 'Persoane ocupate în întreprinderi active',
+        yLabel: 'Mil',
+        series: [
+          { name: 'Total', data: [1.55, 1.52, 1.48, 1.50, 1.52, 1.51], colorIndex: 4 },
+          { name: 'Mari', data: [0.95, 0.92, 0.90, 0.92, 0.93, 1.08], colorIndex: 0 },
+          { name: 'Mijlocii', data: [0.88, 0.87, 0.85, 0.86, 0.82, 0.82], colorIndex: 2 },
+          { name: 'Mici', data: [0.85, 0.84, 0.82, 0.83, 0.80, 0.80], colorIndex: 1 },
+        ],
+        years: [2018, 2019, 2020, 2021, 2022, 2023]
+      },
+      turnover: {
+        title: 'Cifra de afaceri (miliarde EUR)',
+        yLabel: 'Mld €',
+        series: [
+          { name: 'Total', data: [180, 195, 185, 210, 240, 260], colorIndex: 4 },
+          { name: 'Export', data: [45, 52, 48, 58, 68, 75], colorIndex: 0 },
+        ],
+        years: [2018, 2019, 2020, 2021, 2022, 2023]
+      },
+      tea: {
+        title: 'Total Early-Stage Entrepreneurial Activity',
+        yLabel: '%',
+        series: [
+          { name: 'Romania', data: [9.2, 10.1, 8.5, 9.8, 10.5, 10.8], colorIndex: 0 },
+          { name: 'EU Average', data: [7.8, 8.2, 7.0, 7.5, 8.0, 8.3], colorIndex: 2 },
+        ],
+        years: [2018, 2019, 2020, 2021, 2022, 2023]
+      }
+    };
+    
+    const dataset = datasets[chartType] || datasets.employees;
+    let hoveredPoint = null;
+
+    function render() {
+      const chartEl = document.getElementById('chart');
+      const legendEl = document.getElementById('legend');
+      const titleEl = document.getElementById('title');
+      const tooltipEl = document.getElementById('tooltip');
+      const colors = window.getGemColors ? window.getGemColors() : ['#FF70BB', '#ebbc5a', '#afa2dc', '#99D9EA', '#ffa349', '#7EC844'];
+      
+      titleEl.textContent = dataset.title;
+      chartEl.innerHTML = '';
+      
+      const rect = chartEl.getBoundingClientRect();
+      const width = rect.width || 400;
+      const height = rect.height || 250;
+      const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      
+      const svg = d3.select('#chart')
+        .append('svg')
+        .attr('class', 'chart-svg')
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+      
+      // Defs for gradients
+      const defs = svg.append('defs');
+      
+      dataset.series.forEach((series, i) => {
+        const color = colors[series.colorIndex % colors.length];
+        
+        // Create animated gradient for each series
+        const gradientId = `areaGradient${i}`;
+        const gradient = defs.append('linearGradient')
+          .attr('id', gradientId)
+          .attr('x1', '0%')
+          .attr('y1', '0%')
+          .attr('x2', '0%')
+          .attr('y2', '100%');
+        
+        gradient.append('stop')
+          .attr('class', 'gradient-stop-top')
+          .attr('offset', '0%')
+          .attr('stop-color', color)
+          .attr('stop-opacity', 0.5);
+        
+        gradient.append('stop')
+          .attr('class', 'gradient-stop-bottom')
+          .attr('offset', '100%')
+          .attr('stop-color', color)
+          .attr('stop-opacity', 0.05);
+      });
+      
+      const g = svg.append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+      
+      // Scales
+      const xScale = d3.scaleLinear()
+        .domain([dataset.years[0], dataset.years[dataset.years.length - 1]])
+        .range([0, innerWidth]);
+      
+      const allValues = dataset.series.flatMap(s => s.data);
+      const yMin = Math.min(...allValues) * 0.9;
+      const yMax = Math.max(...allValues) * 1.05;
+      
+      const yScale = d3.scaleLinear()
+        .domain([yMin, yMax])
+        .range([innerHeight, 0]);
+      
+      // Grid
+      g.append('g')
+        .attr('class', 'grid')
+        .selectAll('line')
+        .data(yScale.ticks(5))
+        .enter()
+        .append('line')
+        .attr('x1', 0)
+        .attr('x2', innerWidth)
+        .attr('y1', d => yScale(d))
+        .attr('y2', d => yScale(d));
+      
+      // Axes
+      g.append('g')
+        .attr('class', 'axis')
+        .attr('transform', `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(xScale).ticks(dataset.years.length).tickFormat(d3.format('d')));
+      
+      g.append('g')
+        .attr('class', 'axis')
+        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d => {
+          if (d >= 1000000) return (d/1000000).toFixed(1) + ' Mil';
+          if (d >= 1000) return (d/1000).toFixed(0) + ' K';
+          return d.toFixed(1);
+        }));
+      
+      // Area and line generators
+      const area = d3.area()
+        .x((d, i) => xScale(dataset.years[i]))
+        .y0(innerHeight)
+        .y1(d => yScale(d))
+        .curve(d3.curveMonotoneX);
+      
+      const line = d3.line()
+        .x((d, i) => xScale(dataset.years[i]))
+        .y(d => yScale(d))
+        .curve(d3.curveMonotoneX);
+      
+      // Draw series (reversed for proper layering)
+      [...dataset.series].reverse().forEach((series, i) => {
+        const color = colors[series.colorIndex % colors.length];
+        const seriesIndex = dataset.series.length - 1 - i;
+        
+        // Area with gradient
+        g.append('path')
+          .datum(series.data)
+          .attr('class', 'area-path')
+          .attr('d', area)
+          .attr('fill', `url(#areaGradient${seriesIndex})`)
+          .style('animation-delay', `${i * 0.5}s`);
+        
+        // Line
+        g.append('path')
+          .datum(series.data)
+          .attr('class', 'line-path')
+          .attr('d', line)
+          .attr('fill', 'none')
+          .attr('stroke', color)
+          .attr('stroke-width', 2.5)
+          .attr('stroke-linecap', 'round');
+        
+        // Data points
+        series.data.forEach((value, j) => {
+          g.append('circle')
+            .attr('class', 'data-point')
+            .attr('cx', xScale(dataset.years[j]))
+            .attr('cy', yScale(value))
+            .attr('r', 4)
+            .attr('fill', color)
+            .attr('stroke', 'var(--bg-card)')
+            .attr('stroke-width', 2)
+            .on('mouseenter', function(event) {
+              tooltipEl.innerHTML = `
+                <div class="tooltip-label">${series.name} (${dataset.years[j]})</div>
+                <div class="tooltip-value" style="color: ${color}">${value.toLocaleString()} ${dataset.yLabel}</div>
+              `;
+              tooltipEl.classList.add('visible');
+              tooltipEl.style.left = (event.offsetX + 10) + 'px';
+              tooltipEl.style.top = (event.offsetY - 40) + 'px';
+            })
+            .on('mouseleave', function() {
+              tooltipEl.classList.remove('visible');
+            });
+        });
+      });
+      
+      // Legend
+      legendEl.innerHTML = dataset.series.map((series, i) => {
+        const color = colors[series.colorIndex % colors.length];
+        return `
+          <div class="legend-item">
+            <div class="legend-line" style="background: linear-gradient(90deg, ${color}, ${color}88)"></div>
+            <span>${series.name}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('resize', render);
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

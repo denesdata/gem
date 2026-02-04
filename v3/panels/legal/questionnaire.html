@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Form Questionnaire</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <style>
+    .quiz-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+    
+    .quiz-progress {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .progress-dot {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+    
+    .progress-dot.active {
+      background: var(--primary);
+    }
+    
+    .progress-dot.done {
+      background: var(--teal);
+    }
+    
+    .question-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .question-number {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+    
+    .question-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+    
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+    
+    .option-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    
+    .option-btn:hover .option-icon,
+    .option-btn.selected .option-icon {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    
+    .option-btn.selected .option-icon::after {
+      content: '✓';
+      color: white;
+      font-size: 12px;
+    }
+    
+    .result-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .result-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    
+    .result-icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+    
+    .result-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .result-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 280px;
+    }
+    
+    .restart-btn {
+      padding: 10px 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .restart-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz"></div>
+
+  <script>
+    const questions = [
+      {
+        question: 'How many founders will start the business?',
+        options: [
+          { text: 'Just me (solo)', value: 'solo' },
+          { text: 'Multiple partners', value: 'partners' }
+        ]
+      },
+      {
+        question: 'What level of personal liability are you comfortable with?',
+        options: [
+          { text: 'I accept full personal liability', value: 'full' },
+          { text: 'I want limited liability protection', value: 'limited' }
+        ]
+      },
+      {
+        question: 'What is your expected annual revenue?',
+        options: [
+          { text: 'Under €100,000/year', value: 'small' },
+          { text: 'Over €100,000/year', value: 'large' }
+        ]
+      },
+      {
+        question: 'Do you plan to hire employees?',
+        options: [
+          { text: 'No, working solo', value: 'no' },
+          { text: 'Yes, I plan to hire', value: 'yes' }
+        ]
+      }
+    ];
+
+    const results = {
+      pfa: {
+        title: 'PFA (Persoană Fizică Autorizată)',
+        subtitle: 'Sole trader - ideal for solo entrepreneurs with lower revenue and simpler operations',
+        color: 'var(--accent-2)',
+        icon: '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+      },
+      srl: {
+        title: 'SRL (Societate cu Răspundere Limitată)',
+        subtitle: 'Limited liability company - better for higher revenue, multiple partners, or employees',
+        color: 'var(--accent-1)',
+        icon: '<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>'
+      }
+    };
+
+    let currentQuestion = 0;
+    let answers = [];
+
+    function render() {
+      const container = document.getElementById('quiz');
+      const colors = window.getGemColors();
+      
+      if (currentQuestion >= questions.length) {
+        // Calculate result
+        const needsSRL = answers.includes('partners') || answers.includes('limited') || 
+                        answers.includes('large') || answers.includes('yes');
+        const result = needsSRL ? results.srl : results.pfa;
+        
+        container.innerHTML = `
+          <div class="result-card">
+            <div class="result-icon" style="background: ${result.color}">
+              ${result.icon}
+            </div>
+            <div class="result-title">${result.title}</div>
+            <div class="result-subtitle">${result.subtitle}</div>
+            <button class="restart-btn" onclick="restart()">Start Over</button>
+          </div>
+        `;
+        return;
+      }
+      
+      const q = questions[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="quiz-progress">
+          ${questions.map((_, i) => `
+            <div class="progress-dot ${i < currentQuestion ? 'done' : ''} ${i === currentQuestion ? 'active' : ''}"></div>
+          `).join('')}
+        </div>
+        <div class="question-card">
+          <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+          <div class="question-text">${q.question}</div>
+          <div class="options">
+            ${q.options.map((opt, i) => `
+              <button class="option-btn" data-value="${opt.value}" style="animation-delay: ${i * 100}ms">
+                <span class="option-icon"></span>
+                <span>${opt.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      
+      // Add click handlers
+      container.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectOption(btn.dataset.value));
+      });
+    }
+
+    function selectOption(value) {
+      answers.push(value);
+      currentQuestion++;
+      render();
+    }
+
+    window.restart = function() {
+      currentQuestion = 0;
+      answers = [];
+      render();
+    };
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

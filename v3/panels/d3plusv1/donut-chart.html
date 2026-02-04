@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donut Chart</title>
+  <link rel="stylesheet" href="../base.css">
+  <script src="../color-scheme.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .chart-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .donut-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+    
+    .center-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .center-value {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--primary);
+    }
+    
+    .center-text {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .slice {
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      transform-origin: center;
+    }
+    
+    .slice:hover {
+      opacity: 0.8;
+    }
+    
+    .legend-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 0 16px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-wrapper">
+    <div class="donut-container" id="chart"></div>
+    <div class="legend-container" id="legend"></div>
+  </div>
+
+  <script>
+    // Get chart type from URL
+    const params = new URLSearchParams(window.location.search);
+    const chartType = params.get('type') || 'profiles';
+    
+    const datasets = {
+      profiles: {
+        title: 'Profiles',
+        centerValue: '100%',
+        centerLabel: 'Total',
+        data: [
+          { label: 'Opportunity-driven', value: 45 },
+          { label: 'Improvement-driven', value: 32 },
+          { label: 'Necessity-driven', value: 23 }
+        ]
+      },
+      motives: {
+        title: 'Motives',
+        centerValue: '68%',
+        centerLabel: 'Opportunity',
+        data: [
+          { label: 'Build wealth', value: 35 },
+          { label: 'Independence', value: 28 },
+          { label: 'Make a difference', value: 22 },
+          { label: 'Family tradition', value: 15 }
+        ]
+      },
+      characteristics: {
+        title: 'Characteristics',
+        centerValue: '16%',
+        centerLabel: 'High Growth',
+        data: [
+          { label: 'Solo entrepreneur', value: 40 },
+          { label: '1-5 employees', value: 35 },
+          { label: '6-19 employees', value: 18 },
+          { label: '20+ employees', value: 7 }
+        ]
+      }
+    };
+    
+    const dataset = datasets[chartType] || datasets.profiles;
+
+    function render() {
+      const container = document.getElementById('chart');
+      const legendContainer = document.getElementById('legend');
+      const colors = window.getGemColors();
+      
+      const width = 200;
+      const height = 200;
+      const radius = Math.min(width, height) / 2;
+      const innerRadius = radius * 0.6;
+      
+      container.innerHTML = '';
+      
+      const svg = d3.select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', `translate(${width/2},${height/2})`);
+      
+      const pie = d3.pie()
+        .value(d => d.value)
+        .sort(null)
+        .padAngle(0.02);
+      
+      const arc = d3.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(radius)
+        .cornerRadius(4);
+      
+      const arcs = svg.selectAll('.slice')
+        .data(pie(dataset.data))
+        .enter()
+        .append('path')
+        .attr('class', 'slice')
+        .attr('d', arc)
+        .attr('fill', (d, i) => colors[i % colors.length]);
+      
+      // Center label
+      const centerHtml = `
+        <div class="center-label">
+          <div class="center-value">${dataset.centerValue}</div>
+          <div class="center-text">${dataset.centerLabel}</div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', centerHtml);
+      
+      // Legend
+      legendContainer.innerHTML = dataset.data.map((item, i) => `
+        <div class="legend-item">
+          <div class="legend-dot" style="background: ${colors[i % colors.length]}"></div>
+          <span>${item.label} (${item.value}%)</span>
+        </div>
+      `).join('');
+    }
+
+    // Initialize - wait for color-scheme.js to be ready
+    function init() {
+      if (window.GEM && window.getGemColors) {
+        render();
+      } else {
+        setTimeout(init, 50);
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    window.addEventListener('resize', render);
+    window.addEventListener('gem-settings-change', render);
+  </script>
+</body>
+</html>

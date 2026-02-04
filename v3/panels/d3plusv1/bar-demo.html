@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEM Bar Chart Demo</title>
+  <link rel="stylesheet" href="../color-scheme.css">
+  <script src="../color-scheme.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px;
+      overflow: hidden;
+    }
+    #chart {
+      width: 100%;
+      height: calc(100vh - 20px);
+    }
+    .bar {
+      transition: fill 0.3s ease;
+    }
+    .bar:hover {
+      filter: brightness(1.1);
+    }
+    .label {
+      font-size: 12px;
+      fill: var(--text-secondary);
+    }
+    .value {
+      font-size: 14px;
+      font-weight: bold;
+      fill: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+  
+  <script>
+    // Sample data for entrepreneurial activity
+    const data = [
+      { name: 'TEA', value: 10.8, label: 'Total Early-Stage' },
+      { name: 'EBO', value: 7.2, label: 'Established Business' },
+      { name: 'Intent', value: 23.5, label: 'Entrepreneurial Intent' },
+      { name: 'NECI', value: 4.3, label: 'National Conditions' },
+    ];
+
+    function renderChart() {
+      const container = document.getElementById('chart');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      
+      // Clear previous
+      d3.select('#chart').html('');
+      
+      const margin = { top: 20, right: 30, bottom: 40, left: 80 };
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      
+      // Get colors based on scheme
+      const colors = window.getGemColors();
+      
+      const svg = d3.select('#chart')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+      
+      const g = svg.append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+      
+      // Scales
+      const xScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.value) * 1.1])
+        .range([0, innerWidth]);
+      
+      const yScale = d3.scaleBand()
+        .domain(data.map(d => d.name))
+        .range([0, innerHeight])
+        .padding(0.3);
+      
+      // Bars
+      g.selectAll('.bar')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar')
+        .attr('x', 0)
+        .attr('y', d => yScale(d.name))
+        .attr('width', d => xScale(d.value))
+        .attr('height', yScale.bandwidth())
+        .attr('fill', (d, i) => colors[i % colors.length])
+        .attr('rx', 4);
+      
+      // Labels (left)
+      g.selectAll('.label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'label')
+        .attr('x', -10)
+        .attr('y', d => yScale(d.name) + yScale.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        .attr('text-anchor', 'end')
+        .text(d => d.name);
+      
+      // Values (on bars)
+      g.selectAll('.value')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'value')
+        .attr('x', d => xScale(d.value) + 8)
+        .attr('y', d => yScale(d.name) + yScale.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        .text(d => d.value + '%');
+    }
+    
+    // Initial render
+    renderChart();
+    
+    // Re-render on resize
+    window.addEventListener('resize', renderChart);
+    
+    // Re-render on hash change (color scheme change)
+    window.addEventListener('hashchange', renderChart);
+  </script>
+</body>
+</html>

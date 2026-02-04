@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Share</title>
+  <link rel="stylesheet" href="base.css">
+  <script src="color-scheme.js"></script>
+  <style>
+    body {
+      background: transparent !important;
+    }
+    
+    body::before {
+      display: none;
+    }
+    
+    .social-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      height: 100%;
+      padding: 4px;
+    }
+    
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    
+    .social-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .social-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    
+    .social-btn.facebook { color: #1877F2; }
+    .social-btn.twitter { color: #1DA1F2; }
+    .social-btn.linkedin { color: #0A66C2; }
+    .social-btn.email { color: var(--primary); }
+    .social-btn.share { color: var(--text-secondary); }
+    
+    .social-btn:hover.facebook { background: rgba(24, 119, 242, 0.1); }
+    .social-btn:hover.twitter { background: rgba(29, 161, 242, 0.1); }
+    .social-btn:hover.linkedin { background: rgba(10, 102, 194, 0.1); }
+    .social-btn:hover.email { background: var(--primary-glow); }
+  </style>
+</head>
+<body>
+  <div class="social-container">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://econ.ubbcluj.ro/entrepreneurship/" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-btn facebook"
+       title="Share on Facebook">
+      <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+    </a>
+    
+    <a href="https://twitter.com/intent/tweet?url=https://econ.ubbcluj.ro/entrepreneurship/&text=GEM Romania - Global Entrepreneurship Monitor" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-btn twitter"
+       title="Share on Twitter">
+      <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+    </a>
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://econ.ubbcluj.ro/entrepreneurship/&title=GEM Romania" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="social-btn linkedin"
+       title="Share on LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    
+    <a href="mailto:?subject=GEM Romania&body=Check out the Global Entrepreneurship Monitor Romania: https://econ.ubbcluj.ro/entrepreneurship/" 
+       class="social-btn email"
+       title="Share via Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </a>
+  </div>
+</body>
+</html>
