@@ -319,6 +319,11 @@
                 throw new Error('Redirecting to 2025 Report');
             }
 
+            if (targetUrl === 'Raport2026') {
+                window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf';
+                throw new Error('Redirecting to 2026 Report');
+            }
+
             // Remove any leading question marks and convert pipes to ampersands
             targetUrl = targetUrl
                 .replace(/^\?+/, '')
