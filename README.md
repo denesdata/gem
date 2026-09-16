@@ -1,5 +1,7 @@
 # 🇷🇴💹📉📊 Global Entrepreneurship Monitor Wiki
 This Wiki guides you through the technical steps of replicating the __[🇷🇴💹📉📊 Global Entrepreneurship Monitor](https://econ.ubbcluj.ro/entrepreneurship)__ site and walks you through the technologies used to build it. For any technical or visualization-related questions you may contact [Dénes](mailto:mail@csaladen.es). For economics-related queries and anything else about the site content, or further collaborations, you may contact [Petra](mailto:petra.szabo@econ.ubbcluj.ro).
+
+__Beta Next.js rebuild:__ [gem2.csaladen.es/v3](https://gem2.csaladen.es/v3/?lang=en&mode=expert&theme=dark&colors=colorful) — native D3 charts, live legal/funding/reports iframes from gem-html. Notes in [`v3/README.md`](v3/README.md).
   
 __👉 Start by the reading the [0. Prerequisites](https://github.com/denesdata/gem/wiki/0.-Prerequisites).__
 

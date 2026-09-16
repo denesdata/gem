@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Guide - PFA / SRL</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --accent-1: #FF70BB;
+      --accent-2: #ebbc5a;
+      --accent-3: #afa2dc;
+      --accent-4: #99D9EA;
+      --accent-5: #ffa349;
+      --accent-6: #7EC844;
+      --primary: #7EC844;
+      --primary-glow: rgba(126, 200, 68, 0.15);
+      --teal: #3D8B70;
+      --bg-primary: #0a0f14;
+      --bg-card: #12181f;
+      --bg-elevated: #1a222b;
+      --bg-hover: #232d38;
+      --text-primary: #F8FAF9;
+      --text-secondary: #B8C5C0;
+      --text-muted: #6B7D77;
+      --border: rgba(126, 200, 68, 0.15);
+      --border-accent: rgba(126, 200, 68, 0.3);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] {
+      --primary: #3D8B70;
+      --primary-glow: rgba(61, 139, 112, 0.12);
+      --bg-primary: #EDEAE5;
+      --bg-card: #F5F3F0;
+      --bg-elevated: #FAF9F7;
+      --bg-hover: #f0eeeb;
+      --text-primary: #3D4349;
+      --text-secondary: #5A6570;
+      --text-muted: #9AA5B1;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-accent: rgba(61, 139, 112, 0.25);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(61,139,112,0.06) 0%, transparent 35%, transparent 65%, rgba(126,200,68,0.03) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 16px 60px;
+    }
+
+    /* ── Settings Bar ── */
+    .settings-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 2px;
+      background: var(--bg-primary);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .pill-btn {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .pill-btn:hover { color: var(--text-secondary); }
+    .pill-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--border-accent); color: var(--text-primary); }
+
+    /* ── Section Tabs ── */
+    .section-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .section-tab {
+      flex: 1;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-tab:hover { border-color: var(--border-accent); background: var(--bg-elevated); }
+
+    .section-tab.active {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+      color: var(--text-primary);
+    }
+
+    .tab-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-icon svg {
+      width: 20px; height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .section-tab.active .tab-icon { background: var(--primary); color: white; }
+
+    .tab-label-sm {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Content Panels ── */
+    .panel { display: none; animation: fadeIn 0.35s ease; }
+    .panel.active { display: block; }
+
+    /* ── Accordion ── */
+    .accordion { margin-bottom: 8px; }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--teal), var(--primary));
+      color: white;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .accordion-header:hover { filter: brightness(1.08); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+    .accordion-header.alt {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--teal) 60%, white), color-mix(in srgb, var(--primary) 60%, white));
+    }
+
+    [data-theme="light"] .accordion-header.alt {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--teal) 75%, white), color-mix(in srgb, var(--primary) 75%, white));
+    }
+
+    .accordion-chevron {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      transition: transform 0.3s;
+    }
+
+    .accordion-header.open .accordion-chevron { transform: rotate(180deg); }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 8px;
+    }
+
+    .accordion-body.open {
+      max-height: 50000px;
+      padding: 12px 8px;
+    }
+
+    .accordion-body > .accordion { margin-top: 4px; }
+
+    /* ── Content Styles ── */
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .intro-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .content-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .content-text:last-child { margin-bottom: 0; }
+
+    ul.content-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0;
+    }
+
+    ul.content-list li {
+      padding: 6px 0 6px 20px;
+      position: relative;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    ul.content-list li::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 13px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .legislation {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .legislation .fa { color: var(--accent-2); margin-right: 4px; }
+
+    a {
+      color: var(--accent-4);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    a:hover { color: var(--primary); }
+    a::after { content: ' \2197'; font-size: 0.8em; }
+
+    .numbered-item {
+      padding: 8px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .numbered-item + .numbered-item { border-top: 1px solid var(--border); }
+
+    /* ── Quiz ── */
+    .quiz-container {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quiz-progress {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+
+    .progress-dot {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+
+    .progress-dot.active { background: var(--primary); }
+    .progress-dot.done { background: var(--teal); }
+
+    .question-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .question-number {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .question-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+      transform: translateX(4px);
+    }
+
+    .option-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover .option-icon {
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+
+    .result-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .result-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .result-icon svg {
+      width: 36px; height: 36px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .result-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 400px;
+      line-height: 1.5;
+    }
+
+    .restart-btn {
+      padding: 12px 28px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .restart-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Language visibility ── */
+    .RO, .HU, .EN { display: none; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .section-tabs { flex-direction: column; gap: 6px; }
+      .section-tab { flex-direction: row; padding: 12px 14px; }
+      .settings-bar { gap: 8px; }
+      .question-text { font-size: 16px; }
+      .page-wrap { padding: 10px 10px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+
+    <!-- Settings Bar -->
+    <div class="settings-bar">
+      <div class="pill-group" id="langGroup">
+        <button class="pill-btn" data-lang="RO">RO</button>
+        <button class="pill-btn" data-lang="HU">HU</button>
+        <button class="pill-btn" data-lang="EN">EN</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">&#9790;</button>
+    </div>
+
+    <!-- Section Tabs -->
+    <div class="section-tabs">
+      <button class="section-tab" data-section="PFA">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <span class="RO">PFA</span><span class="HU">PFA (ETSZ)</span><span class="EN">PFA</span>
+        <span class="tab-label-sm"><span class="RO">Persoană Fizică Autorizată</span><span class="HU">Engedélyezett természetes személy</span><span class="EN">Sole Trader</span></span>
+      </button>
+      <button class="section-tab" data-section="SRL">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg></span>
+        <span class="RO">SRL</span><span class="HU">KFT</span><span class="EN">LLC</span>
+        <span class="tab-label-sm"><span class="RO">Societate cu Răspundere Limitată</span><span class="HU">Korlátolt Felelősségű Társaság</span><span class="EN">Limited Liability Company</span></span>
+      </button>
+      <button class="section-tab" data-section="Test">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+        <span class="RO">PFA sau SRL?</span><span class="HU">PFA vagy KFT?</span><span class="EN">PFA or LLC?</span>
+        <span class="tab-label-sm"><span class="RO">Chestionar</span><span class="HU">Kérdőív</span><span class="EN">Questionnaire</span></span>
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ PFA Panel ═══════════════════════════════════════════ -->
+    <div class="panel" id="panel-PFA">
+      <div class="content-card">
+        <p class="intro-text RO">PFA: nu este o societate/ persoană juridică, ci este o modalitate în care o persoană fizică poate desfășura o activitate economică. Persoana fizică pune la dispoziție cunoștințele sau abilitățile personale, așadar cea mai importantă valoare în această afacere este forța de muncă proprie. Să vedem câteva exemple în care înființarea unui PFA este metoda uzuală de a presta un serviciu, de a desfășura o activitate economică.</p>
+        <p class="intro-text HU">Engedélyezett természetes személy: nem vállalat/jogi személy, hanem egy módszer, amely által természetes személy gazdasági tevékenységet folytathat. A természetes személy a tudását és/vagy képességeit hasznosítja, így a legfontosabb érték ebben a vállalkozói formában az egyén munkája. Lássunk néhány elterjedt példát amelyben engedélyezett természetes személyként szolgáltatást nyújthatunk vagy gazdasági tevékenységet végezhetünk.</p>
+        <p class="intro-text EN">Sole trader: it is not a company / legal entity, but a way in which a natural person can carry out an economic activity. The individual provides personal knowledge or skills, so the most important value in this business is their own workforce. Let us look at some examples in which the establishment of a sole tradership is the usual method of providing a service or carrying out an economic activity.</p>
+        <div class="legislation">
+          <i class="fa fa-gavel"></i>
+          <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span>
+          <a href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a>
+        </div>
+      </div>
+
+      <!-- Examples -->
+      <div class="accordion">
+        <button class="accordion-header alt" onclick="toggleAccordion(this)">
+          <span><span class="RO">Exemple</span><span class="HU">Példák</span><span class="EN">Examples</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <!-- Translator -->
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="RO">Traducător (sursă primară de venit)</span><span class="HU">Fordító (elsődleges bevételi forrás)</span><span class="EN">Translator (primary source of income)</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Ionel și-a obținut autorizația de traducător și dorește să câștige bani din această activitate. Desigur, dacă prestează un serviciu de traducere, el va trebui să emită o factură pe baza căruia va încasa banii câștigați, apoi va plăti impozitul și contribuțiile aferente. Dacă Ionel și-a înființat PFA-ul, el va putea încheia contracte cu diverși clienți, cu autorități sau instituții, își poate închiria un spațiu de birou. Toate aceste cheltuieli pot fi deduse.</p>
+              <p class="content-text HU">Jancsi fordítói engedéllyel rendelkezik és szeretne pénzt keresni ezzel. Amennyiben fordítói szolgáltatást nyújt, kénytelen számlát kiadni. Így hozzájut a bevételhez, amely után adózik és befizeti a különböző kötelező hozzájárulásokat. Amennyiben Jancsi engedélyezett természetes személlyé vált, szerződéseket köthet kliensekkel, hatóságokkal és intézményekkel, irodahelységet bérelhet. Mindezen kiadások leírhatóak.</p>
+              <p class="content-text EN">Ionel has obtained a translator's license and wants to earn money from this activity. If he provides a translation service, he will have to issue an invoice on the basis of which he will collect the money earned, then he will pay the tax and the related contributions. If Ionel has registered as a sole trader, he will be able to enter into contracts with various clients, with authorities or institutions, he can rent an office space. All these expenses can be deducted.</p>
+            </div>
+          </div>
+          <!-- Electrician -->
+          <div class="accordion">
+            <button class="accordion-header alt" onclick="toggleAccordion(this)">
+              <span><span class="RO">Electrician (sursă secundară de venit)</span><span class="HU">Villanyszerelő (másodlagos bevételi forrás)</span><span class="EN">Electrician (secondary source of income)</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Ionel are diplomă de electrician și este angajat cu un contract individual de muncă de 8 ore la o firmă. Ionel ar dori să câștige mai mulți bani, astfel decide ca pe lângă jobul de 8 ore, după-amiază să presteze servicii de instalații și reparații electrice pentru clienți proprii. Ionel va înființa un PFA, astfel va putea pune anunțuri despre serviciile sale și va putea emite facturi clienților săi.</p>
+              <p class="content-text HU">Jancsi diplomás villanyszerelő és teljes munkaidőben alkalmazott egy cégnél. Jancsi szeretne több pénzt keresni, így eldönti, hogy a teljes munkaidős állásán felül, délutánonként szerelési és javítási szolgáltatásokat nyújtana saját kliensei számára. Jancsi engedélyezett természetes személlyé válik, így meghirdetheti szolgáltatásait és számlákat állíthat ki a kliensei számára.</p>
+              <p class="content-text EN">Ionel is a qualified electrician and is employed full time with an individual employment contract by a company. Ionel would like to earn more money, so he decides to provide electrical installation and repair services for his own clients in the afternoon, in addition to his nine-to-five job. Ionel will register as a sole trader, so that he will be able to place ads about his services and be able to issue invoices to his clients.</p>
+            </div>
+          </div>
+          <!-- Developer -->
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="RO">Programator (testarea unei idei de afacere)</span><span class="HU">Programozó (egy üzleti koncepció tesztelése)</span><span class="EN">Developer (testing a business idea)</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Ionel are o idee originală prin care va reforma unele metode informatice. Dorește să presteze servicii de programare pentru firme care ar dori să încerce noile tehnici. Ionel totuși nu este foarte sigur că metodele sale vor funcționa pe scală largă, astfel, în primă fază înființează un PFA cu ajutorul căruia poate încheia contracte și poate emite facturi. Dacă afacerea se dovedește una de succes, Ionel își va radia PFA-ul și va înființa un SRL, în cazul căruia nu mai este limitat numărul salariaților și numărul activităților.</p>
+              <p class="content-text HU">Jancsinak van egy eredeti ötlete, amely megreformálna egyes informatikai eljárásokat. Szeretne szolgáltatást nyújtani azon cégek számára, amelyek kipróbálnák az új technikákat. Jancsinak kétségei vannak az ötlete széleskörű használati lehetőségét illetően, így első lépésben engedélyezett természetes személlyé válik, amely által szerződéseket köthet és számlákat állíthat ki. Amennyiben a vállalkozás sikeressé válik, Jancsi megszűnik engedélyzetett természetes személy lenni, és alapít egy céget, amely esetében nincsenek az alkalmazottak vagy a végzett tevékenységek számát illető megkötések.</p>
+              <p class="content-text EN">Ionel has an original idea that will reform some computer programing methods. He wants to provide programming services for companies that would like to try his new techniques. However, Ionel is not very sure that his methods will work on a large scale, so in the first phase he sets himself up as a sole trader, which will allow him to enter into contracts and issue invoices. If the business proves to be successful, Ionel will close his sole trader business and set up an LLC, where the number of employees and the number of activities are no longer limited.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advantages -->
+      <div class="accordion">
+        <button class="accordion-header alt" onclick="toggleAccordion(this)">
+          <span><span class="RO">Avantaje</span><span class="HU">Előnyök</span><span class="EN">Advantages</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <ul class="content-list RO"><li>Înființare mai ușoară și costuri reduse</li><li>Contabilitatea poate fi întocmită de titular, fără obligația legală de a avea un contabil</li><li>Posibilitatea de a dispune personal de venituri</li><li>Beneficii fiscale în unele cazuri</li></ul>
+          <ul class="content-list HU"><li>Könnyebb alapítás és alacsonyabb költségek</li><li>A könyvelést végezheti az alapító, a hivatásos könyvelő megléte nem törvényi előírás</li><li>A bevételek feletti személyes rendelkezés</li><li>Bizonyos esetekben adóügyi kedvezmények</li></ul>
+          <ul class="content-list EN"><li>Easier to set up and costs less</li><li>The accounting can be done by the holder, without the legal obligation to have an accountant</li><li>The possibility to use the income directly</li><li>Tax benefits in some cases</li></ul>
+          <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507" target="_blank">LEGE 1/2017</a></div>
+        </div>
+      </div>
+
+      <!-- Limits -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span><span class="RO">Limite</span><span class="HU">Korlátok</span><span class="EN">Limits</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <ul class="content-list RO"><li>Maxim 5 clase CAEN, forme de activități</li><li>Maxim 3 salariați</li><li>Răspundere "nelimitată„ cu întreg patrimoniul titularului</li></ul>
+          <ul class="content-list HU"><li>Maximum 5 engedélyezett CAEN osztály, tevékenységi forma</li><li>Maximum 3 alkalmazott</li><li>Korlátlan felelősségvállalás az alapító teljes vagyonával</li></ul>
+          <ul class="content-list EN"><li>Maximum five CAEN classes, forms of activities</li><li>Maximum three employees</li><li>Unlimited liability, the holder is personally liable with their entire patrimony</li></ul>
+          <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a></div>
+          <p class="content-text" style="margin-top:10px">
+            <span class="RO"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc" target="_blank">Profesii în cazul cărora nu se înființează un PFA, ci funcționează conform legilor speciale</a></span>
+            <span class="HU"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc" target="_blank">Szakmák, amelyek esetében nem lehetséges engedélyezett természetes személyként tevékenykedni</a></span>
+            <span class="EN"><a href="https://www.onrc.ro/documente/infoutile/Lista_profesii_liberale25.04.2019.doc" target="_blank">Professions for which a sole tradership cannot be set up</a></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- How long -->
+      <div class="accordion">
+        <button class="accordion-header alt" onclick="toggleAccordion(this)">
+          <span><span class="RO">Cât durează înființarea?</span><span class="HU">Mennyi időbe telik az alapítás?</span><span class="EN">How long does it take to set up?</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p class="content-text RO">După înregistrarea dosarului la Registrul Comerțului, în 3-4 zile PFA-ul este înregistrat și poți începe activitatea. Cu toate acestea, îți recomandăm să demarezi procedura puțin mai repede și nu lăsa înființarea pe ultima clipă, deoarece adunarea actelor, luarea unor decizii cu privire la activitate, completarea formularelor, eventual deplasarea la oficiul competent sunt etape ce trebuie parcurse. Un alt impediment, care ar putea duce la întârzieri, poate fi necesitatea de a completa sau corecta dosarul după ce acesta a fost preluat la ghișeu (dacă suntem foarte siguri că dosarul a fost întocmit corect, nu se aplică).</p>
+          <p class="content-text HU">Az iratcsomó a Kereskedelmi Jegyzékhivatalnál való bejegyzését követően az engedélyezett természetes személy 3-4 napon belül bejegyzésre kerül és megkezdheti aktivitását. Mindazonáltal azt ajánljuk, kezdjen bele hamarabb, és ne hagyja az alapítást az utolsó pillanatra, ugyanis az iratok összegyűjtése, a tevékenységgel kapcsolatos döntések meghozatala, a formanyomtatványok kitöltése, esetenként az illetékes hivatal meglátogatása kötelezően megteendő lépések. Egy másik akadály, amely késlekedéshez vezethet, a leadott iratcsomó kiegészítésének vagy kijavításának felmerülhető szükségessége (amennyiben teljességgel biztosak vagyunk benne, hogy az akta helyesen került összeállításra, ez utóbbitól nem kell tartani).</p>
+          <p class="content-text EN">Three to four days after the required documents have been submitted at the Trade Register Office, the sole trader business is registered and you can start the activity. We recommend that you start the establishment procedure in a timely manner, because gathering documents, making decisions about the activity, filling out forms and possibly visiting the competent office are steps that must be completed. Another impediment which could lead to delays may be the need to complete or correct the required documentation after it has been submitted (this does not apply if you are absolutely sure that the filing has been prepared correctly).</p>
+          <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE 202/2010</a></div>
+        </div>
+      </div>
+
+      <!-- Where to register -->
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span><span class="RO">Unde trebuie înregistrat PFA-ul?</span><span class="HU">Hol kell bejegyeztetni?</span><span class="EN">Where should I register?</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p class="content-text RO">La Oficiul Registrului Comerțului din județul unde PFA-ul își va avea sediul. În unele județe există birouri teritoriale în orașele mai mari.</p>
+          <p class="content-text HU">Az engedélyzetett természetes személy székhelye szerint illetékes megyei Kereskedelmi Jegyzékhivatalnál. Egyes megyék nagyobb városaiban ennek vannak területi irodái is.</p>
+          <p class="content-text EN">At the Trade Register Office of the county where the sole tradership will have its headquarters. In some counties there are territorial offices in larger cities.</p>
+          <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+          <p class="content-text" style="margin-top:10px">
+            <span class="RO"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Verificați care este cel mai apropiat oficiu/ birou, adresa exactă și programul de lucru</a></span>
+            <span class="HU"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Ellenőrizze, hogy melyik a legközelebbi hivatal/iroda, annak pontos címe és nyitvatartási rendje</a></span>
+            <span class="EN"><a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Check the exact address and working hours of the nearest office / location</a></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- How to register -->
+      <div class="accordion">
+        <button class="accordion-header alt" onclick="toggleAccordion(this)">
+          <span><span class="RO">Cum înregistrez PFA-ul?</span><span class="HU">Hogyan jegyezheti be?</span><span class="EN">How do I register?</span></span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p class="content-text RO">În principal există trei modalități dintre care puteți alege:</p>
+          <p class="content-text HU">Alapvetően 3 módszer közül választhat:</p>
+          <p class="content-text EN">There are three main ways to choose between:</p>
+
+          <!-- Method 1 -->
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="RO">1. Firme specializate sau avocați</span><span class="HU">1. Szakosodott cégek vagy ügyvédek</span><span class="EN">1. Specialized companies or lawyers</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Procedura este mai simplă, însă va trebui să plătiți acest serviciu. Nu uitați totuși că înregistrarea unui PFA nu necesită cunoștințe de specialitate și chiar dacă optați pentru această variantă, va trebui să adunați actele necesare și să oferiți informațiile necesare înregistrării. Acest serviciu adesea constă din completarea formularelor, întocmirea dosarului, înregistrarea dosarului la care se mai poate adăuga și serviciul de consultanță/ consiliere.</p>
+              <p class="content-text HU">Az eljárás egyszerűbb, ám ezért a szolgáltatásért fizetnie kell. Ne felejtse, az engedélyezett természetes személy bejegyzéséhez nem szükséges szaktudás, és amennyiben mégis ezt a módszert választja, akkor is Önnek kell a bejegyzéshez szükséges iratokat összegyűjteni, vagy a szükséges információkat megadni. Ezen szolgáltatás gyakran a formanyomtatványok kitöltéséből, az iratcsomó összeállításából és beadásából áll, amelyhez még hozzá adódhat a konzultáció, szaktanácsadás nyújtása.</p>
+              <p class="content-text EN">The procedure is simpler, but you will have to pay for this service. Keep in mind, however, that registering as a sole trader does not require specialised knowledge, and even if you choose this option, you will need to gather the necessary documents and provide the necessary information for registration. This service often consists of filling in forms, preparing the documentation and registering the file, to which a consultancy or counseling fee can be added.</p>
+            </div>
+          </div>
+
+          <!-- Method 2 -->
+          <div class="accordion">
+            <button class="accordion-header alt" onclick="toggleAccordion(this)">
+              <span><span class="RO">2. Înregistrarea on-line prin portalul ONRC</span><span class="HU">2. Online bejegyzés az ONRC honlapján</span><span class="EN">2. Online registration through the ONRC portal</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Deși pare cea mai simplă și accesibilă metodă, atenție: necesită semnătură electronică PKI cu certificat digital calificat, recunoscut de ONRC! Dacă nu dețineți un asemenea certificat, nu vă pierdeți timpul cu formularele, ca după completarea acestora să nu le puteți semna. Dacă dețineți un asemenea certificat de semnătură electronică, accesați pagina <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">ONRC</a> creați un cont gratuit, apoi accesați butonul Înregistrare în RC PFA/II/IF. Aici veți găsi un ghid în care este explicat în detaliu modalitatea de completare a formularelor.</p>
+              <p class="content-text HU">Habár a legkönnyebb és legelérhetőbb módszernek tűnhet, legyen tekintettel arra, hogy ehhez a módszerhez PKI elektronikus aláírásra van szüksége, minősített digitális tanúsítvánnyal. Ne vesztegesse az idejét a formanyomtatványok kitöltésével, ugyanis a végén nem lesz képes ezeket aláírni. Amennyiben rendelkezik elektronikus aláírási tanúsítvánnyal, lépjen be az <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">ONRC</a> oldalra, hozzon létre egy ingyenes felhasználói fiókot, majd kattintson az Înregistrare în RC PFA/II/IF gombra.</p>
+              <p class="content-text EN">Although it seems the simplest and most affordable method, beware: it requires a PKI electronic signature with a qualified digital certificate, recognized by NTRO (ONRC)! If you do not have such a certificate, do not waste your time with the forms. If you have such an electronic signature certificate, go to the NTRO <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">ONRC</a> website, create a free account, then go to the RC Registration button PFA / II / IF.</p>
+              <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658" target="_blank">LEGE 152/2015</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+            </div>
+          </div>
+
+          <!-- Method 3: Physical -->
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="RO">3. Înregistrarea în format fizic de către titular</span><span class="HU">3. Fizikailag történő bejegyzés az alapító által</span><span class="EN">3. Physical registration by the holder</span></span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="content-text RO">Această metodă este cea mai răspândită, nu implică costuri suplimentare și nu necesită cunoștințe de specialitate, fiind vorba doar de completarea câtorva formulare, astfel întocmirea dosarului și deplasarea la oficiul sau biroul Registrului Comerțului cel mai apropiat.</p>
+              <p class="content-text HU">Ez a módszer a legelterjedtebb, nem hordoz magasabb költségeket és nem szükséges szaktudás hozzá, hiszen néhány formanyomtatvány kitöltésével, az iratcsomó összeállításával és a területileg illetékes jegyzéki hivatalba/irodába való látogatással jár.</p>
+              <p class="content-text EN">This method is the most common, it does not involve additional costs and does not require specialized knowledge, it only consists of the completion of a few forms, thus preparing the file and visiting the office or location of the nearest Trade Register Office.</p>
+              <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+
+              <!-- Step 1: Name -->
+              <div class="accordion">
+                <button class="accordion-header alt" onclick="toggleAccordion(this)">
+                  <span><span class="RO">Primul pas: Denumirea</span><span class="HU">Első lépés: Megnevezés</span><span class="EN">First step: Name</span></span>
+                  <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body">
+                  <p class="content-text RO">Se compune din numele şi prenumele persoanei fizice scrise în întregime sau din numele şi iniţialele prenumelui/prenumelor acesteia, urmate de sintagma «persoană fizică autorizată» sau PFA. În cazul în care există identitate de nume şi prenume cu o altă persoană fizică autorizată, înregistrată în Registrul Comerţului ori rezervată în vederea înregistrării, firma va fi completată cu iniţialele prenumelui tatălui sau al mamei sau cu prenumele întreg al acestora.</p>
+                  <p class="content-text HU">A természetes személy vezetéknevéből, valamint teljes keresztnevéből/keresztneveiből, vagy vezetéknevéből és keresztnevének/keresztneveinek kezdőbetűiből áll, amelyet az "engedélyezett természetes személy" megnevezés követ. Amennyiben vezeték- és keresztnév-azonosság áll fenn egy már létező, a Kereskedelmi Jegyzékbe már felvett vagy lefoglalt engedélyezett természetes személlyel, a név kiegészítésre kerül az apa vagy az anya keresztnevének keződbetűjével vagy teljes keresztnevével.</p>
+                  <p class="content-text EN">It shall consist of the name and, in some cases, the first name of the natural person written in full, or of the name and initials of their first name(s), followed by the phrase 'persoană fizică autorizată', meaning sole trader (PFA). If there is a first and last name identity with another sole trader, already in the trade register or reserved for registration, the company name will be completed with the initials of the father or mother's first name or their full first name.</p>
+                  <div class="legislation"><i class="fa fa-gavel"></i> <span class="RO">Legislație relevantă:</span><span class="HU">Vonatkozó törvények:</span><span class="EN">Relevant legislation:</span> <a href="https://legislatie.just.ro/Public/DetaliiDocument/91808" target="_blank">OUG 44/2008</a></div>
+
+                  <!-- Name sub-options -->
+                  <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">1. Rezervarea on-line</span><span class="HU">1. Online foglalás</span><span class="EN">1. Online reservation</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+                    <p class="content-text RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și creați un cont. Apăsați butonul Verificări preliminare, bifați căsuța rezervare denumire firmă și completați formularul online. Atenție: acest serviciu se poate accesa doar dacă dețineți certificat de semnătură electronică.</p>
+                    <p class="content-text HU">Lépjen az <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> linkre és hozzon létre egy felhasználói fiókot. Kattintson a Verificări preliminare gombra, jelölje be a rezervare denumire firma mezőt. Figyelem: ezen szolgáltatást csak akkor tudja igénybe venni, ha rendelkezik elektromos aláírás tanúsítvánnyal.</p>
+                    <p class="content-text EN">Access the NTRO <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">(ONRC)</a> website and create an account. Click the Preliminary Checks button, check the Company Name Reservation box. Warning: this service can only be accessed if you have an electronic signature certificate.</p>
+                    <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658" target="_blank">LEGE 152/2015</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+                  </div></div>
+                  <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">2. Rezervarea la sediul Registrului Comerțului</span><span class="HU">2. Foglalás a Jegyzékhivatalban</span><span class="EN">2. Reservation at the Trade Register office</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+                    <p class="content-text RO">Va trebui să completați <a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">acest formular</a>. Denumirea aleasă va fi validată dacă este liberă sau nu.</p>
+                    <p class="content-text HU"><a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">Ezen formanyomtatványt</a> kell kitöltenie. A választott megnevezés ellenőrzésre kerül, hogy elérhető-e, vagy sem.</p>
+                    <p class="content-text EN">You will need to fill out <a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">this form</a>. The chosen name will be validated whether it is free or not.</p>
+                  </div></div>
+                  <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">3. Verificare on-line + rezervare la sediu</span><span class="HU">3. Online ellenőrzés + hivatali foglalás</span><span class="EN">3. Check online + reserve at office</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+                    <p class="content-text RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și creați un cont. Bifați căsuța verificare disponibilitate denumire firmă. Această metodă nu necesită certificat de semnătură electronică, dar nici nu garantează că denumirea va fi disponibilă la momentul rezervării. Totuși dacă o verificați cu una sau două zile înainte, este puțin probabil ca între timp să o rezerve o altă persoană.</p>
+                    <p class="content-text HU">Lépjen a <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a>-re és hozzon létre egy felhasználói fiókot. Jelölje be a verificare disponibilitate denumire firma mezőt. Ezen szolgáltatás nem igényel elektronikus aláírás tanúsítványt, de nem is garantálja a név elérhetőségét a foglalás pillanatában. Amennyiben egy-két nappal előbb ellenőrzi, kevés az esélye hogy más lefoglalja.</p>
+                    <p class="content-text EN">Go to the NTRO <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">(ONRC)</a> website and create an account. Check the Company Name Availability check box. This method does not require an electronic signature certificate, but it also does not guarantee availability at the time of reservation. However, if you check a day or two in advance, it is unlikely that another person will reserve it.</p>
+                    <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+                  </div></div>
+                </div>
+              </div>
+
+              <!-- Step 2: Documents -->
+              <div class="accordion">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                  <span><span class="RO">Al doilea pas: Actele necesare</span><span class="HU">Második lépés: Szükséges iratok</span><span class="EN">Second step: Necessary documents</span></span>
+                  <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body">
+                  <div class="numbered-item"><span class="RO">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf" target="_blank">Cererea de înregistrare</a></span><span class="HU">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf" target="_blank">Bejegyzési kérelem</a></span><span class="EN">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-180.pdf" target="_blank">Application for registration</a></span></div>
+                  <div class="numbered-item"><span class="RO">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">Anexa 1 privind înregistrarea fiscală</a></span><span class="HU">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">Adóbejegyzéshez szükséges 1-es függelék</a></span><span class="EN">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">Annex 1 regarding the fiscal registration</a></span></div>
+                  <div class="numbered-item"><span class="RO">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Declaraţia-tip pe propria răspundere</a> despre îndeplinirea condiţiilor legale de funcţionare</span><span class="HU">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Saját felelősségvállalásra kitöltött nyilatkozat</a> a működéshez szükséges törvényi előírásoknak való megfelelésről</span><span class="EN">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Affidavit</a> stating the fulfillment of the legal operating conditions</span></div>
+                  <div class="numbered-item"><span class="RO">4. Dovada verificării disponibilităţii şi rezervării denumirii firmei</span><span class="HU">4. A megnevezés ellenőrzését és lefoglalását tanúsító okmány</span><span class="EN">4. Proof of verification of availability and reservation of the company name</span></div>
+                  <div class="numbered-item"><span class="RO">5. Actul de identitate al titularului PFA (copie cu "Conform cu originalul" + semnătura)</span><span class="HU">5. Az alapító személyi igazolványa (másolat, "Conform cu originalul" + aláírás)</span><span class="EN">5. Identity card of the registering sole trader (copy with 'In accordance with the original' + signature)</span></div>
+                  <div class="numbered-item"><span class="RO">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx" target="_blank">Declarație pe propia răspundere</a> privind îndeplinirea condițiilor legale ca PFA</span><span class="HU">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx" target="_blank">Saját felelősségvállalásra kitöltött nyilatkozat</a> a törvényi feltételeknek való megfelelésről</span><span class="EN">6. <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA.docx" target="_blank">Affidavit</a> regarding the fulfillment of the legal conditions</span></div>
+                  <div class="numbered-item"><span class="RO">7. Dovada dreptului de folosință asupra sediului profesional (extras CF + contract de comodat/locațiune)</span><span class="HU">7. A székhely feletti használati jogot igazoló okmány (telekkönyvi kivonat + haszonkölcsön/bérleti szerződés)</span><span class="EN">7. Proof of the right of use on the professional headquarters (land book extract + bailment/lease agreement)</span></div>
+                  <div class="numbered-item"><span class="RO">8. <a href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc" target="_blank">Declarație în cazul participării soțului/soției</a></span><span class="HU">8. <a href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc" target="_blank">Nyilatkozat amennyiben a házastárs részt vesz</a></span><span class="EN">8. <a href="https://www.onrc.ro/templates/site/formulare/declaratie%20de%20participare%20sot%20-%20sotie.doc" target="_blank">Declaration if the spouse participates</a></span></div>
+                  <div class="numbered-item"><span class="RO">9. Dacă activitatea la sediu: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">avizul asociaţiei de proprietari</a> și acordul vecinilor</span><span class="HU">9. Amennyiben a székhelyen: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">a lakóközösség véleményezése</a> és a szomszédok beleegyezése</span><span class="EN">9. If activity at headquarters: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">opinion of the owners' association</a> and agreement of the neighbors</span></div>
+                  <div class="numbered-item"><span class="RO">10. Documentele care atestă pregătirea profesională, dacă aceasta este cerută (copie cu "Conform cu originalul" + semnătura)</span><span class="HU">10. A szakmai felkészültséget tanúsító iratok, amennyiben szükségesek (másolat + aláírás)</span><span class="EN">10. Documents attesting the professional training, if required (simple copy + signature)</span></div>
+                  <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+                </div>
+              </div>
+
+              <!-- Step 3: Registering -->
+              <div class="accordion">
+                <button class="accordion-header alt" onclick="toggleAccordion(this)">
+                  <span><span class="RO">Al treilea pas: Înregistrarea dosarului</span><span class="HU">Harmadik lépés: Az iratcsomó leadása</span><span class="EN">Third step: Registering the file</span></span>
+                  <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body">
+                  <p class="content-text RO">După ce ați adunat toate documentele, va trebui să le prindeți într-un dosar cu șină și să vă desplasați la cel mai apropiat oficiu/ birou al registrului comerțului (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">aici</a> puteți verifica cea mai apropiată locație). Dosarul Dvs. va fi supus unei verificări prealabile, după care va fi înregistrat. Dacă aveți nelămuriri sau nu sunteți siguri dacă ați completat corect un formular, nu ezitați să întrebați personalul, cu siguranță vă vor ajuta.</p>
+                  <p class="content-text HU">Miután az összes iratot összegyűjtötte, fogja össze őket egy sínes aktába és menjen el a legközelebbi Kereskedelmi Jegyzékhivatalba (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">itt</a> ellenőrizheti a legközelebbi helyszínt). Az iratcsomó előzetes ellenőrzésnek lesz alávetve. Amennyiben kérdései vannak, forduljon bizalommal az alkalmazottakhoz.</p>
+                  <p class="content-text EN">Once you have gathered all necessary documents, bind them in a folder and go to the nearest Trade Register Office (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">here</a> you can check the nearest location). Your file will be subject to a prior verification. If you are unsure about a form, feel free to ask the employees.</p>
+                  <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+                </div>
+              </div>
+
+              <!-- Step 4: Certificate -->
+              <div class="accordion">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                  <span><span class="RO">Al patrulea pas: Ridicarea certificatului</span><span class="HU">Negyedik lépés: A bizonyítvány átvétele</span><span class="EN">Fourth step: Receiving the certificate</span></span>
+                  <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="accordion-body">
+                  <p class="content-text RO">La înregistrarea dosarului veți afla în cât timp puteți ridica certificatul de înregistrare (de obicei 3-4 zile). Dacă dosarul a fost complet și corect, felicitări, puteți începe activitatea. În cazul unei nereguli, veți avea 15 zile să completați dosarul. Stadiul dosarului se poate urmări și <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>.</p>
+                  <p class="content-text HU">Az iratcsomó leadásakor megtudja, hogy mennyi idő múlva veheti át a bizonyítványt (általában 3-4 nap). Amennyiben teljes és helyes volt, gratulálunk! Szabálytalanság esetén 15 nap áll rendelkezésére. Az állapotot <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a> is követheti.</p>
+                  <p class="content-text EN">Upon registering, you will find out when you can pick up the certificate (usually 3-4 days). If the file was complete and correct, congratulations! If an irregularity is found, you will have 15 days to complete the file. The status can be tracked <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>.</p>
+                  <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE 202/2010</a></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ SRL Panel ═══════════════════════════════════════════ -->
+    <div class="panel" id="panel-SRL">
+      <div class="content-card">
+        <p class="intro-text RO">SRL: este o societate/ persoană juridică având patrimoniu propriu și devenind independent de patrimoniul asociaților sau administratorilor, astfel răspunzând doar limitat, cu patrimoniul său propriu pentru orice datorie. SRL-ul în circuitul civil și comercial este o entitate de sine stătătoare, cu nume, sediu, date de identificare proprii, dar desigur este reprezentat de cele mai multe ori de către o persoană fizică. Este foarte important să ținem cont de diferența dintre persoana juridică (SRL-ul) și persoana fizică (administratorul/ asociatul). Adesea suntem tentați să confundăm cele două entități, mai ales dacă o persoană fizică este singurul asociat și are calitatea de administrator. Nu este deloc indiferent dacă persoana fizică sau persoana juridică răspunde pentru obligațiile asumate.</p>
+        <p class="intro-text HU">KFT: egy társaság/jogi személy, amely saját vagyonnal rendelkezik és független a tag(ok)/ügyvezető(k) vagyonától, így korlátolt felelősséggel rendelkezik, a saját vagyonával felel bármilyen tartozásért. A KFT egyedülálló entitás, megnevezéssel, székhellyel, saját azonosító jelekkel, ám a legtöbb esetben egy természetes személy képviseli. Fontos különbséget tennünk a jogi személy (KFT) és a természetes személy (ügyvezető/tag) között. Gyakran hajlamosak vagyunk összemosni a két entitást, különösen ha egyedüli tag és ügyvezető is egyben. Egyáltalán nem mindegy, hogy a természetes személy vagy a jogi személy felel a vállalt kötelezettségekért.</p>
+        <p class="intro-text EN">An LLC is a company or legal entity, which has its own patrimony, and being independent from the patrimonies of its members/administrators, bears a limited liability only to the extent of its own patrimony, for any debts incurred. An LLC in the civil and commercial circuit is an independent entity, with its own name, headquarters, identification, which in the majority of cases is represented by a natural person. It is really important to understand the difference between the legal entity (LLC) and the natural person (administrator/member). Sometimes we confound the two entities, especially in the case of a sole member who is also the administrator. It is not at all indifferent whether the natural person or the legal entity will be liable for the assumed obligations.</p>
+      </div>
+
+      <!-- Types of SRL -->
+      <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">SRL cu un singur asociat</span><span class="HU">Egyetlen taggal rendelkező KFT</span><span class="EN">LLC with a sole member</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">Societatea cu răspundere limitată este momentan singura persoană juridică în România care poate fi fondată de o persoană și nu presupune o asociere. Atenție! Înainte de anul 2020 o persoană putea avea calitatea de asociat unic doar într-o singură societate cu răspundere limitată, însă această limitare nu mai există conform legislației în vigoare, astfel o persoană poate înființa mai multe SRL-uri, fiind asociat unic. Poate interveni o situație puțin ciudată, în cazul în care persoana fizică, asociat unic și administrator încheie un contract cu persoana juridică (de exemplu contract de comodat pentru sediu). Dacă Ionel este singurul asociat, va trebui să completeze la înregistrare un act constitutiv aparte, iar pe parcursul desfățurării activităților va lua "decizii ale asociatului unic".</p>
+        <p class="content-text HU">A korlátolt felelősségű társaság jelen pillanatban az egyetlen romániai jogi személy, amely egyetlen személy által alapítható. Figyelem! 2020 előtt egyetlen személy csak egyetlen KFT-ben lehetett egyedüli tag, ám ez a megkötés többé nem létezik, így egy személy több KFT-t is alapíthat egyedüli tagként. Amennyiben Jancsi az egyetlen tag, a bejegyzés során más fajta alapító okiratot kell leadnia, a tevékenységek kifejtése során pedig "egyéni tagi döntéseket" hoz a közgyűlési határozatok helyett.</p>
+        <p class="content-text EN">Limited liability companies are momentarily the only legal entities which can be founded in Romania without the need for association. Attention! Before 2020, a person could be a sole member in only one LLC, but this limitation no longer exists in current legislation; a person can be the founder of multiple LLCs as a sole member. If Ionel is the sole member, he will have to submit a different set of articles of incorporation, and will make 'decisions of the sole member' instead of 'decisions of the general assembly'.</p>
+      </div></div>
+
+      <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">SRL cu mai mulți asociați</span><span class="HU">KFT több taggal</span><span class="EN">LLC with multiple members</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">Aceasta este varianta clasică. SRL-ul poate avea un număr maxim de 50 de asociați iar patrimoniul este împărțit pe părți sociale. De cele mai multe ori administratorul sau administratorii sunt numiți dintre asociați, însă pot fi persoane și dinafara societății. Toate regulile cu privire la funcționarea SRL-ului, drepturile și obligațiile asociaților se vor regăsi în actul constitutiv. Hotărârile luate de adunarea asociaților se numesc "hotărâri ale adunării generale ale asociaților (AGA)".</p>
+        <p class="content-text HU">Ez a KFT klasszikus változata. A KFT legtöbb 50 taggal rendelkezhet, a vagyona társasági részekre van osztva. A legtöbb esetben az ügyvezetőt a tagok közül nevezik ki, de lehetnek külső személyek is. A működési szabályok, jogok és kötelezettségek az alapító okiratban találhatóak. A tagok gyűlésén hozott döntéseket "közgyűlési határozatok (AGA)" hívják.</p>
+        <p class="content-text EN">This is the classic type. LLCs can have up to 50 members, the patrimony is divided into shares held by members in equal or non-equal parts. In most cases, the administrator(s) is/are named from the members, but they can be outside persons. All rules, rights and obligations are found in the articles of incorporation. Decisions are called 'decisions of the general assembly (AGA)'.</p>
+      </div></div>
+
+      <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">Persoană juridică asociat într-un SRL</span><span class="HU">Jogi személy tag egy KFT-ben</span><span class="EN">Legal entity, member of an LLC</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">Un SRL poate fi asociat într-un alt SRL? Da. Adesea societățile străine doresc să-și desfășoare activitatea prin înființarea unui SRL în România în care ei sunt asociați. O societate cu răspundere limitată poate fi și administratorul unei alte societăți. Aceste mecanisme sunt mai complicate și adesea necesită expertiză juridică și economică.</p>
+        <p class="content-text HU">Egy KFT lehet tag egy másik KFT-ben? Igen. Gyakran külföldi társaságok egy romániai KFT-n keresztül szeretnének tevékenykedni. Egy KFT lehet egy másik társaság ügyvezetője is. Ezen mechanizmusok komplikáltabbak és jogi, illetve gazdasági tapasztalatra van szükség hozzájuk.</p>
+        <p class="content-text EN">Can an LLC be a member of another LLC? Yes. Often foreign companies wish to carry out activities in Romania by founding an LLC in which they are a member. An LLC can be the administrator of another company. These mechanisms require legal and economic expertise.</p>
+      </div></div>
+
+      <!-- SRL Advantages -->
+      <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">Avantaje</span><span class="HU">Előnyök</span><span class="EN">Advantages</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <ul class="content-list RO"><li>Număr de activități nelimitate</li><li>Poate avea un asociat sau mai mulți, până la 50</li><li>Poate avea un număr nelimitat de salariați</li><li>Răspundere limitată, doar în măsura patrimoniului SRL-ului</li></ul>
+        <ul class="content-list HU"><li>Korlátlan számú tevékenység</li><li>Egy vagy több tagja lehet, legtöbb 50</li><li>Korlátlan számú alkalmazottal rendelkezhet</li><li>Korlátolt felelősségvállalás, a KFT vagyonának keretein belül</li></ul>
+        <ul class="content-list EN"><li>Unlimited number of activities</li><li>May have one or more associates, up to 50</li><li>Can have an unlimited number of employees</li><li>Limited liability, only to the extent of the LLC's patrimony</li></ul>
+        <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+      </div></div>
+
+      <!-- SRL Limits -->
+      <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">Limite</span><span class="HU">Hátrányok</span><span class="EN">Limits</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <ul class="content-list RO"><li>Mai mult formalități și costuri mai ridicate la înregistrare</li><li>Necesită serviciile unui contabil - contra cost</li><li>Veniturile nu pot fi utilizate în mod direct de către asociați/ administrator</li></ul>
+        <ul class="content-list HU"><li>Több formalitás és magasabb költségek a bejegyzés során</li><li>Szükséges egy könyvelő szolgáltatásainak igénybevétele - pénzbe kerül</li><li>A bevételek nem használhatóak direkt módon a tagok vagy az ügyvezető által</li></ul>
+        <ul class="content-list EN"><li>More formalities and higher registration costs</li><li>Requires the services of an accountant - for a fee</li><li>Revenues cannot be used directly by associates or the administrator</li></ul>
+        <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507" target="_blank">LEGE 1/2017</a></div>
+      </div></div>
+
+      <!-- SRL How long -->
+      <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">Cât durează înființarea?</span><span class="HU">Mennyi időbe telik az alapítás?</span><span class="EN">How long does it take?</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">După înregistrarea dosarului la Registrul Comerțului, în 3-4 zile SRL-ul este înregistrat și poți începe activitatea. Cu toate acestea, îți recomandăm să demarezi procedura din timp.</p>
+        <p class="content-text HU">Az iratcsomó bejegyzését követően a KFT 3-4 napon belül bejegyzésre kerül. Azt ajánljuk, kezdjen bele hamarabb és ne hagyja az alapítást az utolsó pillanatra.</p>
+        <p class="content-text EN">Three to four days after submitting the documents, the LLC is registered. We recommend starting the procedure in a timely manner.</p>
+        <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE 202/2010</a></div>
+      </div></div>
+
+      <!-- SRL Where -->
+      <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">Unde trebuie înregistrat SRL-ul?</span><span class="HU">Hol kell bejegyeztetni?</span><span class="EN">Where to register?</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">La Oficiul Registrului Comerțului din județul unde SRL-ul își va avea sediul. <a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Verificați</a> cel mai apropiat oficiu.</p>
+        <p class="content-text HU">A KFT székhelye szerint illetékes megyei Kereskedelmi Jegyzékhivatalnál. <a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Ellenőrizze</a> a legközelebbi hivatalt.</p>
+        <p class="content-text EN">At the Trade Register Office in the county where the LLC will have its headquarters. <a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">Check</a> the nearest office.</p>
+      </div></div>
+
+      <!-- SRL How to register -->
+      <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">Cum înregistrez SRL-ul?</span><span class="HU">Hogyan jegyezheti be a KFT-t?</span><span class="EN">How do I register an LLC?</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+        <p class="content-text RO">În principal există trei modalități:</p>
+        <p class="content-text HU">Alapvetően 3 módszer közül választhat:</p>
+        <p class="content-text EN">There are three main ways:</p>
+
+        <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">1. Firme specializate sau avocați</span><span class="HU">1. Szakosodott cégek vagy ügyvédek</span><span class="EN">1. Specialized companies or lawyers</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+          <p class="content-text RO">Procedura este mai simplă, însă va trebui să plătiți acest serviciu. Înregistrarea unui SRL nu necesită cunoștințe de specialitate.</p>
+          <p class="content-text HU">Az eljárás egyszerűbb, ám ezért fizetnie kell. A KFT bejegyzéséhez nem szükséges szaktudás.</p>
+          <p class="content-text EN">The procedure is simpler, but you will have to pay for this service. Registering an LLC does not require specialized knowledge.</p>
+        </div></div>
+
+        <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">2. Înregistrarea on-line prin ONRC</span><span class="HU">2. Online bejegyzés az ONRC-n</span><span class="EN">2. Online registration through ONRC</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+          <p class="content-text RO">Necesită semnătură electronică PKI cu certificat digital calificat! Dacă dețineți un asemenea certificat, accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a>, creați un cont, apoi accesați butonul Înregistrare în RC și autorizare PJ.</p>
+          <p class="content-text HU">PKI elektronikus aláírásra van szüksége! Amennyiben rendelkezik, lépjen be az <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> oldalra, hozzon létre fiókot, majd kattintson az Înregistrare în RC si autorizare PJ gombra.</p>
+          <p class="content-text EN">Requires a PKI electronic signature with a qualified digital certificate! If you have one, go to the <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">NTRO (ONRC)</a> website, create an account, then go to the RC Registration and PJ Authorization button.</p>
+          <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658" target="_blank">LEGE 152/2015</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+        </div></div>
+
+        <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">3. Înregistrarea în format fizic</span><span class="HU">3. Fizikailag történő bejegyzés</span><span class="EN">3. Physical registration</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+          <p class="content-text RO">Această metodă este cea mai răspândită, nu implică costuri suplimentare și nu necesită cunoștințe de specialitate.</p>
+          <p class="content-text HU">Ez a módszer a legelterjedtebb, nem hordoz magasabb költségeket és nem szükséges szaktudás hozzá.</p>
+          <p class="content-text EN">This method is the most common, it does not involve additional costs and does not require specialized knowledge.</p>
+          <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+
+          <!-- SRL Step 1: Name -->
+          <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">Primul pas: Denumirea</span><span class="HU">Első lépés: Megnevezés</span><span class="EN">First step: Name</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+            <p class="content-text RO">Firma trebuie să fie scrisă cu caractere latine, în primul rând în limba română, şi să nu producă confuzie cu alte firme înregistrate anterior. Se înscrie cu litere majuscule şi cu diacritice. Articularea, inversarea, dublarea, adăugarea de adverbe, prepoziții, simboluri (@, #, %), folosirea/nefolosirea diacriticelor etc. nu sunt considerate elemente distinctive.</p>
+            <p class="content-text HU">A cég nevét latin betűkkel kell írni, első sorban román nyelven, és nem kelthet zavarodottságot más, korábban bejegyzett cégekkel. A megnevezés nyomtatott nagy betűkkel és ékezetekkel kerül bejegyzésre. A szavak tagolása, sorrend megváltoztatása, betűk megduplázása, névelők/kötőszavak/számok/szimbólumok hozzáadása stb. nem számítanak megkülönböztető elemeknek.</p>
+            <p class="content-text EN">The company name must be written in Latin characters, primarily in Romanian, and must not cause confusion with previously registered names. It is entered in capital letters with diacritics. Articulation, reversing order, duplication, addition of adverbs/prepositions/symbols (@, #, %), use/non-use of diacritics etc. are not distinguishing elements.</p>
+
+            <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">1. Rezervarea on-line</span><span class="HU">1. Online foglalás</span><span class="EN">1. Online reservation</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+              <p class="content-text RO">Accesați <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> și creați un cont. Bifați rezervare denumire firmă. Necesită certificat de semnătură electronică.</p>
+              <p class="content-text HU">Lépjen az <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">ONRC</a> linkre. Jelölje be a rezervare denumire firma mezőt. Elektronikus aláírás szükséges.</p>
+              <p class="content-text EN">Access <a href="https://myportal.onrc.ro/rezervation/wizard" target="_blank">NTRO (ONRC)</a>. Check the Company Name Reservation box. Requires an electronic signature certificate.</p>
+            </div></div>
+            <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">2. Rezervarea la sediul ONRC</span><span class="HU">2. Foglalás a Jegyzékhivatalban</span><span class="EN">2. Reservation at the Trade Register</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+              <p class="content-text RO">Completați <a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">acest formular</a>. Dovada este valabilă 1 lună și poate fi prelungită.</p>
+              <p class="content-text HU">Töltse ki <a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">ezt az űrlapot</a>. A foglalás egy hónapig érvényes és meghosszabbítható.</p>
+              <p class="content-text EN">Fill out <a href="https://www.onrc.ro/templates/site/formulare/11-10-181.pdf" target="_blank">this form</a>. The proof is valid for one month and may be extended.</p>
+              <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/169658" target="_blank">LEGE 152/2015</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+            </div></div>
+            <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">3. Verificare on-line + rezervare la sediu</span><span class="HU">3. Online ellenőrzés + hivatali foglalás</span><span class="EN">3. Check online + reserve at office</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+              <p class="content-text RO">Accesați <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">ONRC</a>. Bifați verificare disponibilitate denumire firmă. Nu necesită certificat de semnătură electronică dar nici nu garantează disponibilitatea la momentul rezervării.</p>
+              <p class="content-text HU">Lépjen az <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">ONRC</a>-re. Jelölje be a verificare disponibilitate denumire firma mezőt. Nem igényel elektronikus aláírást, de nem is garantálja az elérhetőséget.</p>
+              <p class="content-text EN">Go to <a href="https://portal.onrc.ro/ONRCPortalWeb/appmanager/myONRC/signup?p=portal.informareInitiala" target="_blank">NTRO (ONRC)</a>. Check the Company Name Availability box. Does not require an electronic signature but does not guarantee availability.</p>
+              <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/230399" target="_blank">LEGE 208/2020</a></div>
+            </div></div>
+          </div></div>
+
+          <!-- SRL Step 2: Documents -->
+          <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">Al doilea pas: Actele necesare</span><span class="HU">Második lépés: Szükséges iratok</span><span class="EN">Second step: Necessary documents</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+            <div class="numbered-item"><span class="RO">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf" target="_blank">Cererea de înregistrare</a></span><span class="HU">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf" target="_blank">Bejegyzési kérelem</a></span><span class="EN">1. <a href="https://www.onrc.ro/templates/site/formulare/11-10-150.pdf" target="_blank">Application for registration</a></span></div>
+            <div class="numbered-item"><span class="RO">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">Anexa 1</a> privind înregistrarea fiscală (sau <a href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf" target="_blank">Anexa 2</a> dacă aveți investitori străini)</span><span class="HU">2. Adóbejegyzéshez szükséges <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">1-es függelék</a> (vagy <a href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf" target="_blank">2-es</a> külföldi befektető esetén)</span><span class="EN">2. <a href="https://www.onrc.ro/templates/site/formulare/anexa_1_inregistrare_fiscala.pdf" target="_blank">Annex 1</a> for fiscal registration (or <a href="https://www.onrc.ro/templates/site/formulare/anexa_2_investitie_straina.pdf" target="_blank">Annex 2</a> for foreign investors)</span></div>
+            <div class="numbered-item"><span class="RO">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Declaraţia-tip pe propria răspundere</a> privind condițiile legale de funcționare</span><span class="HU">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Saját felelősségvállalásra kitöltött nyilatkozat</a> a törvényi előírásokról</span><span class="EN">3. <a href="https://www.onrc.ro/templates/site/formulare/11-10-141.pdf" target="_blank">Affidavit</a> on fulfillment of legal operating conditions</span></div>
+            <div class="numbered-item"><span class="RO">4. Dovada verificării și rezervării denumirii</span><span class="HU">4. A megnevezés ellenőrzését és lefoglalását tanúsító okmány</span><span class="EN">4. Proof of company name verification and reservation</span></div>
+            <div class="numbered-item"><span class="RO">5. Actul constitutiv SRL</span><span class="HU">5. A KFT alapító irata</span><span class="EN">5. Articles of incorporation of the LLC</span></div>
+            <div class="numbered-item"><span class="RO">6. Dovada dreptului de folosință asupra sediului (extras CF + contract de comodat/locațiune). Chiar dacă sunteți proprietar, încheiați contract cu SRL-ul!</span><span class="HU">6. A székhely feletti használati jog okmánya (CF kivonat + szerződés). Még ha tulajdonos is, kössön szerződést a KFT-vel!</span><span class="EN">6. Proof of right to use the headquarters (CF extract + bailment/lease). Even if you own the premises, enter into a contract with the LLC!</span></div>
+            <div class="numbered-item"><span class="RO">7. <a href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf" target="_blank">Declaraţii pe propria răspundere</a> ale fondatorilor/administratorilor/cenzorilor</span><span class="HU">7. <a href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf" target="_blank">Saját felelősségvállalásra kitöltött nyilatkozatok</a> az alapítók/ügyvezetők/cenzorok részéről</span><span class="EN">7. <a href="https://www.onrc.ro/templates/site/formulare/declaratii/D5_Declaratie-PJ%20Conditii%20Fondator%20Asociat%20administrator.pdf" target="_blank">Affidavits</a> by founders/administrators/censors</span></div>
+            <div class="numbered-item"><span class="RO">8. Actele de identitate ale fondatorilor, administratorilor (copie cu "Conform cu originalul" + semnătura)</span><span class="HU">8. Az alapítók, ügyvezetők személyi igazolványai (másolat + aláírás)</span><span class="EN">8. Identity documents of founders, administrators (copy + signature)</span></div>
+            <div class="numbered-item"><span class="RO">9. Dacă aveți asociat cetățean străin: declarație notarială</span><span class="HU">9. Külföldi tag esetén: közjegyzői nyilatkozat</span><span class="EN">9. For foreign citizen associates: notarized statement</span></div>
+            <div class="numbered-item"><span class="RO">10. Dacă activitatea la sediu: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">avizul asociaţiei de proprietari</a> și <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx" target="_blank">acordul vecinilor</a></span><span class="HU">10. Amennyiben a székhelyen: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">lakóközösség véleményezése</a> és <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx" target="_blank">szomszédok beleegyezése</a></span><span class="EN">10. If activity at headquarters: <a href="https://www.onrc.ro/templates/site/formulare/11-10-160.pdf" target="_blank">owners' association opinion</a> and <a href="https://www.onrc.ro/templates/site/formulare/model%20declaratie%20PFA%20SEDIU.docx" target="_blank">neighbors' agreement</a></span></div>
+            <div class="numbered-item"><span class="RO">11. Dacă aveți asociat/administrator/cenzor persoană juridică: actele lor de înregistrare</span><span class="HU">11. Jogi személy tag/ügyvezető/cenzor esetén: alapító okiratuk</span><span class="EN">11. If a legal entity is associate/administrator/censor: their registration documents</span></div>
+            <div class="numbered-item"><span class="RO">12. <a href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf" target="_blank">Declarație privind beneficiarii reali</a></span><span class="HU">12. <a href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf" target="_blank">A valós kedvezményezettekről szóló nyilatkozat</a></span><span class="EN">12. <a href="https://www.onrc.ro/templates/site/formulare/Declaratie%20privind%20beneficiarii%20reaii-orct-nr.6.pdf" target="_blank">Declaration regarding real beneficiaries</a></span></div>
+            <div class="numbered-item"><span class="RO">13. Taxa de publicare în Monitorul Oficial (~130 lei, la registru sau prin <a href="https://www.onrc.ro/index.php/ro/conturi-iban" target="_blank">virament bancar</a>)</span><span class="HU">13. Hivatalos Közlönybeli megjelentetési illeték (~130 RON, <a href="https://www.onrc.ro/index.php/ro/conturi-iban" target="_blank">banki átutalással</a> is)</span><span class="EN">13. Official Gazette publication fee (~130 RON, at the registry or by <a href="https://www.onrc.ro/index.php/ro/conturi-iban" target="_blank">wire transfer</a>)</span></div>
+            <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/185507" target="_blank">LEGE 1/2017</a> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+            <p class="content-text" style="margin-top:10px"><span class="RO">Dacă vă confruntați cu dificultăți, puteți solicita <a href="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta" target="_blank">serviciul de asistență</a> gratuit sau contra cost al registrului comerțului.</span><span class="HU">Nehézségek esetén igénybe veheti a Kereskedelmi Jegyzékhivatal ingyenes vagy fizetéses <a href="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta" target="_blank">ügyfélszolgálatát</a>.</span><span class="EN">If you have difficulties, you can request the free or paid <a href="https://www.onrc.ro/index.php/ro/inmatriculari/operatiuni-prealabile/servicii-de-asistenta" target="_blank">support service</a> of the Trade Register.</span></p>
+          </div></div>
+
+          <!-- SRL Step 3 -->
+          <div class="accordion"><button class="accordion-header" onclick="toggleAccordion(this)"><span><span class="RO">Al treilea pas: Înregistrarea dosarului</span><span class="HU">Harmadik lépés: Az iratcsomó leadása</span><span class="EN">Third step: Registering the file</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+            <p class="content-text RO">Prindeți documentele într-un dosar cu șină și deplasați-vă la cel mai apropiat oficiu al registrului comerțului (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">locații</a>). Dosarul va fi verificat de un angajat. Nu ezitați să întrebați dacă aveți nelămuriri.</p>
+            <p class="content-text HU">Fogja össze az iratokat és menjen a legközelebbi Kereskedelmi Jegyzékhivatalba (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">helyszínek</a>). Az iratcsomót egy alkalmazott ellenőrzi. Kérdés esetén forduljon bizalommal hozzájuk.</p>
+            <p class="content-text EN">Bind your documents in a folder and go to the nearest Trade Register Office (<a href="https://www.onrc.ro/index.php/ro/retea-onrc" target="_blank">locations</a>). Your file will be reviewed by an employee. Feel free to ask if you have questions.</p>
+            <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a></div>
+          </div></div>
+
+          <!-- SRL Step 4 -->
+          <div class="accordion"><button class="accordion-header alt" onclick="toggleAccordion(this)"><span><span class="RO">Al patrulea pas: Ridicarea certificatului</span><span class="HU">Negyedik lépés: A bizonyítvány átvétele</span><span class="EN">Fourth step: Receiving the certificate</span></span><svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="accordion-body">
+            <p class="content-text RO">De obicei 3-4 zile. Dacă dosarul e corect, felicitări! În caz de neregulă, 15 zile pentru completare. Urmăriți stadiul <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>.</p>
+            <p class="content-text HU">Általában 3-4 nap. Ha helyes, gratulálunk! Szabálytalanság esetén 15 nap a kiegészítésre. Követheti az állapotot <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>.</p>
+            <p class="content-text EN">Usually 3-4 days. If correct, congratulations! If irregularity found, 15 days to complete. Track the status <a href="https://myportal.onrc.ro/dossier-status" target="_blank">online</a>.</p>
+            <div class="legislation"><i class="fa fa-gavel"></i> <a href="https://legislatie.just.ro/Public/DetaliiDocument/257835" target="_blank">LEGE 265/2022</a> <a href="https://legislatie.just.ro/Public/DetaliiDocumentAfis/123025" target="_blank">LEGE 202/2010</a></div>
+          </div></div>
+        </div></div>
+      </div></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ Quiz Panel ═══════════════════════════════════════════ -->
+    <div class="panel" id="panel-Test">
+      <div class="content-card">
+        <div class="quiz-container" id="quiz"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ── State ──
+    let currentLang = 'RO';
+    let currentTheme = 'dark';
+    let currentSection = 'PFA';
+
+    // ── Hash parsing (compatible with original #lang&section format) ──
+    function parseHash() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      const parts = hash.split('&').map(p => p.trim());
+      parts.forEach(p => {
+        const upper = p.toUpperCase();
+        if (['RO', 'HU', 'EN'].includes(upper)) currentLang = upper;
+        else if (['PFA', 'SRL', 'TEST'].includes(upper)) currentSection = upper === 'TEST' ? 'Test' : upper;
+        else if (['DARK', 'LIGHT'].includes(p.toLowerCase())) currentTheme = p.toLowerCase();
+      });
+    }
+
+    // ── Apply language ──
+    function applyLang() {
+      document.querySelectorAll('.RO, .HU, .EN').forEach(el => { el.style.display = 'none'; el.style.opacity = '0'; });
+      document.querySelectorAll('.' + currentLang).forEach(el => {
+        el.style.display = el.classList.contains('inline') ? 'inline' : 'block';
+        el.style.opacity = '1';
+      });
+      document.querySelectorAll('#langGroup .pill-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === currentLang);
+      });
+    }
+
+    // ── Apply theme ──
+    function applyTheme() {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      document.getElementById('themeToggle').innerHTML = currentTheme === 'dark' ? '&#9790;' : '&#9788;';
+    }
+
+    // ── Apply section ──
+    function applySection() {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      const el = document.getElementById('panel-' + currentSection);
+      if (el) el.classList.add('active');
+      document.querySelectorAll('.section-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.section === currentSection);
+      });
+    }
+
+    // ── Accordion toggle ──
+    function toggleAccordion(btn) {
+      btn.classList.toggle('open');
+      const body = btn.nextElementSibling;
+      body.classList.toggle('open');
+    }
+
+    // ── Quiz ──
+    const quizQuestions = [
+      {
+        question: { RO: 'Doriți să aveți mai mult de 3 salariați?', HU: 'Szeretné, hogy több, mint 3 alkalmazottja legyen?', EN: 'Do you want to have more than three employees?' },
+        desc: { RO: 'Persoana fizică autorizată poate încheia contract individual de muncă doar cu maxim 3 salariați. În cazul în care doriți să aveți mai mulți angajați, va trebui să înființați un SRL.', HU: 'Az engedélyezett természetes személy legfeljebb 3 fővel köthet egyéni munkaszerződést. Ha több alkalmazottat szeretne, KFT-t kell létrehoznia.', EN: 'The sole trader can conclude an individual employment contract only with a maximum of three employees. If you want more, you need an LLC.' },
+        yes: 'srl', no: 'next'
+      },
+      {
+        question: { RO: 'Doriți să vă ocupați cu mai mult de 5 activități?', HU: 'Szeretne több, mint 5 tevékenységet folytatni?', EN: 'Do you want more than five activities?' },
+        desc: { RO: 'PFA-ul poate derula doar 5 tipuri de activități (5 clase CAEN). Consultați lista codurilor CAEN.', HU: 'Az ETSZ csak 5 fajta tevékenységet végezhet (5 TEÁOR osztály). Tekintse át a TEÁOR kódok listáját.', EN: 'The sole trader can carry out only five types of activities (5 CAEN classes). Consult the CAEN code list.' },
+        yes: 'srl', no: 'next',
+        link: { url: 'https://www.caen.ro', text: 'CAEN' }
+      },
+      {
+        question: { RO: 'Doriți să vă bazați activitatea pe propria forță de muncă?', HU: 'Szeretné tevékenységét a saját munkaerejére alapozni?', EN: 'Do you want to base your work primarily on your own workforce?' },
+        desc: { RO: 'Acest criteriu nu exclude posibilitatea de a înființa un SRL. Dacă activitatea se bazează pe cunoștințele și munca Dvs., vă recomandăm un PFA.', HU: 'Ez a kritérium nem zárja ki a KFT alapításának lehetőségét. Ha az Ön tudásán és munkáján alapul, javasoljuk az ETSZ-t.', EN: 'This does not exclude setting up an LLC. If the activity is based mainly on your own knowledge and work, we recommend a sole tradership.' },
+        yes: 'pfa', no: 'next'
+      },
+      {
+        question: { RO: 'Doriți să conduceți afacerea cu mai mulți asociați?', HU: 'Szeretné vállalkozását több taggal működtetni?', EN: 'Do you want to run a business with multiple partners?' },
+        desc: { RO: 'PFA-ul poate avea ca titular o singură persoană. Dacă doriți asociați, va trebui să înființați un SRL.', HU: 'Az ETSZ-nek csak egy tagja/"tulajdonosa" lehet. Amennyiben társakat szeretne, KFT-t kell létrehoznia.', EN: 'The sole trader may have only one person as holder. If you want partners, you need an LLC.' },
+        yes: 'srl', no: 'next'
+      },
+      {
+        question: { RO: 'Doriți să testați o idee de afaceri de care nu sunteți încă sigur?', HU: 'Szeretne egy üzleti koncepciót tesztelni, amelynek sikerességéről még nem biztos?', EN: 'Do you want to test a business idea you\'re not sure about?' },
+        desc: { RO: 'PFA-ul se poate înființa și închide mai ușor. Dacă funcționează, puteți înființa un SRL mai târziu.', HU: 'Az ETSZ könnyebben létrehozható és bezárható. Ha beválik, később is alapíthat KFT-t.', EN: 'A sole tradership can be set up and closed more easily. If it works, you can always set up an LLC later.' },
+        yes: 'pfa', no: 'next'
+      },
+      {
+        question: { RO: 'Aveți o profesie și doriți să prestați servicii pe lângă jobul Dvs.?', HU: 'Van egy szakmája és szeretne szolgáltatást nyújtani állása mellett?', EN: 'Do you have a profession and want to work in addition to your job?' },
+        desc: { RO: 'PFA-ul este o modalitate mai comodă și mai eficientă, cu administrare simplificată din punct de vedere contabil.', HU: 'Az ETSZ kényelmesebb és hatékonyabb módszer, egyszerűbb könyvelés szempontjából.', EN: 'A sole tradership is more convenient and efficient, with simpler accounting administration.' },
+        yes: 'pfa', no: 'srl'
+      }
+    ];
+
+    const quizResults = {
+      pfa: {
+        title: { RO: 'PFA (Persoană Fizică Autorizată)', HU: 'ETSZ / PFA (Engedélyezett természetes személy)', EN: 'Sole Trader (PFA)' },
+        subtitle: { RO: 'Formă simplificată, ideală pentru antreprenori individuali cu operațiuni mai simple', HU: 'Egyszerűsített forma, ideális egyéni vállalkozók számára egyszerűbb tevékenységekre', EN: 'Simplified form, ideal for solo entrepreneurs with simpler operations' },
+        color: 'var(--accent-2)',
+        icon: '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+      },
+      srl: {
+        title: { RO: 'SRL (Societate cu Răspundere Limitată)', HU: 'KFT (Korlátolt Felelősségű Társaság)', EN: 'Limited Liability Company (LLC / SRL)' },
+        subtitle: { RO: 'Potrivit pentru venituri mai mari, mai mulți asociați sau angajați', HU: 'Alkalmas nagyobb bevételekre, több tagra vagy alkalmazottra', EN: 'Better for higher revenue, multiple partners, or employees' },
+        color: 'var(--accent-1)',
+        icon: '<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>'
+      }
+    };
+
+    let quizCurrent = 0;
+    let quizHistory = [];
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz');
+      const totalSteps = quizQuestions.length;
+
+      if (quizCurrent >= totalSteps || quizCurrent === -1) {
+        const lastAnswer = quizHistory[quizHistory.length - 1];
+        const result = quizResults[lastAnswer];
+        const btnText = { RO: 'Reîncepe', HU: 'Újrakezd', EN: 'Start Over' };
+        container.innerHTML = `
+          <div class="result-card">
+            <div class="result-icon" style="background: ${result.color}">${result.icon}</div>
+            <div class="result-title">${result.title[currentLang]}</div>
+            <div class="result-subtitle">${result.subtitle[currentLang]}</div>
+            <button class="restart-btn" onclick="restartQuiz()">${btnText[currentLang]}</button>
+          </div>`;
+        return;
+      }
+
+      const q = quizQuestions[quizCurrent];
+      const qNum = { RO: 'Întrebarea', HU: 'Kérdés', EN: 'Question' };
+      const ofText = { RO: 'din', HU: '/', EN: 'of' };
+      const yesText = { RO: 'Da', HU: 'Igen', EN: 'Yes' };
+      const noText = { RO: 'Nu', HU: 'Nem', EN: 'No' };
+
+      container.innerHTML = `
+        <div class="quiz-progress">
+          ${quizQuestions.map((_, i) => `<div class="progress-dot ${i < quizCurrent ? 'done' : ''} ${i === quizCurrent ? 'active' : ''}"></div>`).join('')}
+        </div>
+        <div class="question-card">
+          <div class="question-number">${qNum[currentLang]} ${quizCurrent + 1} ${ofText[currentLang]} ${totalSteps}</div>
+          <div class="question-text">${q.question[currentLang]}</div>
+          <div class="question-desc">${q.desc[currentLang]}${q.link ? ` <a href="${q.link.url}" target="_blank">${q.link.text}</a>` : ''}</div>
+          <div class="options">
+            <button class="option-btn" onclick="answerQuiz('yes')">
+              <span class="option-icon"></span>
+              <span>${yesText[currentLang]}</span>
+            </button>
+            <button class="option-btn" onclick="answerQuiz('no')">
+              <span class="option-icon"></span>
+              <span>${noText[currentLang]}</span>
+            </button>
+          </div>
+        </div>`;
+    }
+
+    function answerQuiz(answer) {
+      const q = quizQuestions[quizCurrent];
+      const result = answer === 'yes' ? q.yes : q.no;
+      if (result === 'next') {
+        quizCurrent++;
+        if (quizCurrent >= quizQuestions.length) {
+          quizHistory.push('srl');
+          quizCurrent = -1;
+        }
+      } else {
+        quizHistory.push(result);
+        quizCurrent = -1;
+      }
+      renderQuiz();
+    }
+
+    window.restartQuiz = function() {
+      quizCurrent = 0;
+      quizHistory = [];
+      renderQuiz();
+    };
+
+    // ── Event listeners ──
+    document.querySelectorAll('#langGroup .pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentLang = btn.dataset.lang;
+        applyLang();
+        if (currentSection === 'Test') renderQuiz();
+      });
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme();
+    });
+
+    document.querySelectorAll('.section-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        currentSection = tab.dataset.section;
+        applySection();
+        if (currentSection === 'Test') renderQuiz();
+      });
+    });
+
+    // ── Init ──
+    parseHash();
+    applyTheme();
+    applyLang();
+    applySection();
+    renderQuiz();
+
+    window.addEventListener('hashchange', () => {
+      parseHash();
+      applyTheme();
+      applyLang();
+      applySection();
+      if (currentSection === 'Test') renderQuiz();
+    });
+
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'gem-settings') {
+        const s = event.data.settings;
+        if (s.lang) currentLang = s.lang.toUpperCase();
+        if (s.theme) currentTheme = s.theme;
+        applyTheme();
+        applyLang();
+        if (currentSection === 'Test') renderQuiz();
+      }
+    });
+  </script>
+</body>
+</html>
