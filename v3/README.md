@@ -35,6 +35,12 @@ Still iframes from `gem-html.csaladen.es` (interactive HTML the daily job writes
 - `reports/index.html` reports carousel
 - `like.html` / `like2.html`
 
+## Ask GEM (AI assistant)
+
+The live agent is healthy at https://gem-agent.csaladen.es (`portal-agent` on the server, OpenRouter → InfluxQL on `base`). The beta page has an **Ask GEM** section that POSTs there from the browser (CORS is open). Standalone UI: https://gem-new.csaladen.es — source on the server already has GEM example questions; the running image was still showing GDP/temperature stubs until rebuilt.
+
+Example that works: “What is the TEA rate in Romania?” → `SELECT LAST("value") FROM "aps" WHERE "country"='RO' AND "type"='TEA' AND "lang"='EN'` → 5.85% (2023).
+
 ## Data pipeline (keep running)
 
 Cron on the server: `0 2 * * * sudo docker exec jupyter bash /home/jovyan/work/data-updater.sh`
