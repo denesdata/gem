@@ -1,0 +1,509 @@
+[
+  {
+    "year": 2026,
+    "sort": 202601,
+    "kind": "nationalreport",
+    "featured": true,
+    "href": "https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/38.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2024/2025",
+      "RO": "GEM România Raport de țară 2024/2025",
+      "EN": "GEM Romania National Report 2024/2025"
+    }
+  },
+  {
+    "year": 2025,
+    "sort": 202504,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/reports/womens-entrepreneurship",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/37.jpg",
+    "title": {
+      "HU": "A GEM 2024/2025-ös Női Vállalkozói Jelentése: A kihívások kezelése és a változás előmozdítása",
+      "RO": "Raportul GEM 2024/2025 privind Antreprenoriatul Feminin: Abordarea provocărilor și consolidarea proceselor de schimbare",
+      "EN": "Global Entrepreneurship Monitor (GEM) 2024/2025 Women’s Entrepreneurship Report: Navigating Challenges, Driving Change"
+    }
+  },
+  {
+    "year": 2025,
+    "sort": 202503,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://econ.ubbcluj.ro/antreprenoriat/?url=Raport2025",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/36.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2023/2024",
+      "RO": "GEM România Raport de țară 2023/2024",
+      "EN": "GEM Romania National Report 2023/2024"
+    }
+  },
+  {
+    "year": 2025,
+    "sort": 202502,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://gemconsortium.org/file/open?fileId=51637",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/35.jpg",
+    "title": {
+      "HU": "GEM 2023/2024 Fenntarthatósági és Vállalkozási Jelentés: Tudatosság és Cselekvés",
+      "RO": "Raportul GEM 2023/2024 privind Sustenabilitatea și Antreprenoriatul: Conștientizare și Acțiuni",
+      "EN": "GEM 2023/2024 Sustainability and Entrepreneurship Report: Awareness and Actions"
+    }
+  },
+  {
+    "year": 2025,
+    "sort": 202501,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=51621",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/34.jpg",
+    "title": {
+      "HU": "GEM 2024/2025 globális jelentés - Vállalkozói valóságellenőrzés",
+      "RO": "Raportul global GEM 2024/2025 - Verificarea realității antreprenoriatului",
+      "EN": "GEM 2024/2025 Global Report - Entrepreneurship Reality Check"
+    }
+  },
+  {
+    "year": 2024,
+    "sort": 2024,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://gemconsortium.org/file/open?fileId=51377",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/31.jpg",
+    "title": {
+      "HU": "GEM 2023/2024 globális jelentés",
+      "RO": "Raportul global GEM 2023/2024 - 25 de ani și în creștere",
+      "EN": "GEM 2023/2024 Global Report - 25 Years and Growing"
+    }
+  },
+  {
+    "year": 2024,
+    "sort": 2024,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://econ.ubbcluj.ro/antreprenoriat/?url=Raport2024",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/32.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2022/2023",
+      "RO": "GEM România Raport de țară 2022/2023",
+      "EN": "GEM Romania National Report 2022/2023"
+    }
+  },
+  {
+    "year": 2024,
+    "sort": 2024,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=51601",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/33.jpg",
+    "title": {
+      "HU": "GEM 2023/24 Női vállalkozói jelentés: A gazdaságok és közösségek átalakítása",
+      "RO": "GEM 2023/24 Raportul privind antreprenoriatul feminin: Transformarea economiilor și a comunităților",
+      "EN": "GEM 2023/24 Women's Entrepreneurship Report: Reshaping Economies and Communities"
+    }
+  },
+  {
+    "year": 2023,
+    "sort": 2023,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=51147",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/28.jpg",
+    "title": {
+      "HU": "GEM 2022/2023 globális jelentés",
+      "RO": "Raport global GEM 2022/2023",
+      "EN": "GEM 2022-2023 Global Report"
+    }
+  },
+  {
+    "year": 2023,
+    "sort": 2023,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/report/gem-20222023-womens-entrepreneurship-challenging-bias-and-stereotypes-2",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/29.jpg",
+    "title": {
+      "HU": "GEM 2022/2023 női vállalkozói szellem: az előítéletek és sztereotípiák megkérdőjelezése",
+      "RO": "GEM 2022/2023 antreprenoriatul feminin: contestarea prejudecăților și a stereotipurilor",
+      "EN": "GEM 2022/2023 women's entrepreneurship: challenging bias and stereotypes"
+    }
+  },
+  {
+    "year": 2023,
+    "sort": 2023,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://gemconsortium.org/report/202223-european-regional-report-research-insights-for-policymakers",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/30.jpg",
+    "title": {
+      "HU": "GEM 2022/23 Európai regionális jelentés: Kutatási eredmények a politikai döntéshozók számára",
+      "RO": "GEM 2022/2023 Raport regional european: Rezultate de cercetare pentru decidenții politici",
+      "EN": "GEM 2022/23 European Regional Report: Research Insights for Policymakers"
+    }
+  },
+  {
+    "year": 2022,
+    "sort": 2022,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50900",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/0.jpg",
+    "title": {
+      "HU": "GEM 2021/2022 globális jelentés",
+      "RO": "Raport global GEM 2021/2022",
+      "EN": "GEM 2021/2022 Global Report"
+    }
+  },
+  {
+    "year": 2021,
+    "sort": 2021,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50691",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/1.jpg",
+    "title": {
+      "HU": "GEM 2020/2021 globális jelentés",
+      "RO": "Raport global GEM 2020/2021",
+      "EN": "GEM 2020/2021 Global Report"
+    }
+  },
+  {
+    "year": 2021,
+    "sort": 2021,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=51347",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/15.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2021/2022",
+      "RO": "GEM România Raport de țară 2021/2022",
+      "EN": "GEM Romania National Report 2021/2022"
+    }
+  },
+  {
+    "year": 2021,
+    "sort": 2021,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50841",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/25.jpg",
+    "title": {
+      "HU": "GEM 2020/21 Női vállalkozói jelentés: Gyarapodás a válságban",
+      "RO": "Raportul GEM 2020/21 privind antreprenoriatul feminin: Să prosperăm în situații de criză",
+      "EN": "GEM 2020/21 Women's Entrepreneurship Report: Thriving through Crisis"
+    }
+  },
+  {
+    "year": 2021,
+    "sort": 2021,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50521",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/27.jpg",
+    "title": {
+      "HU": "A COVID-19 vállalkozói tevékenységre gyakorolt hatásának diagnosztizálása: A gazdaságélénkítés politikai megoldásainak feltárása",
+      "RO": "Diagnosticarea impactului COVID-19 asupra antreprenoriatului: Explorarea soluțiilor politice pentru redresare",
+      "EN": "Diagnosing COVID-19 Impacts on Entrepreneurship: Exploring Policy Remedies for Recovery"
+    }
+  },
+  {
+    "year": 2020,
+    "sort": 2020,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50443",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/2.jpg",
+    "title": {
+      "HU": "GEM 2019/2020 globális jelentés",
+      "RO": "Raport global GEM 2019/2020",
+      "EN": "GEM 2019/2020 Global Report"
+    }
+  },
+  {
+    "year": 2020,
+    "sort": 2020,
+    "kind": "specialreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50545",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/26.jpg",
+    "title": {
+      "HU": "2019/2020-as Globális Vállalkozási Monitor (GEM) Családi vállalkozói jelentés",
+      "RO": "Raportul Global Entrepreneurship Monitor (GEM) 2019/2020 privind antreprenoriatul familial",
+      "EN": "2019/2020 Global Entrepreneurship Monitor (GEM) Family Entrepreneurship Report"
+    }
+  },
+  {
+    "year": 2019,
+    "sort": 2019,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50213",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/3.jpg",
+    "title": {
+      "HU": "GEM 2018/2019 globális jelentés",
+      "RO": "Raport global GEM 2018/2019",
+      "EN": "GEM 2018/2019 Global Report"
+    }
+  },
+  {
+    "year": 2018,
+    "sort": 2018,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=50012",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/4.jpg",
+    "title": {
+      "HU": "GEM 2017/2018 globális jelentés",
+      "RO": "Raport global GEM 2017/2018",
+      "EN": "GEM 2017/2018 Global Report"
+    }
+  },
+  {
+    "year": 2017,
+    "sort": 2017,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=49812",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/5.jpg",
+    "title": {
+      "HU": "GEM 2016/2017 globális jelentés",
+      "RO": "Raport global GEM 2016/2017",
+      "EN": "GEM 2016/2017 Global Report"
+    }
+  },
+  {
+    "year": 2016,
+    "sort": 2016,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=49480",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/6.jpg",
+    "title": {
+      "HU": "GEM 2015/2016 globális jelentés",
+      "RO": "Raport global GEM 2015/2016",
+      "EN": "GEM 2015/2016 Global Report"
+    }
+  },
+  {
+    "year": 2015,
+    "sort": 2015,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/report/gem-romanian-report-2015",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/16.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2015",
+      "RO": "GEM România Raport de țară 2015",
+      "EN": "GEM Romania National Report 2015"
+    }
+  },
+  {
+    "year": 2014,
+    "sort": 2014,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=49079",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/7.jpg",
+    "title": {
+      "HU": "GEM 2014 globális jelentés",
+      "RO": "Raport global GEM 2014",
+      "EN": "GEM 2014 Global Report"
+    }
+  },
+  {
+    "year": 2014,
+    "sort": 2014,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=49404",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/17.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2014",
+      "RO": "GEM România Raport de țară 2014",
+      "EN": "GEM Romania National Report 2014"
+    }
+  },
+  {
+    "year": 2013,
+    "sort": 2013,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=48772",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/8.jpg",
+    "title": {
+      "HU": "GEM 2013 globális jelentés",
+      "RO": "Raport global GEM 2013",
+      "EN": "GEM 2013 Global Report"
+    }
+  },
+  {
+    "year": 2013,
+    "sort": 2013,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=49091",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/18.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2013",
+      "RO": "GEM România Raport de țară 2013",
+      "EN": "GEM Romania National Report 2013"
+    }
+  },
+  {
+    "year": 2012,
+    "sort": 2012,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=48545",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/9.jpg",
+    "title": {
+      "HU": "GEM 2012 globális jelentés",
+      "RO": "Raport global GEM 2012",
+      "EN": "GEM 2012 Global Report"
+    }
+  },
+  {
+    "year": 2012,
+    "sort": 2012,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=48812",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/19.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2012",
+      "RO": "GEM România Raport de țară 2012",
+      "EN": "GEM Romania National Report 2012"
+    }
+  },
+  {
+    "year": 2011,
+    "sort": 2011,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=48371",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/10.jpg",
+    "title": {
+      "HU": "GEM 2011 globális jelentés",
+      "RO": "Raport global GEM 2011",
+      "EN": "GEM 2011 Global Report"
+    }
+  },
+  {
+    "year": 2011,
+    "sort": 2011,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=48535",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/20.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2011",
+      "RO": "GEM România Raport de țară 2011",
+      "EN": "GEM Romania National Report 2011"
+    }
+  },
+  {
+    "year": 2010,
+    "sort": 2010,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47109",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/11.jpg",
+    "title": {
+      "HU": "GEM 2010 globális jelentés",
+      "RO": "Raport global GEM 2010",
+      "EN": "GEM 2010 Global Report"
+    }
+  },
+  {
+    "year": 2010,
+    "sort": 2010,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47518",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/21.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2010",
+      "RO": "GEM România Raport de țară 2010",
+      "EN": "GEM Romania National Report 2010"
+    }
+  },
+  {
+    "year": 2009,
+    "sort": 2009,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47108",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/12.jpg",
+    "title": {
+      "HU": "GEM 2009 globális jelentés",
+      "RO": "Raport global GEM 2009",
+      "EN": "GEM 2009 Global Report"
+    }
+  },
+  {
+    "year": 2009,
+    "sort": 2009,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47517",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/22.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2009",
+      "RO": "GEM România Raport de țară 2009",
+      "EN": "GEM Romania National Report 2009"
+    }
+  },
+  {
+    "year": 2008,
+    "sort": 2008,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47107",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/13.jpg",
+    "title": {
+      "HU": "GEM 2008 globális jelentés",
+      "RO": "Raport global GEM 2008",
+      "EN": "GEM 2008 Global Report"
+    }
+  },
+  {
+    "year": 2008,
+    "sort": 2008,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47344",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/23.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2008",
+      "RO": "GEM România Raport de țară 2008",
+      "EN": "GEM Romania National Report 2008"
+    }
+  },
+  {
+    "year": 2007,
+    "sort": 2007,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47106",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/14.jpg",
+    "title": {
+      "HU": "GEM 2007 globális jelentés",
+      "RO": "Raport global GEM 2007",
+      "EN": "GEM 2007 Global Report"
+    }
+  },
+  {
+    "year": 2007,
+    "sort": 2007,
+    "kind": "nationalreport",
+    "featured": false,
+    "href": "https://www.gemconsortium.org/file/open?fileId=47343",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/24.jpg",
+    "title": {
+      "HU": "GEM Románia országjelentés 2007",
+      "RO": "GEM România Raport de țară 2007",
+      "EN": "GEM Romania National Report 2007"
+    }
+  }
+]
