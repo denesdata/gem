@@ -10,7 +10,7 @@ import re
 from typing import Dict, Any, Optional
 import json
 
-MODEL = "qwen/qwen3.8-flash"
+MODEL = "qwen/qwen3.7-flash"
 
 _LANG_PREDICATE = re.compile(r'"lang"\s*=\s*\'[^\']*\'', re.IGNORECASE)
 _FROM_UPCOMING = re.compile(r'\bfrom\s+"upcoming"', re.IGNORECASE)
@@ -59,7 +59,8 @@ class DataAgent:
             default_headers={
                 "HTTP-Referer": os.getenv("OPENROUTER_REFERRER", "https://github.com/your-repo"),
                 "X-Title": os.getenv("OPENROUTER_TITLE", "GEM Romania Intelligent Agent")
-            }
+            },
+            extra_body={"reasoning": {"effort": "none"}},
         )
         
         # Connect to InfluxDB 1.8 (uses InfluxQL, not Flux)
