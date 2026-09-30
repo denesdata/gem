@@ -1,0 +1,27 @@
+# Core Agent Framework
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.20
+# Note: Using OpenRouter via langchain-openai (OpenRouter is OpenAI-compatible)
+
+# InfluxDB 1.x (InfluxQL)
+influxdb>=5.3.1
+
+# API Framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.3
+requests>=2.31.0
+
+# Utilities
+python-dotenv>=1.0.0
+redis>=5.0.1
+
+# Chart Generation
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Optional: For self-hosted LLM
+# transformers>=4.36.0
+# torch>=2.1.0
+
