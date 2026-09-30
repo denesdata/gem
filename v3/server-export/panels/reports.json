@@ -1,33 +1,33 @@
 [
   {
     "year": 2026,
-    "sort": 202601,
-    "kind": "nationalreport",
-    "featured": true,
-    "href": "https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf",
+    "sort": 2026,
+    "kind": "globalreport",
+    "featured": false,
+    "href": "https://gemconsortium.org/file/open?fileId=51858",
     "img": "https://gem-html.csaladen.es/panels/reports/img/38.jpg",
     "title": {
-      "HU": "GEM Románia országjelentés 2024/2025",
-      "RO": "GEM România Raport de țară 2024/2025",
-      "EN": "GEM Romania National Report 2024/2025"
+      "HU": "GEM 2025/2026 globális jelentés: A bizonytalanságtól a lehetőségekig",
+      "RO": "Raportul global GEM 2025/2026: De la incertitudine la oportunitate",
+      "EN": "GEM 2025/2026 Global Report: From Uncertainty To Opportunity"
     }
   },
   {
     "year": 2025,
-    "sort": 202504,
-    "kind": "specialreport",
+    "sort": 2025,
+    "kind": "globalreport",
     "featured": false,
-    "href": "https://www.gemconsortium.org/reports/womens-entrepreneurship",
-    "img": "https://gem-html.csaladen.es/panels/reports/img/37.jpg",
+    "href": "https://www.gemconsortium.org/file/open?fileId=51621",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/34.jpg",
     "title": {
-      "HU": "A GEM 2024/2025-ös Női Vállalkozói Jelentése: A kihívások kezelése és a változás előmozdítása",
-      "RO": "Raportul GEM 2024/2025 privind Antreprenoriatul Feminin: Abordarea provocărilor și consolidarea proceselor de schimbare",
-      "EN": "Global Entrepreneurship Monitor (GEM) 2024/2025 Women’s Entrepreneurship Report: Navigating Challenges, Driving Change"
+      "HU": "GEM 2024/2025 globális jelentés - Vállalkozói valóságellenőrzés",
+      "RO": "Raportul global GEM 2024/2025 - Verificarea realității antreprenoriatului",
+      "EN": "GEM 2024/2025 Global Report - Entrepreneurship Reality Check"
     }
   },
   {
     "year": 2025,
-    "sort": 202503,
+    "sort": 2025,
     "kind": "nationalreport",
     "featured": false,
     "href": "https://econ.ubbcluj.ro/antreprenoriat/?url=Raport2025",
@@ -40,7 +40,7 @@
   },
   {
     "year": 2025,
-    "sort": 202502,
+    "sort": 2025,
     "kind": "specialreport",
     "featured": false,
     "href": "https://gemconsortium.org/file/open?fileId=51637",
@@ -53,15 +53,15 @@
   },
   {
     "year": 2025,
-    "sort": 202501,
-    "kind": "globalreport",
+    "sort": 2025,
+    "kind": "specialreport",
     "featured": false,
-    "href": "https://www.gemconsortium.org/file/open?fileId=51621",
-    "img": "https://gem-html.csaladen.es/panels/reports/img/34.jpg",
+    "href": "https://www.gemconsortium.org/reports/womens-entrepreneurship",
+    "img": "https://gem-html.csaladen.es/panels/reports/img/37.jpg",
     "title": {
-      "HU": "GEM 2024/2025 globális jelentés - Vállalkozói valóságellenőrzés",
-      "RO": "Raportul global GEM 2024/2025 - Verificarea realității antreprenoriatului",
-      "EN": "GEM 2024/2025 Global Report - Entrepreneurship Reality Check"
+      "HU": "A GEM 2024/2025-ös Női Vállalkozói Jelentése: A kihívások kezelése és a változás előmozdítása",
+      "RO": "Raportul GEM 2024/2025 privind Antreprenoriatul Feminin: Abordarea provocărilor și consolidarea proceselor de schimbare",
+      "EN": "Global Entrepreneurship Monitor (GEM) 2024/2025 Women’s Entrepreneurship Report: Navigating Challenges, Driving Change"
     }
   },
   {
@@ -100,7 +100,7 @@
     "title": {
       "HU": "GEM 2023/24 Női vállalkozói jelentés: A gazdaságok és közösségek átalakítása",
       "RO": "GEM 2023/24 Raportul privind antreprenoriatul feminin: Transformarea economiilor și a comunităților",
-      "EN": "GEM 2023/24 Women's Entrepreneurship Report: Reshaping Economies and Communities"
+      "EN": "GEM 2023/24 Women’s Entrepreneurship Report: Reshaping Economies and Communities"
     }
   },
   {
@@ -126,7 +126,7 @@
     "title": {
       "HU": "GEM 2022/2023 női vállalkozói szellem: az előítéletek és sztereotípiák megkérdőjelezése",
       "RO": "GEM 2022/2023 antreprenoriatul feminin: contestarea prejudecăților și a stereotipurilor",
-      "EN": "GEM 2022/2023 women's entrepreneurship: challenging bias and stereotypes"
+      "EN": "GEM 2022/2023 women’s entrepreneurship: challenging bias and stereotypes"
     }
   },
   {
@@ -191,7 +191,7 @@
     "title": {
       "HU": "GEM 2020/21 Női vállalkozói jelentés: Gyarapodás a válságban",
       "RO": "Raportul GEM 2020/21 privind antreprenoriatul feminin: Să prosperăm în situații de criză",
-      "EN": "GEM 2020/21 Women's Entrepreneurship Report: Thriving through Crisis"
+      "EN": "GEM 2020/21 Women’s Entrepreneurship Report: Thriving through Crisis"
     }
   },
   {
