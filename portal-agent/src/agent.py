@@ -10,7 +10,7 @@ import re
 from typing import Dict, Any, Optional
 import json
 
-MODEL = "qwen/qwen3.8-max-prime"
+MODEL = "qwen/qwen3.8-flash"
 
 _LANG_PREDICATE = re.compile(r'"lang"\s*=\s*\'[^\']*\'', re.IGNORECASE)
 _FROM_UPCOMING = re.compile(r'\bfrom\s+"upcoming"', re.IGNORECASE)
