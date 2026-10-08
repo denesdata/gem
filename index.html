@@ -286,17 +286,17 @@
     </div>
     <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
     <script>
-        // Section to panel ID mapping
+        // Section ids on the new gem.csaladen.es site (Grafana lives at /old)
         const sectionMap = {
-            'home': '285',
-            'funding': '163',
-            'start': '171',
-            'ro': '161',
-            'stats': '169',
-            'aps': '179',
-            'nes': '175',
-            'news': '173',
-            'about': '66'
+            'home': 'overview',
+            'funding': 'funding',
+            'start': 'entrepreneurship',
+            'ro': 'romania',
+            'stats': 'statistics',
+            'aps': 'aps',
+            'nes': 'nes',
+            'news': 'reports',
+            'about': 'research'
         };
 
         // Get the URL parameters
@@ -350,25 +350,24 @@
         const section = targetParams.get('section')?.replace(/=$/, '');
         console.log('Parsed values:', { lang, section });  // Debug
 
-        // Construct query string with all additional parameters
-        const queryParams = [];
-
-        // Add panel if section exists
-        if (section && sectionMap[section]) {
-            queryParams.push(`panel=${sectionMap[section]}`);
+        // Construct query string for the new site (root). PDF shortcuts above are unchanged.
+        const queryParams = [`lang=${encodeURIComponent(lang)}`];
+        const sectionId = section && sectionMap[section] ? sectionMap[section] : section;
+        if (sectionId) {
+            queryParams.push(`section=${encodeURIComponent(sectionId)}`);
         }
 
         // Add any other parameters (including theme)
         targetParams.forEach((value, key) => {
-            if (key !== 'lang' && key !== 'section' && key !== 'url') {
-                queryParams.push(`${key}=${value}`);
+            if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'panel') {
+                queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
             }
         });
 
         const queryString = queryParams.join('&');
-        const newUrl = `//gem.csaladen.es/d/${lang}/${queryString ? '?' + queryString : ''}`;
+        const newUrl = `//gem.csaladen.es/?${queryString}`;
         iframe.src = newUrl;
-        console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', section);
+        console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', sectionId);
 
         iframe.onload = function () {
             setTimeout(() => {
@@ -384,34 +383,26 @@
                 document.querySelector('#bg-video').style.opacity = 0;
             }, 800);
 
-            // Extract panel ID from the URL if it exists
-            if (targetUrl) {
-                // const search = targetUrl.split('?')[1];
-                // const targetParams = new URLSearchParams(search);
-                // const section = targetParams.get('section');
-                const panelId = section ? sectionMap[section] : targetParams.get('panel');
-
-                if (panelId) {
-                    const delays = [400, 900, 1400, 1900];
-                    delays.forEach(delay => {
-                        setTimeout(() => {
-                            iframe.contentWindow.postMessage({
-                                type: 'scrollToPanel',
-                                panelId: panelId
-                            }, 'https://gem.csaladen.es');
-                        }, delay);
-                    });
-                }
+            if (sectionId) {
+                const delays = [400, 900, 1400, 1900];
+                delays.forEach(delay => {
+                    setTimeout(() => {
+                        iframe.contentWindow.postMessage({
+                            type: 'scrollToSection',
+                            section: sectionId
+                        }, 'https://gem.csaladen.es');
+                    }, delay);
+                });
             }
         };
 
         // Add new function for navigation
         function scrollToSection(section) {
-            const panelId = sectionMap[section];
-            if (panelId) {
+            const sectionId = sectionMap[section] || section;
+            if (sectionId) {
                 iframe.contentWindow.postMessage({
-                    type: 'scrollToPanel',
-                    panelId: panelId
+                    type: 'scrollToSection',
+                    section: sectionId
                 }, 'https://gem.csaladen.es');
             }
 
@@ -468,26 +459,23 @@
 
         // Update the message event listener
         window.addEventListener('message', function (event) {
-            // Verify the message is from our Grafana domain
+            // Child site at gem.csaladen.es (new UI) or legacy Grafana under /old
             if (event.origin !== 'https://gem.csaladen.es') return;
 
-            if (event.data.type === 'grafanaNavigation') {
-                console.log('Grafana navigated to:', event.data.url);
+            if (event.data.type === 'siteNavigation' || event.data.type === 'grafanaNavigation') {
+                console.log('Child navigated to:', event.data.url);
 
-                // Extract language from URL
-                const url = event.data.url;
-                let lang = 'ro'; // default language
+                const url = event.data.url || '';
+                let nextLang = 'ro';
+                try {
+                    const u = new URL(url, 'https://gem.csaladen.es');
+                    nextLang = u.searchParams.get('lang') || nextLang;
+                } catch (e) { /* ignore */ }
+                if (url.includes('/d/ro') || url.includes('lang=ro')) nextLang = 'ro';
+                if (url.includes('/d/en') || url.includes('lang=en')) nextLang = 'en';
+                if (url.includes('/d/hu') || url.includes('lang=hu')) nextLang = 'hu';
 
-                if (url.includes('/d/ro')) {
-                    lang = 'ro';
-                } else if (url.includes('/d/en')) {
-                    lang = 'en';
-                } else if (url.includes('/d/hu')) {
-                    lang = 'hu';
-                }
-
-                // Update menu language
-                updateMenuLanguage(lang);
+                updateMenuLanguage(nextLang);
             }
         });
 
