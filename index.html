@@ -1,505 +1,155 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="//www.w3.org/1999/xhtml">
-
+<html lang="en">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -- grafana -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6WYJ4XHJJ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-R6WYJ4XHJJ');
     </script>
-
-
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
     <meta name="description"
         content="Global Entrepreneurship Monitor Romania - Research conducted at Babeș-Bolyai University of Cluj-Napoca. Analyzing entrepreneurial attitudes, activity and aspirations in Romania." />
-    <meta name="keywords"
-        content="GEM Romania, Global Entrepreneurship Monitor, entrepreneurship, Babeș-Bolyai University, Cluj-Napoca, business research, Romanian economy, startup ecosystem, business development, UBB Cluj" />
-    <meta property="og:image" content="//gem2.csaladen.es/snapshot.png" />
-    <meta property="twitter:image" content="https://gem2.csaladen.es/snapshot.png" />
-    <meta property="og:description"
-        content="Global Entrepreneurship Monitor Romania - Research conducted at Babeș-Bolyai University of Cluj-Napoca. Analyzing entrepreneurial attitudes, activity and aspirations in Romania." />
-    <meta property="twitter:description"
-        content="Global Entrepreneurship Monitor Romania - Research conducted at Babeș-Bolyai University of Cluj-Napoca. Analyzing entrepreneurial attitudes, activity and aspirations in Romania." />
-    <meta property="og:title" content="Global Entrepreneurship Monitor 🇷🇴 Romania" />
-    <meta property="twitter:title" content="Global Entrepreneurship Monitor 🇷🇴 Romania" />
+    <meta property="og:image" content="https://gem2.csaladen.es/snapshot.png" />
+    <meta property="og:title" content="Global Entrepreneurship Monitor Romania" />
     <meta property="og:url" content="https://econ.ubbcluj.ro/entrepreneurship/" />
-    <meta property="twitter:url" content="https://econ.ubbcluj.ro/entrepreneurship/" />
-    <meta property="og:site_name" content="Global Entrepreneurship Monitor 🇷🇴 Romania" />
-    <meta property="fb:admins" content="100943737036023614165" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <link rel="shortcut icon" href="https://gem2.csaladen.es/favicon.ico" />
-    <link rel="shortcut icon" href="https://gem2.csaladen.es/favicon.ico" />
-
-    <title>Global Entrepreneurship Monitor 🇷🇴 Romania</title>
-
-    <!-- Add Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <title>Global Entrepreneurship Monitor Romania</title>
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Varela+Round:wght@400;700&family=Abyssinica+SIL:wght@400;700&display=swap");
-
-        html,
-        body,
-        iframe {
+        html, body, iframe {
             height: 100%;
             width: 100%;
-            /* background: transparent; */
-            background: #0b5567;
-            background: -webkit-linear-gradient(to bottom right, #0b5567, #020a11);
-            background: linear-gradient(to bottom right, #0b5567, #020a11);
-            border-color: #0b5567;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
             margin: 0;
-            border: none;
+            padding: 0;
+            border: 0;
             overflow: hidden;
-            color: #d8d9da;
-            /* Updated to match nav text color */
-            font-family: sans-serif;
+            background: transparent;
         }
-
-        a {
-            color: royalBlue;
-        }
-
-        /* Updated navigation styles to match Grafana */
-        .nav-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+        /* Legacy Grafana shell — same teal gradient the old gem2 layer painted */
+        html.engine-old, html.engine-old body {
             background: #0b5567;
             background: -webkit-linear-gradient(to bottom right, #0b5567, #020a11);
             background: linear-gradient(to bottom right, #0b5567, #020a11);
-            padding: 10px;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            height: 40px;
-            opacity: 0;
-            transition: opacity 1s linear;
-        }
-
-        .nav-menu a {
-            color: #d8d9da;
-            text-decoration: none;
-            padding: 8px 15px;
-            margin: 0 5px;
-            border-radius: 2px;
-            transition: all 0.2s;
-            display: inline-block;
-            border: 1px solid rgba(204, 204, 220, 0.15);
-            font-family: "Varela Round", sans-serif;
-            font-size: 14px;
-        }
-
-        .nav-menu a:hover {
-            color: #3bffce;
-            border-color: #3bffce;
-            text-decoration: none;
-        }
-
-        .nav-menu .home-btn {
-            background: rgba(59, 222, 255, 0.1);
-            font-weight: 500;
-        }
-
-        .nav-menu i {
-            margin-right: 6px;
-        }
-
-        /* Adjust iframe margin */
-        iframe {
-            /* margin-top: 120px; */
-            opacity: 0;
-            transition: opacity 2s linear;
-            /* transform: translateY(60px); */
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .nav-menu {
-                height: auto;
-                padding: 5px;
-            }
-
-            .nav-menu a {
-                padding: 6px 10px;
-                margin: 2px;
-                font-size: 12px;
-            }
-
-            .nav-menu i {
-                margin-right: 4px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-menu {
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-                background: linear-gradient(to right,
-                        #0b5567 calc(100% - 35px),
-                        rgba(11, 51, 103, 0.3) 100%);
-                padding-right: 35px;
-            }
-
-            .nav-menu:after {
-                content: '\f054';
-                font-family: 'Font Awesome 6 Free';
-                font-weight: 900;
-                position: fixed;
-                right: 10px;
-                top: 15px;
-                color: #3bffce;
-                animation: bounce-horizontal 2s infinite;
-                pointer-events: none;
-                font-size: 12px;
-            }
-
-            .nav-menu::-webkit-scrollbar {
-                display: none;
-            }
-
-            .nav-menu {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-
-            @keyframes bounce-horizontal {
-
-                0%,
-                100% {
-                    transform: translateX(0);
-                }
-
-                50% {
-                    transform: translateX(5px);
-                }
-            }
-        }
-
-        iframe {
-            z-index: 900;
-        }
-
-        /* Add new logo styles */
-        .center-logo {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 850;
-            width: 265px;
-            height: 120px;
-            /* opacity: 0; */
-            transition: opacity 0.5s linear;
-        }
-
-        .center-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: brightness(0.9);
-            /* Makes the logo white */
-        }
-
-        .center-logo div {
-            font-size: 44px;
-            font-family: "Abyssinica SIL", sans-serif;
-            font-weight: 400;
-            color: #d8d9da;
-            position: relative;
-            /* Add this */
-            display: inline-block;
-            /* Add this */
-        }
-
-        /* Add circular loader styles */
-        /* .center-logo div:after {
-            content: '';
-            position: absolute;
-            right: -60px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 25px;
-            height: 25px;
-            border: 3px solid rgba(59, 255, 206, 0.2);
-            border-top: 3px solid #3bffce;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        } */
-
-        @keyframes spin {
-            0% {
-                transform: translateY(-50%) rotate(0deg);
-            }
-
-            100% {
-                transform: translateY(-50%) rotate(360deg);
-            }
         }
     </style>
 </head>
-
 <body>
-    <!-- Updated navigation menu -->
-    <nav class="nav-menu">
-        <a href="#" onclick="return scrollToSection('home')" class="home-btn"><i class="fas fa-home"></i> Home</a>
-        <a href="#" onclick="return scrollToSection('funding')"><i class="fas fa-coins"></i> Funding</a>
-        <a href="#" onclick="return scrollToSection('start')"><i class="fas fa-play"></i> Start-up</a>
-        <a href="#" onclick="return scrollToSection('ro')"><i class="fas fa-flag"></i> Romania</a>
-        <a href="#" onclick="return scrollToSection('stats')"><i class="fas fa-chart-bar"></i> Statistics</a>
-        <a href="#" onclick="return scrollToSection('aps')"><i class="fas fa-poll"></i> APS</a>
-        <a href="#" onclick="return scrollToSection('nes')"><i class="fas fa-network-wired"></i> NES</a>
-        <a href="#" onclick="return scrollToSection('news')"><i class="fas fa-newspaper"></i> News</a>
-        <a href="#" onclick="return scrollToSection('about')"><i class="fas fa-person"></i> About</a>
-    </nav>
-    <video id="bg-video" style="position: fixed; left:0px; top:0px; min-width: 100%;
-  min-height: 100%;" loop muted autoplay poster="https://descoanalytics.com/img/bg.jpg">
-        <source src="https://descoanalytics.com/vid/5b.mp4" type="video/mp4">
-    </video>
-    <div
-        style="position: fixed; left:0px; top:0px; width: 100%; height: 100%; background-color: rgba(16, 48, 56, 0.9);">
-    </div>
-    <div class="center-logo">
-        <img src="https://www.gemconsortium.org/images/new-logo-white.png" alt="GEM Logo">
-        <div>Romania</div>
-        <!-- <div style="font-size:12px;">Currently we are down for maintenance.</div>
-        <div style="font-size:12px;">We will be back shortly!</div> -->
-    </div>
-    <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
+    <iframe id="iframe" allow="geolocation" title="GEM Romania"></iframe>
     <script>
         /**
-         * gem2 mother page router (what UBB iframes).
-         *   default  → new site  https://gem.csaladen.es
-         *   engine=old → Grafana https://gem-new.csaladen.es  (clean host, no /old subpath)
-         * PDF shortcuts stay here and never touch either child.
+         * gem2 mother (UBB iframe target).
+         *   default     → new site  https://gem.csaladen.es
+         *   engine=old  → Grafana   https://gem-new.csaladen.es + PDF shortcuts
+         * No chrome: child owns load/menu/nav.
          */
         const CHILD_NEW = 'https://gem.csaladen.es';
         const CHILD_OLD = 'https://gem-new.csaladen.es';
 
-        // New-site chapter ids
         const sectionMapNew = {
-            'home': 'overview',
-            'funding': 'funding',
-            'start': 'entrepreneurship',
-            'ro': 'romania',
-            'stats': 'statistics',
-            'aps': 'aps',
-            'nes': 'nes',
-            'news': 'reports',
-            'about': 'research'
+            home: 'overview',
+            funding: 'funding',
+            start: 'entrepreneurship',
+            ro: 'romania',
+            stats: 'statistics',
+            aps: 'aps',
+            nes: 'nes',
+            news: 'reports',
+            about: 'research'
         };
-        // Legacy Grafana panel ids (only when engine=old)
         const sectionMapOld = {
-            'home': '285',
-            'funding': '163',
-            'start': '171',
-            'ro': '161',
-            'stats': '169',
-            'aps': '179',
-            'nes': '175',
-            'news': '173',
-            'about': '66'
+            home: '285',
+            funding: '163',
+            start: '171',
+            ro: '161',
+            stats: '169',
+            aps: '179',
+            nes: '175',
+            news: '173',
+            about: '66'
+        };
+
+        const PDF = {
+            Raport2024: 'https://gem-html.csaladen.es/panels/reports/pdf/Raport%20de%20tara%202022-2023_final.pdf',
+            Raport2025: 'https://gem-html.csaladen.es/panels/reports/pdf/GEM%20Raport%20de%20tara%202023-2024.pdf',
+            Raport2026: 'https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf'
         };
 
         const urlParams = new URLSearchParams(window.location.search);
         const fullUrl = window.location.search;
-
         let targetUrl = '';
         if (fullUrl.includes('url=')) {
             targetUrl = decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4));
+        }
 
-            if (targetUrl === 'Raport2024') {
-                window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/Raport%20de%20tara%202022-2023_final.pdf';
-                throw new Error('Redirecting to 2024 Report');
-            }
-            if (targetUrl === 'Raport2025') {
-                window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/GEM%20Raport%20de%20tara%202023-2024.pdf';
-                throw new Error('Redirecting to 2025 Report');
-            }
-            if (targetUrl === 'Raport2026') {
-                window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf';
-                throw new Error('Redirecting to 2026 Report');
-            }
+        const targetParams = targetUrl
+            ? new URLSearchParams(targetUrl.replace(/^\?+/, '').replace(/\|/g, '&'))
+            : urlParams;
+        const useOld = (targetParams.get('engine') || urlParams.get('engine') || '') === 'old';
+        const lang = targetParams.get('lang') || 'ro';
+        const section = (targetParams.get('section') || '').replace(/=$/, '');
+        if (useOld) document.documentElement.classList.add('engine-old');
 
-            targetUrl = targetUrl.replace(/^\?+/, '').replace(/\|/g, '&');
-
-            if (targetUrl.startsWith('html=')) {
-                const pdfPath = targetUrl.replace('html=', '');
-                window.location.href = `https://gem-html.csaladen.es/${pdfPath}`;
-                throw new Error('Redirecting to HTML');
+        // PDF / html shortcuts only on the legacy engine
+        if (useOld && targetUrl) {
+            if (PDF[targetUrl]) {
+                window.location.replace(PDF[targetUrl]);
+                throw new Error('pdf');
+            }
+            const raw = targetUrl.replace(/^\?+/, '').replace(/\|/g, '&');
+            if (raw.startsWith('html=')) {
+                window.location.replace('https://gem-html.csaladen.es/' + raw.slice(5));
+                throw new Error('html');
             }
         }
 
-        const targetParams = targetUrl ? new URLSearchParams(targetUrl) : urlParams;
-        const lang = targetParams.get('lang') || 'ro';
-        const section = targetParams.get('section')?.replace(/=$/, '');
-        const useOld = (targetParams.get('engine') || urlParams.get('engine') || '') === 'old';
-        const childOrigin = useOld ? CHILD_OLD : CHILD_NEW;
-        const sectionMap = useOld ? sectionMapOld : sectionMapNew;
-
+        const iframe = document.getElementById('iframe');
         let childSrc;
+
         if (useOld) {
-            // Classic Grafana dashboard URL — host is clean, no /old prefix
+            const sectionMap = sectionMapOld;
             const queryParams = [];
             if (section && sectionMap[section]) {
-                queryParams.push(`panel=${sectionMap[section]}`);
+                queryParams.push('panel=' + sectionMap[section]);
             }
             targetParams.forEach((value, key) => {
-                if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'engine' && key !== 'panel') {
-                    queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                if (!['lang', 'section', 'url', 'engine', 'panel'].includes(key)) {
+                    queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
                 }
             });
-            const qs = queryParams.length ? `?${queryParams.join('&')}` : '';
-            childSrc = `${CHILD_OLD}/d/${lang}/${qs}`;
+            const qs = queryParams.length ? '?' + queryParams.join('&') : '';
+            childSrc = CHILD_OLD + '/d/' + lang + '/' + qs;
         } else {
-            const queryParams = [`lang=${encodeURIComponent(lang)}`];
+            const sectionMap = sectionMapNew;
+            const queryParams = ['lang=' + encodeURIComponent(lang)];
             const sectionId = section && sectionMap[section] ? sectionMap[section] : section;
-            if (sectionId) queryParams.push(`section=${encodeURIComponent(sectionId)}`);
+            if (sectionId) queryParams.push('section=' + encodeURIComponent(sectionId));
             targetParams.forEach((value, key) => {
-                if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'engine' && key !== 'panel') {
-                    queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                if (!['lang', 'section', 'url', 'engine', 'panel'].includes(key)) {
+                    queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
                 }
             });
-            childSrc = `${CHILD_NEW}/?${queryParams.join('&')}`;
+            childSrc = CHILD_NEW + '/?' + queryParams.join('&');
         }
 
         iframe.src = childSrc;
-        console.log('gem2 →', childSrc, { useOld, lang, section });
 
-        iframe.onload = function () {
-            setTimeout(() => { iframe.style.opacity = 1; }, 100);
-            setTimeout(() => { document.querySelector('.center-logo').style.opacity = 0; }, 200);
-            setTimeout(() => {
-                document.querySelector('.nav-menu').style.opacity = 1;
-                document.querySelector('#bg-video').style.opacity = 0;
-            }, 800);
-
-            const mapped = section && sectionMap[section] ? sectionMap[section] : section;
-            if (!mapped) return;
-            const delays = [400, 900, 1400, 1900];
-            delays.forEach(delay => {
-                setTimeout(() => {
-                    if (useOld) {
-                        iframe.contentWindow.postMessage({
-                            type: 'scrollToPanel',
-                            panelId: mapped
-                        }, CHILD_OLD);
-                    } else {
-                        iframe.contentWindow.postMessage({
-                            type: 'scrollToSection',
-                            section: mapped
-                        }, CHILD_NEW);
-                    }
-                }, delay);
-            });
-        };
-
-        function scrollToSection(sectionKey) {
-            const mapped = sectionMap[sectionKey] || sectionKey;
-            if (!mapped) return false;
-            if (useOld) {
-                iframe.contentWindow.postMessage({
-                    type: 'scrollToPanel',
-                    panelId: mapped
-                }, CHILD_OLD);
-            } else {
-                iframe.contentWindow.postMessage({
-                    type: 'scrollToSection',
-                    section: mapped
-                }, CHILD_NEW);
-            }
-            return false;
-        }
-
-        // Add language translations
-        const menuTranslations = {
-            en: {
-                home: 'Home',
-                funding: 'Funding',
-                start: 'Start-up',
-                ro: 'Romania',
-                stats: 'Statistics',
-                aps: 'APS',
-                nes: 'NES',
-                news: 'News',
-                about: 'About us'
-            },
-            ro: {
-                home: 'Acasă',
-                funding: 'Finanțare',
-                start: 'Start-up',
-                ro: 'România',
-                stats: 'Statistici',
-                aps: 'APS',
-                nes: 'NES',
-                news: 'Știri',
-                about: 'Despre noi'
-            },
-            hu: {
-                home: 'Kezdőlap',
-                funding: 'Finanszírozás',
-                start: 'Cégalapítás',
-                ro: 'Románia',
-                stats: 'Statisztikák',
-                aps: 'APS',
-                nes: 'NES',
-                news: 'Hírek',
-                about: 'Rólunk'
-            }
-        };
-
-        // Function to update menu language
-        function updateMenuLanguage(lang) {
-            const translations = menuTranslations[lang] || menuTranslations.ro;
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                const section = link.getAttribute('onclick').match(/scrollToSection\('(.+?)'\)/)[1];
-                const icon = link.querySelector('i').outerHTML;
-                link.innerHTML = `${icon} ${translations[section]}`;
+        if (useOld && section) {
+            const mapped = sectionMapOld[section] || section;
+            iframe.addEventListener('load', function () {
+                [400, 900, 1400].forEach(function (delay) {
+                    setTimeout(function () {
+                        try {
+                            iframe.contentWindow.postMessage(
+                                { type: 'scrollToPanel', panelId: mapped },
+                                CHILD_OLD
+                            );
+                        } catch (e) { /* cross-origin */ }
+                    }, delay);
+                });
             });
         }
-
-        window.addEventListener('message', function (event) {
-            if (event.origin !== CHILD_NEW && event.origin !== CHILD_OLD) return;
-
-            if (event.data.type === 'siteNavigation' || event.data.type === 'grafanaNavigation') {
-                const url = event.data.url || '';
-                let nextLang = 'ro';
-                try {
-                    const u = new URL(url, event.origin);
-                    nextLang = u.searchParams.get('lang') || nextLang;
-                } catch (e) { /* ignore */ }
-                if (url.includes('/d/ro') || /[?&]lang=ro\b/.test(url)) nextLang = 'ro';
-                if (url.includes('/d/en') || /[?&]lang=en\b/.test(url)) nextLang = 'en';
-                if (url.includes('/d/hu') || /[?&]lang=hu\b/.test(url)) nextLang = 'hu';
-                updateMenuLanguage(nextLang);
-            }
-        });
-
-        // Initialize menu with language
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log(lang, 'language detected..');
-            updateMenuLanguage(lang);
-        });
     </script>
 </body>
-
 </html>
