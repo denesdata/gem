@@ -1,0 +1,15 @@
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+# Root host — no /v3 basePath
+ENV NEXT_PUBLIC_BASE_PATH=
+RUN npm run build
+
+FROM node:18-alpine
+WORKDIR /app
+RUN npm install -g serve@14
+COPY --from=build /app/out ./out
+EXPOSE 3000
+CMD ["serve", "-s", "out", "-l", "3000"]

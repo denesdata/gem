@@ -1,0 +1,28 @@
+# formatter_daily.ipynb — cell ranges inclusive.
+# Intentionally omits papermill→update_grafana (cells 49–55) and
+# the inline git shell cells (56–62); publish is handled by the pipeline.
+
+job: daily
+notebook: formatter_daily.ipynb
+
+stages:
+  - id: setup
+    description: Imports, params, Influx client, country dictionary
+    cells: [0, 12]
+
+  - id: news
+    description: Press sheet → Influx news + panels/news.json
+    cells: [13, 18]
+
+  - id: opportunities
+    description: Funding sheet → content-filter HTML + upcoming Influx/JSON
+    cells: [19, 31]
+
+  - id: legal
+    description: ONRC weekly legal map → legal_unstacked_*.json + legal_def.json
+    cells: [32, 48]
+
+publish:
+  panel_set: daily
+  sqlite: true
+  github: true

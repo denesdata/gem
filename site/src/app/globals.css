@@ -1,0 +1,846 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GEM Romania Custom Properties */
+:root {
+  /* Light theme (default) - soft grey/beige, not harsh white */
+  --color-bg-primary: #EDEAE5;
+  --color-bg-secondary: #E5E2DD;
+  --color-bg-tertiary: #DDD9D4;
+  --color-bg-card: #F5F3F0;
+  --color-bg-elevated: #FAF9F7;
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-default: rgba(0, 0, 0, 0.08);
+  --color-border: var(--color-border-subtle);
+  --color-border-accent: rgba(61, 139, 112, 0.25);
+  --color-on-primary: #ffffff;
+  --color-text-primary: #3D4349;
+  --color-text-secondary: #5A6570;
+  --color-text-tertiary: #7A8590;
+  --color-text-muted: #9AA5B1;
+  --color-gem-500: #7EC844;
+  --color-gem-600: #5FA832;
+  --color-gem-400: #9AD864;
+  --color-gem-teal: #3D8B70;
+  
+  /* Background gradient */
+  --bg-gradient: linear-gradient(160deg, 
+    rgba(126, 200, 68, 0.08) 0%,
+    rgba(90, 158, 47, 0.04) 25%,
+    transparent 50%
+  );
+
+  /* Colorful scheme colors (default) */
+  --color-accent-1: #FF70BB; /* Pink */
+  --color-accent-2: #ebbc5a; /* Gold */
+  --color-accent-3: #afa2dc; /* Purple */
+  --color-accent-4: #99D9EA; /* Cyan */
+  --color-accent-5: #ffa349; /* Orange */
+  --color-accent-6: #7EC844; /* Lime Green */
+  
+  /* Primary accent - CONSISTENT across both schemes (teal-green brand color) */
+  --color-primary: #3D8B70;
+  --color-primary-hover: #2D6B55;
+  --color-primary-muted: rgba(61, 139, 112, 0.1);
+  --color-primary-border: rgba(61, 139, 112, 0.2);
+  
+  /* Chart colors - colorful scheme */
+  --chart-color-1: #FF70BB;
+  --chart-color-2: #ebbc5a;
+  --chart-color-3: #afa2dc;
+  --chart-color-4: #99D9EA;
+  --chart-color-5: #ffa349;
+  --chart-color-6: #7EC844;
+  --chart-color-7: #3D8B70;
+  --chart-gradient-start: #7EC844;
+  --chart-gradient-end: #3D8B70;
+}
+
+.dark {
+  /* Dark theme */
+  --color-bg-primary: #0a0f14;
+  --color-bg-secondary: #0f151b;
+  --color-bg-tertiary: #151c24;
+  --color-bg-card: #12181f;
+  --color-bg-elevated: #1a222b;
+  --color-border-subtle: rgba(126, 200, 68, 0.1);
+  --color-border-default: rgba(126, 200, 68, 0.2);
+  --color-border: var(--color-border-subtle);
+  --color-border-accent: rgba(126, 200, 68, 0.35);
+  --color-on-primary: #0a0f14;
+  --color-text-primary: #F8FAF9;
+  --color-text-secondary: #B8C5C0;
+  --color-text-tertiary: #6B7D77;
+  --color-text-muted: #4A5A54;
+  
+  /* Primary color - lime green in dark mode for better visibility */
+  --color-primary: #7EC844;
+  --color-primary-hover: #9AD864;
+  --color-primary-muted: rgba(126, 200, 68, 0.15);
+  --color-primary-border: rgba(126, 200, 68, 0.25);
+  
+  /* Dark background gradient */
+  --bg-gradient: linear-gradient(160deg,
+    rgba(126, 200, 68, 0.06) 0%,
+    rgba(61, 139, 112, 0.04) 25%,
+    transparent 50%
+  ),
+  linear-gradient(340deg,
+    rgba(61, 139, 112, 0.05) 0%,
+    rgba(27, 58, 75, 0.08) 30%,
+    transparent 60%
+  );
+}
+
+/* Green color scheme */
+[data-colors="green"] {
+  /* Green palette - secondary green (#7EC844) becomes first accent */
+  --color-accent-1: #7EC844; /* Lime Green (secondary) */
+  --color-accent-2: #5FA832; /* Medium Green */
+  --color-accent-3: #4A9F31; /* Forest Green */
+  --color-accent-4: #9AD864; /* Light Green */
+  --color-accent-5: #BBF7D0; /* Pale Green */
+  --color-accent-6: #2D6B55; /* Deep Teal */
+  
+  /* Primary stays consistent - same teal-green brand color */
+  --color-primary: #3D8B70;
+  --color-primary-hover: #2D6B55;
+  --color-primary-muted: rgba(61, 139, 112, 0.1);
+  --color-primary-border: rgba(61, 139, 112, 0.2);
+  
+  /* Chart colors - green scheme (all green shades) */
+  --chart-color-1: #3D8B70;
+  --chart-color-2: #4A9F31;
+  --chart-color-3: #5FA832;
+  --chart-color-4: #7EC844;
+  --chart-color-5: #9AD864;
+  --chart-color-6: #BBF7D0;
+  --chart-color-7: #2D6B55;
+  --chart-gradient-start: #3D8B70;
+  --chart-gradient-end: #7EC844;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark body::before {
+  opacity: 0.055;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gem-500);
+  color: white;
+}
+
+.dark ::selection {
+  color: var(--color-bg-primary);
+}
+
+/* Card component */
+@layer components {
+  .card {
+    @apply rounded-lg border transition-all duration-200;
+    background: var(--color-bg-card);
+    border-color: var(--color-border-subtle);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  
+  .card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  
+  .dark .card {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* Section header — editorial kicker, not a Grafana bar */
+.section-header {
+  background: none;
+  color: var(--color-text-primary);
+  border-radius: 0;
+  padding: 0 0 1rem;
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.section-header h2 {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.section-header p {
+  color: var(--color-text-muted);
+}
+
+.btn-gem {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.btn-gem:hover {
+  background: var(--color-primary-hover);
+}
+
+.text-on-primary {
+  color: var(--color-on-primary);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.gem-chapter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0.15rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: pointer;
+}
+
+.gem-chapter:hover {
+  color: var(--color-primary);
+}
+
+.gem-chapter[aria-expanded='true'] {
+  border-bottom-color: var(--color-primary);
+}
+
+.gem-chapter-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+}
+
+.gem-answer h3,
+.gem-answer h4 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.gem-answer p {
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0.4rem 0;
+}
+
+.gem-answer strong,
+.gem-answer b {
+  color: var(--color-primary);
+  font-weight: 650;
+}
+
+.gem-answer em {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gem-500);
+}
+
+/* Chart tooltips */
+.chart-tooltip {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 12px 16px;
+}
+
+/* Accent color utility classes for dynamic theming */
+.accent-1 { color: var(--color-accent-1); }
+.accent-2 { color: var(--color-accent-2); }
+.accent-3 { color: var(--color-accent-3); }
+.accent-4 { color: var(--color-accent-4); }
+.accent-5 { color: var(--color-accent-5); }
+.accent-6 { color: var(--color-accent-6); }
+
+.bg-accent-1 { background-color: var(--color-accent-1); }
+.bg-accent-2 { background-color: var(--color-accent-2); }
+.bg-accent-3 { background-color: var(--color-accent-3); }
+.bg-accent-4 { background-color: var(--color-accent-4); }
+.bg-accent-5 { background-color: var(--color-accent-5); }
+.bg-accent-6 { background-color: var(--color-accent-6); }
+
+.border-accent-1 { border-color: var(--color-accent-1); }
+.border-accent-2 { border-color: var(--color-accent-2); }
+.border-accent-3 { border-color: var(--color-accent-3); }
+.border-accent-4 { border-color: var(--color-accent-4); }
+.border-accent-5 { border-color: var(--color-accent-5); }
+.border-accent-6 { border-color: var(--color-accent-6); }
+
+.stroke-accent-1 { stroke: var(--color-accent-1); }
+.stroke-accent-2 { stroke: var(--color-accent-2); }
+.stroke-accent-3 { stroke: var(--color-accent-3); }
+.stroke-accent-4 { stroke: var(--color-accent-4); }
+.stroke-accent-5 { stroke: var(--color-accent-5); }
+.stroke-accent-6 { stroke: var(--color-accent-6); }
+
+.fill-accent-1 { fill: var(--color-accent-1); }
+.fill-accent-2 { fill: var(--color-accent-2); }
+.fill-accent-3 { fill: var(--color-accent-3); }
+.fill-accent-4 { fill: var(--color-accent-4); }
+.fill-accent-5 { fill: var(--color-accent-5); }
+.fill-accent-6 { fill: var(--color-accent-6); }
+
+/* Primary color utilities - these respond to color scheme */
+.bg-primary { background-color: var(--color-primary); }
+.bg-primary-hover:hover { background-color: var(--color-primary-hover); }
+.bg-primary-muted { background-color: var(--color-primary-muted); }
+.text-primary { color: var(--color-primary); }
+.text-primary-hover:hover { color: var(--color-primary-hover); }
+.border-primary { border-color: var(--color-primary); }
+.border-primary-muted { border-color: var(--color-primary-border); }
+.ring-primary { --tw-ring-color: var(--color-primary); }
+
+/* Chart color utilities */
+.chart-color-1 { color: var(--chart-color-1); }
+.chart-color-2 { color: var(--chart-color-2); }
+.chart-color-3 { color: var(--chart-color-3); }
+.chart-color-4 { color: var(--chart-color-4); }
+.chart-color-5 { color: var(--chart-color-5); }
+.chart-color-6 { color: var(--chart-color-6); }
+
+.bg-chart-1 { background-color: var(--chart-color-1); }
+.bg-chart-2 { background-color: var(--chart-color-2); }
+.bg-chart-3 { background-color: var(--chart-color-3); }
+.bg-chart-4 { background-color: var(--chart-color-4); }
+.bg-chart-5 { background-color: var(--chart-color-5); }
+.bg-chart-6 { background-color: var(--chart-color-6); }
+
+.stroke-chart-1 { stroke: var(--chart-color-1); }
+.stroke-chart-2 { stroke: var(--chart-color-2); }
+.stroke-chart-3 { stroke: var(--chart-color-3); }
+.stroke-chart-4 { stroke: var(--chart-color-4); }
+.stroke-chart-5 { stroke: var(--chart-color-5); }
+.stroke-chart-6 { stroke: var(--chart-color-6); }
+
+.fill-chart-1 { fill: var(--chart-color-1); }
+.fill-chart-2 { fill: var(--chart-color-2); }
+.fill-chart-3 { fill: var(--chart-color-3); }
+.fill-chart-4 { fill: var(--chart-color-4); }
+.fill-chart-5 { fill: var(--chart-color-5); }
+.fill-chart-6 { fill: var(--chart-color-6); }
+
+/* ============================================
+   AIRY LAYOUT STYLES
+   A cleaner, more spacious design
+   ============================================ */
+
+[data-layout="airy"] {
+  /* Larger base spacing */
+  --airy-section-gap: 4rem;
+  --airy-card-padding: 2rem;
+  --airy-border-radius: 1.5rem;
+}
+
+/* Airy: Increase spacing between page sections */
+[data-layout="airy"] .space-y-8 {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(3rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(3rem * var(--tw-space-y-reverse));
+}
+
+[data-layout="airy"] .space-y-6 {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
+}
+
+/* Airy: Larger, softer cards */
+[data-layout="airy"] .card,
+[data-layout="airy"] .bg-\[var\(--color-bg-card\)\] {
+  border-radius: 1.25rem;
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+[data-layout="airy"].dark .card,
+[data-layout="airy"].dark .bg-\[var\(--color-bg-card\)\] {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-color: rgba(126, 200, 68, 0.05);
+}
+
+/* Airy: Section headers more subtle */
+[data-layout="airy"] .section-header {
+  border-radius: 0;
+  padding: 0 0 1.5rem;
+  box-shadow: none;
+}
+
+/* Airy: Collapsible section headers */
+[data-layout="airy"] .gem-chapter {
+  padding: 1.35rem 0.25rem;
+}
+
+/* Airy: Larger container padding */
+[data-layout="airy"] .container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media (min-width: 1024px) {
+  [data-layout="airy"] .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* Airy: Simplified grids - prefer full width on smaller screens */
+@media (max-width: 1023px) {
+  [data-layout="airy"] .lg\:grid-cols-12,
+  [data-layout="airy"] .lg\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  [data-layout="airy"] .lg\:col-span-3,
+  [data-layout="airy"] .lg\:col-span-4,
+  [data-layout="airy"] .lg\:col-span-5,
+  [data-layout="airy"] .lg\:col-span-6,
+  [data-layout="airy"] .lg\:col-span-7,
+  [data-layout="airy"] .lg\:col-span-8 {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* Airy: Grid gaps */
+[data-layout="airy"] .gap-4 {
+  gap: 1.5rem;
+}
+
+[data-layout="airy"] .gap-6 {
+  gap: 2.5rem;
+}
+
+/* Airy: Hero section more dramatic */
+[data-layout="airy"] section:first-of-type {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  [data-layout="airy"] section:first-of-type {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Airy: Larger typography */
+[data-layout="airy"] h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  [data-layout="airy"] h1 {
+    font-size: 4.5rem;
+  }
+}
+
+[data-layout="airy"] h2 {
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+[data-layout="airy"] h3 {
+  font-size: 1.25rem;
+}
+
+/* Airy: Softer text */
+[data-layout="airy"] p {
+  line-height: 1.8;
+}
+
+/* Airy: Stat cards more minimal */
+[data-layout="airy"] .text-3xl {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Airy: Attitudes/Rankings - show fewer, larger */
+[data-layout="airy"] .grid-cols-5 {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  [data-layout="airy"] .grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Airy: Icons larger */
+[data-layout="airy"] .w-10.h-10,
+[data-layout="airy"] .md\:w-12.md\:h-12 {
+  width: 4rem;
+  height: 4rem;
+}
+
+/* Airy: Header more spacious */
+[data-layout="airy"] header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Airy: Footer more breathing room */
+[data-layout="airy"] footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+[data-layout="airy"] footer .grid {
+  gap: 3rem;
+}
+
+/* Airy: Hide some clutter on smaller screens */
+@media (max-width: 767px) {
+  [data-layout="airy"] .lg\:col-span-3,
+  [data-layout="airy"] .lg\:col-span-4:first-child {
+    display: none;
+  }
+}
+
+/* Airy: Smooth transitions for layout change */
+[data-layout="airy"] .card,
+[data-layout="airy"] .container,
+[data-layout="airy"] .section-header {
+  transition: padding 0.3s ease, margin 0.3s ease, gap 0.3s ease;
+}
+
+/* Airy: Iframes get more padding around them */
+[data-layout="airy"] iframe {
+  border-radius: 1rem;
+}
+
+/* Airy: Buttons more rounded */
+[data-layout="airy"] button:not(.gem-chapter),
+[data-layout="airy"] a[class*="rounded"] {
+  border-radius: 9999px;
+}
+
+/* Airy: Collapsible section content more space */
+[data-layout="airy"] [id$="-content"] {
+  padding-top: 2rem;
+}
+
+/* Airy: Key metrics section - horizontal scroll on mobile */
+@media (max-width: 767px) {
+  [data-layout="airy"] #overview .grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+  }
+  
+  [data-layout="airy"] #overview .grid > * {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@media (max-width: 639px) {
+  .metrics-pips {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.gem-plate {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+}
+
+.gem-kicker {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.gem-year {
+  width: 100%;
+  accent-color: var(--color-primary);
+  height: 2px;
+  cursor: pointer;
+}
+
+.gem-marquee {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  animation: gem-marquee 80s linear infinite;
+}
+
+.gem-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes gem-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gem-marquee { animation: none; }
+}
+
+.gem-pill {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-default);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gem-pill:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.gem-pill[aria-pressed='true'] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: transparent;
+}
+
+.gem-rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.15rem 0.15rem 0.5rem;
+}
+
+.gem-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.gem-rail-card {
+  scroll-snap-align: start;
+  flex: 0 0 min(240px, 78vw);
+}
+
+.gem-cover {
+  aspect-ratio: 3 / 4;
+  background: var(--color-bg-tertiary);
+}
+
+.gem-news-item + .gem-news-item {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.gem-quiz-pane {
+  animation: gemQuizIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes gemQuizIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.gem-quiz-pips {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.gem-quiz-pip {
+  height: 3px;
+  flex: 1;
+  border-radius: 999px;
+  background: var(--color-bg-tertiary);
+}
+
+.gem-quiz-pip.is-on {
+  background: var(--color-primary);
+}
+
+.gem-quiz-pip.is-now {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.gem-choice-lg {
+  background: transparent;
+  cursor: pointer;
+}
+
+.gem-choice-lg:hover,
+.gem-choice-lg:focus-visible {
+  background: var(--color-primary-muted);
+}
+
+.gem-choice-lg:hover .gem-choice-rule,
+.gem-choice-lg:focus-visible .gem-choice-rule {
+  width: 2rem;
+}
+
+.gem-choice-lg:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.gem-choice-rule {
+  transition: width 150ms ease;
+}
+
+.gem-docket-row {
+  animation: gemDocketIn 0.22s ease;
+}
+
+@keyframes gemDocketIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.gem-verdict {
+  animation: gemVerdict 0.52s ease-out;
+}
+
+@keyframes gemVerdict {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gem-quiz-pane,
+  .gem-docket-row,
+  .gem-verdict {
+    animation: none;
+  }
+  .gem-choice-rule {
+    transition: none;
+  }
+}

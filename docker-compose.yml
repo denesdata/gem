@@ -1,0 +1,218 @@
+version: "2.2"
+
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+
+  gem-site:
+    build:
+      context: ./gem-site
+      dockerfile: Dockerfile.prod
+    container_name: gem-site
+    hostname: gem-site
+    restart: unless-stopped
+    labels:
+      - traefik.backend=gem-site
+      - traefik.frontend.rule=Host:gem.csaladen.es
+      - traefik.frontend.priority=10
+      - traefik.docker.network=web
+      - traefik.port=3000
+    networks:
+      - internal
+      - web
+    cpus: 0.5
+
+  gem-site-dev:
+    build:
+      context: ./gem-site
+      dockerfile: Dockerfile.dev
+    container_name: gem-site-dev
+    hostname: gem-site-dev
+    restart: unless-stopped
+    volumes:
+      - ./gem-site/src:/app/src
+      - ./gem-site/public:/app/public
+      - ./gem-site/next.config.js:/app/next.config.js
+      - ./gem-site/tailwind.config.ts:/app/tailwind.config.ts
+      - ./gem-site/postcss.config.js:/app/postcss.config.js
+      - ./gem-site/tsconfig.json:/app/tsconfig.json
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    labels:
+      - traefik.backend=gem-site-dev
+      - traefik.frontend.rule=Host:gem-dev.csaladen.es
+      - traefik.docker.network=web
+      - traefik.port=3000
+    networks:
+      - internal
+      - web
+    cpus: 0.75
+  traefik:
+    image: traefik:1.7.34-alpine
+    user: '0'
+    container_name: traefik
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - traefik.frontend.rule=Host:gem-monitor.csaladen.es
+      - traefik.port=8080
+    networks:
+      - web
+
+  grafana:
+    image: grafana/grafana:8.3.5
+    user: '0'
+    container_name: grafana
+    restart: always
+    volumes:
+      - ./grafana/var/lib/:/var/lib/grafana
+      - ./html/:/html
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,yesoreyeram-boomtheme-panel,savantly-heatmap-panel,ryantxu-ajax-panel,grafana-worldmap-panel,innius-video-panel,gapit-htmlgraphics-panel
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_SECURITY_COOKIE_SAMESITE=none
+      - GF_SECURITY_COOKIE_SECURE=true
+      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
+      - GF_LOG_FILTERS=rendering:debug
+      - GF_SERVER_ROOT_URL=https://gem-new.csaladen.es/
+      - GF_RENDERING_CALLBACK_URL=https://gem-new.csaladen.es/
+    labels:
+      - traefik.backend=grafana
+      - traefik.frontend.rule=Host:gem-new.csaladen.es
+      - traefik.docker.network=web
+      - traefik.port=3000
+    networks:
+      - internal
+      - web
+    depends_on:
+      - traefik
+    privileged: true
+
+  renderer:
+    image: grafana/grafana-image-renderer
+    user: '0'
+    container_name: renderer
+    restart: always
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    mem_limit: 400m
+    memswap_limit: 700m
+    cpus: 0.25
+
+  influxdb:
+    image: influxdb:1.8
+    user: '0'
+    container_name: influxdb
+    restart: always
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_USER=user
+      - INFLUXDB_ADMIN_PASSWORD
+      - INFLUXDB_USER_PASSWORD
+      - INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE=200m
+      - INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE=10m
+      - INFLUXDB_DATA_WAL_FSYNC_DELAY=100ms
+      - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION=48h
+      - INFLUXDB_COORDINATOR_WRITE_TIMEOUT=60s
+      - INFLUXDB_COORDINATOR_QUERY_TIMEOUT=30s
+      - INFLUXDB_RETENTION_ENABLED=false
+      - INFLUXDB_RETENTION_CHECK_INTERVAL=30000m
+      - INFLUXDB_HTTP_FLUX_ENABLED=true
+      - INFLUXDB_SHARD_PRECREATION_CHECK_INTERVAL=24h
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    privileged: true
+
+  jupyter:
+    build: ./jupyter
+    user: '0'
+    container_name: jupyter
+    hostname: jupyter
+    restart: always
+    volumes:
+      - ./jupyter:/home/jovyan/work
+      - ./html:/home/jovyan/html    
+      - ./data:/home/jovyan/data
+      - ./pipeline:/home/jovyan/pipeline
+    labels:
+      - traefik.backend=jupyter
+      - traefik.frontend.rule=Host:gem-jupyter.csaladen.es
+      - traefik.docker.network=web
+      - traefik.port=8888
+    networks:
+      - internal
+      - web
+    depends_on:
+      - traefik
+    cpus: 0.5
+
+  httpd:
+    image: httpd
+    user: '0'
+    container_name: httpd
+    hostname: httpd
+    restart: always
+    volumes:
+      - ./html:/usr/local/apache2/htdocs/
+    labels:
+      - traefik.backend=httpd
+      - traefik.frontend.rule=Host:gem-html.csaladen.es
+      - traefik.docker.network=web
+      - traefik.port=80
+    networks:
+      - internal
+      - web
+    depends_on:
+      - traefik
+
+  portal-agent:
+    build: ./portal-agent
+    user: '0'
+    container_name: portal-agent
+    hostname: portal-agent
+    restart: always
+    env_file:
+      - ./portal-agent/.env
+    volumes:
+      - ./portal-agent/src:/app/src
+      - ./portal-agent/config:/app/config
+      - ./db:/data/db
+      - ./html/panels:/html/panels:ro
+    environment:
+      - SQLITE_PATH=/data/db/gem.sqlite
+      - PANELS_PATH=/html/panels
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_USER=user
+      - INFLUXDB_PASSWORD=${INFLUXDB_USER_PASSWORD:-}
+      - INFLUXDB_DATABASE=base
+    labels:
+      - traefik.portalagent.frontend.rule=Host:gem-agent.csaladen.es
+      - traefik.portalagent.port=8000
+      - traefik.portalagent.frontend.entryPoints=http,https
+      - traefik.docker.network=web
+    networks:
+      - internal
+      - web
+    depends_on:
+      - traefik
+      - influxdb

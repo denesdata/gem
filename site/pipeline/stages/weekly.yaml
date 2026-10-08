@@ -1,0 +1,28 @@
+# long_term.ipynb — cell ranges inclusive.
+# Skips Grafana API / playground / zip export (cells 143–154).
+# News and legal-map sections inside the notebook are comments pointing at daily.
+
+job: weekly
+notebook: long_term.ipynb
+
+stages:
+  - id: setup
+    description: Imports, params, optional purge guard, country dictionary
+    cells: [0, 12]
+
+  - id: surveys
+    description: APS + NES → Influx and aps_*/nes_* panel JSON
+    cells: [13, 52]
+
+  - id: maps_rostats
+    description: County geo + TEMPO rostats panels
+    cells: [53, 85]
+
+  - id: regio_reports_exec
+    description: NUTS/regio, reports HTML, legal quiz HTML, radar, scatter, exec
+    cells: [86, 142]
+
+publish:
+  panel_set: weekly
+  sqlite: true
+  github: true

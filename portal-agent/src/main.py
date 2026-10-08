@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 try:
     from agent import DataAgent
     from chart_generator import ChartGenerator
+    from data_api import router as data_router
 except ImportError:
     # Handle import errors gracefully
     import sys
@@ -20,10 +21,12 @@ except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
     from src.agent import DataAgent
     from src.chart_generator import ChartGenerator
+    from src.data_api import router as data_router
 
 load_dotenv()
 
-app = FastAPI(title="GEM Romania Intelligent Agent", version="0.1.0")
+app = FastAPI(title="GEM Romania Intelligent Agent", version="0.2.0")
+app.include_router(data_router)
 
 # CORS for portal integration
 app.add_middleware(
@@ -79,7 +82,7 @@ async def query_data(request: QueryRequest):
         if agent_instance is None:
             raise HTTPException(
                 status_code=503,
-                detail="Agent not initialized. Check API keys and InfluxDB connection."
+                detail="Agent not initialized. Check API keys and SQLITE_PATH."
             )
         
         # Get answer and SQL from agent
@@ -124,7 +127,7 @@ async def health():
     }
     
     if agent_instance is None:
-        status["warning"] = "Agent not initialized - check API keys and InfluxDB"
+        status["warning"] = "Agent not initialized - check API keys and SQLITE_PATH"
     
     return status
 
@@ -137,7 +140,12 @@ async def root():
         "version": "0.1.0",
         "endpoints": {
             "query": "POST /api/query",
-            "health": "GET /health"
+            "health": "GET /health",
+            "data_panels": "GET /api/data/panels/{name}",
+            "data_indicators": "GET /api/data/indicators",
+            "data_upcoming": "GET /api/data/upcoming",
+            "data_news": "GET /api/data/news",
+            "data_sql": "POST /api/data/sql",
         },
         "example": {
             "query": "What was the GDP in the last quarter?",

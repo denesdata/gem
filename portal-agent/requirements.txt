@@ -4,8 +4,8 @@ langchain-openai>=0.0.5
 langchain-community>=0.0.20
 # Note: Using OpenRouter via langchain-openai (OpenRouter is OpenAI-compatible)
 
-# InfluxDB 1.x (InfluxQL)
-influxdb>=5.3.1
+# SQLite is stdlib; Influx client kept optional for legacy notebooks
+# influxdb>=5.3.1
 
 # API Framework
 fastapi>=0.109.0

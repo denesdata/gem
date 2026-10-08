@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.git
+db
+scripts
+pipeline
+*.md
+tsconfig.tsbuildinfo
+public/server-export
+public/panels
+public/panels-legacy
+public/reports

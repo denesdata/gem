@@ -1,0 +1,16 @@
+export const EFC_CONDITIONS = [
+  { code: 'EFC1a', name: 'Entrepreneurial Finance', description: 'Availability of financial resources for SMEs' },
+  { code: 'EFC1b', name: 'Ease of Financing', description: 'Easy access to financing for entrepreneurs' },
+  { code: 'EFC2a', name: 'Government Support', description: 'Public policies supporting entrepreneurship' },
+  { code: 'EFC2b', name: 'Taxes & Bureaucracy', description: 'Size-neutral or SME-friendly regulations' },
+  { code: 'EFC3', name: 'Government Programs', description: 'Programs assisting SMEs at all levels' },
+  { code: 'EFC4a', name: 'School Education', description: 'Entrepreneurial training in primary/secondary' },
+  { code: 'EFC4b', name: 'Higher Education', description: 'Entrepreneurial training in post-school' },
+  { code: 'EFC5', name: 'R&D Transfer', description: 'R&D leading to commercial opportunities' },
+  { code: 'EFC6', name: 'Commercial Infrastructure', description: 'Legal and professional services for SMEs' },
+  { code: 'EFC7a', name: 'Market Dynamics', description: 'Level of change in markets' },
+  { code: 'EFC7b', name: 'Market Entry', description: 'Freedom for new firms to enter markets' },
+  { code: 'EFC8', name: 'Physical Infrastructure', description: 'Access to physical resources' },
+  { code: 'EFC9', name: 'Cultural Norms', description: 'Social support for entrepreneurship' },
+  { code: 'NECI', name: 'National Context Index', description: 'Average of expert scores across framework conditions' },
+] as const
