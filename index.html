@@ -286,8 +286,17 @@
     </div>
     <iframe id="iframe" allow="geolocation" src="//gem.csaladen.es/"></iframe>
     <script>
-        // Section ids on the new gem.csaladen.es site (Grafana lives at /old)
-        const sectionMap = {
+        /**
+         * gem2 mother page router (what UBB iframes).
+         *   default  → new site  https://gem.csaladen.es
+         *   engine=old → Grafana https://gem-old.csaladen.es  (clean host, no /old subpath)
+         * PDF shortcuts stay here and never touch either child.
+         */
+        const CHILD_NEW = 'https://gem.csaladen.es';
+        const CHILD_OLD = 'https://gem-old.csaladen.es';
+
+        // New-site chapter ids
+        const sectionMapNew = {
             'home': 'overview',
             'funding': 'funding',
             'start': 'entrepreneurship',
@@ -298,115 +307,126 @@
             'news': 'reports',
             'about': 'research'
         };
+        // Legacy Grafana panel ids (only when engine=old)
+        const sectionMapOld = {
+            'home': '285',
+            'funding': '163',
+            'start': '171',
+            'ro': '161',
+            'stats': '169',
+            'aps': '179',
+            'nes': '175',
+            'news': '173',
+            'about': '66'
+        };
 
-        // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const fullUrl = window.location.search;
 
-        // Get the raw url parameter value and clean it up
         let targetUrl = '';
         if (fullUrl.includes('url=')) {
             targetUrl = decodeURIComponent(fullUrl.substring(fullUrl.indexOf('url=') + 4));
 
-            // Check for hardcoded shortcut
             if (targetUrl === 'Raport2024') {
                 window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/Raport%20de%20tara%202022-2023_final.pdf';
                 throw new Error('Redirecting to 2024 Report');
             }
-
             if (targetUrl === 'Raport2025') {
                 window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/GEM%20Raport%20de%20tara%202023-2024.pdf';
                 throw new Error('Redirecting to 2025 Report');
             }
-
             if (targetUrl === 'Raport2026') {
                 window.location.href = 'https://gem-html.csaladen.es/panels/reports/pdf/GEM_RO_Raport_de_tara_2024-2025.pdf';
                 throw new Error('Redirecting to 2026 Report');
             }
 
-            // Remove any leading question marks and convert pipes to ampersands
-            targetUrl = targetUrl
-                .replace(/^\?+/, '')
-                .replace(/\|/g, '&');
+            targetUrl = targetUrl.replace(/^\?+/, '').replace(/\|/g, '&');
 
-            // Check if this is a HTML URL pattern
             if (targetUrl.startsWith('html=')) {
                 const pdfPath = targetUrl.replace('html=', '');
                 window.location.href = `https://gem-html.csaladen.es/${pdfPath}`;
-                // Stop further execution
                 throw new Error('Redirecting to HTML');
             }
         }
-        console.log('targetUrl after cleanup:', targetUrl);  // Debug
 
-        // Parse the parameters
-        const targetParams = targetUrl ?
-            new URLSearchParams(targetUrl) :
-            urlParams;
-        console.log('targetParams entries:', [...targetParams.entries()]);  // Debug
-
-        // Get language and section
+        const targetParams = targetUrl ? new URLSearchParams(targetUrl) : urlParams;
         const lang = targetParams.get('lang') || 'ro';
         const section = targetParams.get('section')?.replace(/=$/, '');
-        console.log('Parsed values:', { lang, section });  // Debug
+        const useOld = (targetParams.get('engine') || urlParams.get('engine') || '') === 'old';
+        const childOrigin = useOld ? CHILD_OLD : CHILD_NEW;
+        const sectionMap = useOld ? sectionMapOld : sectionMapNew;
 
-        // Construct query string for the new site (root). PDF shortcuts above are unchanged.
-        const queryParams = [`lang=${encodeURIComponent(lang)}`];
-        const sectionId = section && sectionMap[section] ? sectionMap[section] : section;
-        if (sectionId) {
-            queryParams.push(`section=${encodeURIComponent(sectionId)}`);
+        let childSrc;
+        if (useOld) {
+            // Classic Grafana dashboard URL — host is clean, no /old prefix
+            const queryParams = [];
+            if (section && sectionMap[section]) {
+                queryParams.push(`panel=${sectionMap[section]}`);
+            }
+            targetParams.forEach((value, key) => {
+                if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'engine' && key !== 'panel') {
+                    queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                }
+            });
+            const qs = queryParams.length ? `?${queryParams.join('&')}` : '';
+            childSrc = `${CHILD_OLD}/d/${lang}/${qs}`;
+        } else {
+            const queryParams = [`lang=${encodeURIComponent(lang)}`];
+            const sectionId = section && sectionMap[section] ? sectionMap[section] : section;
+            if (sectionId) queryParams.push(`section=${encodeURIComponent(sectionId)}`);
+            targetParams.forEach((value, key) => {
+                if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'engine' && key !== 'panel') {
+                    queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                }
+            });
+            childSrc = `${CHILD_NEW}/?${queryParams.join('&')}`;
         }
 
-        // Add any other parameters (including theme)
-        targetParams.forEach((value, key) => {
-            if (key !== 'lang' && key !== 'section' && key !== 'url' && key !== 'panel') {
-                queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-            }
-        });
-
-        const queryString = queryParams.join('&');
-        const newUrl = `//gem.csaladen.es/?${queryString}`;
-        iframe.src = newUrl;
-        console.log('Constructed URL:', newUrl, 'lang:', lang, 'section:', sectionId);
+        iframe.src = childSrc;
+        console.log('gem2 →', childSrc, { useOld, lang, section });
 
         iframe.onload = function () {
-            setTimeout(() => {
-                iframe.style.opacity = 1;
-            }, 100);
-
-            setTimeout(() => {
-                document.querySelector('.center-logo').style.opacity = 0;
-            }, 200);
-
+            setTimeout(() => { iframe.style.opacity = 1; }, 100);
+            setTimeout(() => { document.querySelector('.center-logo').style.opacity = 0; }, 200);
             setTimeout(() => {
                 document.querySelector('.nav-menu').style.opacity = 1;
                 document.querySelector('#bg-video').style.opacity = 0;
             }, 800);
 
-            if (sectionId) {
-                const delays = [400, 900, 1400, 1900];
-                delays.forEach(delay => {
-                    setTimeout(() => {
+            const mapped = section && sectionMap[section] ? sectionMap[section] : section;
+            if (!mapped) return;
+            const delays = [400, 900, 1400, 1900];
+            delays.forEach(delay => {
+                setTimeout(() => {
+                    if (useOld) {
+                        iframe.contentWindow.postMessage({
+                            type: 'scrollToPanel',
+                            panelId: mapped
+                        }, CHILD_OLD);
+                    } else {
                         iframe.contentWindow.postMessage({
                             type: 'scrollToSection',
-                            section: sectionId
-                        }, 'https://gem.csaladen.es');
-                    }, delay);
-                });
-            }
+                            section: mapped
+                        }, CHILD_NEW);
+                    }
+                }, delay);
+            });
         };
 
-        // Add new function for navigation
-        function scrollToSection(section) {
-            const sectionId = sectionMap[section] || section;
-            if (sectionId) {
+        function scrollToSection(sectionKey) {
+            const mapped = sectionMap[sectionKey] || sectionKey;
+            if (!mapped) return false;
+            if (useOld) {
+                iframe.contentWindow.postMessage({
+                    type: 'scrollToPanel',
+                    panelId: mapped
+                }, CHILD_OLD);
+            } else {
                 iframe.contentWindow.postMessage({
                     type: 'scrollToSection',
-                    section: sectionId
-                }, 'https://gem.csaladen.es');
+                    section: mapped
+                }, CHILD_NEW);
             }
-
-            // Prevent default anchor behavior
             return false;
         }
 
@@ -457,24 +477,19 @@
             });
         }
 
-        // Update the message event listener
         window.addEventListener('message', function (event) {
-            // Child site at gem.csaladen.es (new UI) or legacy Grafana under /old
-            if (event.origin !== 'https://gem.csaladen.es') return;
+            if (event.origin !== CHILD_NEW && event.origin !== CHILD_OLD) return;
 
             if (event.data.type === 'siteNavigation' || event.data.type === 'grafanaNavigation') {
-                console.log('Child navigated to:', event.data.url);
-
                 const url = event.data.url || '';
                 let nextLang = 'ro';
                 try {
-                    const u = new URL(url, 'https://gem.csaladen.es');
+                    const u = new URL(url, event.origin);
                     nextLang = u.searchParams.get('lang') || nextLang;
                 } catch (e) { /* ignore */ }
-                if (url.includes('/d/ro') || url.includes('lang=ro')) nextLang = 'ro';
-                if (url.includes('/d/en') || url.includes('lang=en')) nextLang = 'en';
-                if (url.includes('/d/hu') || url.includes('lang=hu')) nextLang = 'hu';
-
+                if (url.includes('/d/ro') || /[?&]lang=ro\b/.test(url)) nextLang = 'ro';
+                if (url.includes('/d/en') || /[?&]lang=en\b/.test(url)) nextLang = 'en';
+                if (url.includes('/d/hu') || /[?&]lang=hu\b/.test(url)) nextLang = 'hu';
                 updateMenuLanguage(nextLang);
             }
         });
