@@ -91,8 +91,8 @@
         const section = (targetParams.get('section') || '').replace(/=$/, '');
         if (useOld) document.documentElement.classList.add('engine-old');
 
-        // PDF / html shortcuts only on the legacy engine
-        if (useOld && targetUrl) {
+        // PDF / html shortcuts — always on gem2 (UBB links have no engine=old)
+        if (targetUrl) {
             if (PDF[targetUrl]) {
                 window.location.replace(PDF[targetUrl]);
                 throw new Error('pdf');
