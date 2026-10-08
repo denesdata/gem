@@ -7,12 +7,20 @@ New site is fed from the same run via panel JSON + SQLite.
 
 ## Layout
 
+Lives under the Jupyter `/work` tree (easy to open in the Jupyter file browser):
+
 ```
-~/gem/pipeline/          # this package (on the gem VM)
-~/gem/jupyter/           # notebooks + auth + gem_functions (unchanged)
-~/gem/html/panels/       # live JSON for gem-html.csaladen.es
-~/gem/db/gem.sqlite      # Ask GEM + larger tables
-~/gem/jupyter/github/    # sparse clone of denesdata/gem (gembot commits)
+~/gem/jupyter/                 # = /home/jovyan/work  (Jupyter-visible)
+  formatter_daily.ipynb        # daily stages
+  long_term.ipynb              # weekly stages
+  gem_functions.ipynb          # shared helpers (imported by notebooks)
+  run_daily.sh / run_weekly.sh
+  pipeline/                    # runner
+  logs/
+  auth/                        # tokens (never commit)
+~/gem/gembot/                  # sparse clone for publish (NOT in /work)
+~/gem/html/panels/             # live JSON for gem-html
+~/gem/db/gem.sqlite
 ```
 
 ## Schedules
@@ -27,11 +35,12 @@ The legacy `data-updater.sh` (02:00) is left on disk for rollback but is **remov
 ## What each run does
 
 1. Execute notebook **cell ranges** inside the `jupyter` container (shared kernel per job).
-2. Skip `update_grafana` / playground / zip export cells.
-3. Panel JSON already written by the notebooks under `html/panels/`.
-4. Copy selected JSON → `jupyter/github/data/panels/` (git trace).
-5. `migrate_panels.py` → `~/gem/db/gem.sqlite`.
-6. Gembot commit + push to `denesdata/gem` (`data/` sparse checkout).
+2. Notebooks dual-write: **Influx** (`push2influx`) + **`html/panels/*.json`**.
+3. Skip `update_grafana` / playground / zip export cells.
+4. Copy selected JSON → `~/gem/gembot/data/panels/` (git trace).
+5. `migrate_panels.py` → `~/gem/db/gem.sqlite` (plus exec/exec3 from Influx).
+6. **Audit** Influx ↔ JSON ↔ SQLite parity; fail the job if stores diverge.
+7. Gembot commit + push to `denesdata/gem` (`data/` sparse checkout).
 
 ## Data stores (judgment)
 
@@ -45,16 +54,15 @@ The legacy `data-updater.sh` (02:00) is left on disk for rollback but is **remov
 ## Commands
 
 ```bash
-# on gem VM
-cd ~/gem/pipeline
-./run.sh daily                 # full daily job
-./run.sh weekly                # full weekly job
-./run.sh daily --stage news    # one stage only
-./run.sh daily --dry-run       # print stages, no execute
-./run.sh publish               # sync JSON + sqlite + git only
+# on gem VM (or from Jupyter terminal under /home/jovyan/work)
+~/gem/jupyter/run_daily.sh              # full daily job
+~/gem/jupyter/run_weekly.sh             # full weekly job
+~/gem/jupyter/pipeline/run.sh daily --stage news
+~/gem/jupyter/pipeline/run.sh daily --dry-run
+~/gem/jupyter/pipeline/run.sh publish   # sync JSON + sqlite + git only
 ```
 
-Logs: `~/gem/pipeline/logs/<job>-<timestamp>.log`
+Logs: `~/gem/jupyter/logs/` (same path as `/home/jovyan/work/logs` in Jupyter).
 
 ## Gembot
 

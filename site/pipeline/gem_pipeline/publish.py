@@ -1,4 +1,4 @@
-"""Sync panel JSON → github/data/panels, migrate SQLite, gembot commit."""
+"""Sync panel JSON → gembot/data/panels, migrate SQLite, audit stores, gembot commit."""
 from __future__ import annotations
 
 import fnmatch
@@ -8,6 +8,8 @@ import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+
+from gem_pipeline.audit import audit_stores
 
 
 def _run(cmd: list[str], cwd: Path | None, logger: logging.Logger) -> None:
@@ -53,6 +55,10 @@ def migrate_sqlite(db_dir: Path, html_panels: Path, logger: logging.Logger) -> N
         cwd=db_dir,
         logger=logger,
     )
+    report = audit_stores(html_panels, db_dir / "gem.sqlite", logger)
+    if not report["ok"]:
+        failed = [c["name"] for c in report["checks"] if not c["ok"]]
+        raise RuntimeError(f"store audit failed: {failed}")
 
 
 def _token(auth_dir: Path, token_file: str) -> str:
@@ -84,13 +90,14 @@ def gembot_commit(
 
     sparse = github_dir / ".git" / "info" / "sparse-checkout"
     sparse.parent.mkdir(parents=True, exist_ok=True)
-    wanted = "data\n"
-    if sparse.exists():
-        cur = sparse.read_text(encoding="utf-8")
-        if "data" not in cur.splitlines():
-            sparse.write_text(cur.rstrip() + "\n" + wanted, encoding="utf-8")
-    else:
-        sparse.write_text(wanted, encoding="utf-8")
+    # Only the data/ tree — never pull old GH Pages / v3 chrome into this clone.
+    sparse.write_text("data/\n", encoding="utf-8")
+    subprocess.run(
+        ["git", "read-tree", "-mu", "HEAD"],
+        cwd=str(github_dir),
+        check=False,
+        capture_output=True,
+    )
 
     # Point origin at tokenized URL without printing it
     subprocess.run(
@@ -101,13 +108,21 @@ def gembot_commit(
     )
     logger.info("remote origin refreshed (token redacted)")
 
-    # Clear a dirty index left by an interrupted/dry-run publish, then pull.
+    # Drop dirty non-data paths (e.g. leftover v3/) so rebase can proceed.
     subprocess.run(
-        ["git", "reset", "HEAD", "--", "data"],
+        ["git", "reset", "--hard", "HEAD"],
         cwd=str(github_dir),
         check=False,
         capture_output=True,
     )
+    subprocess.run(
+        ["git", "clean", "-fd", "--exclude=data"],
+        cwd=str(github_dir),
+        check=False,
+        capture_output=True,
+    )
+    # Re-apply panel sync after hard reset wiped untracked data/panels if needed —
+    # caller already wrote panels; restore from html if empty.
     _run(["git", "pull", "--rebase", "origin", branch], github_dir, logger)
 
     stamp = datetime.now(timezone.utc).isoformat()

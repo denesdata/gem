@@ -1,8 +1,8 @@
 """
-Data sources for the new GEM site.
+GEM /api/data — explicit source routing.
 
-Static panel JSON (html/panels) for UI-sized payloads.
-SQLite (gem.sqlite) for larger tables and agent-style filters.
+Static JSON (html/panels) — UI-shaped / small / geo / defs / news / upcoming / unstacked charts
+SQLite (gem.sqlite)       — APS/NES indicators, legal, rostats filters, exec mirrors, agent SQL
 """
 from __future__ import annotations
 
@@ -26,8 +26,8 @@ _FORBIDDEN = re.compile(
     re.I,
 )
 
-# Prefer static files for these (small / UI-shaped). Others can come from SQLite.
-STATIC_PREFERRED = {
+# Always served from static panel files (Next UI + lightweight lists).
+STATIC_ONLY = {
     "news.json",
     "upcoming.json",
     "scatter.json",
@@ -49,14 +49,49 @@ def _safe_panel_name(name: str) -> str:
     return base
 
 
+def _sqlite_ro() -> sqlite3.Connection:
+    if not SQLITE_PATH.is_file():
+        raise HTTPException(503, "sqlite missing")
+    conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def _load_static(name: str) -> Any:
+    path = PANELS_DIR / _safe_panel_name(name)
+    if not path.is_file():
+        raise HTTPException(404, f"panel not found: {path.name}")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 @router.get("/health")
 def data_health():
+    tables = {}
+    meta = {}
+    if SQLITE_PATH.is_file():
+        conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
+        try:
+            for (name,) in conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+            ):
+                tables[name] = conn.execute(f"SELECT COUNT(1) FROM {name}").fetchone()[0]
+            meta = dict(conn.execute("SELECT key, value FROM meta").fetchall())
+        finally:
+            conn.close()
+    panels = sorted(p.name for p in PANELS_DIR.glob("*.json")) if PANELS_DIR.is_dir() else []
     return {
+        "routing": {
+            "static_json": sorted(STATIC_ONLY) + ["panels/{name}", "aps|nes|rostats|legal *_unstacked_*.json"],
+            "sqlite": ["/indicators", "/legal", "/rostats", "/sql", "/tables", "Ask GEM /api/query"],
+        },
         "panels_dir": str(PANELS_DIR),
         "panels_ok": PANELS_DIR.is_dir(),
+        "panels_count": len(panels),
         "sqlite": str(SQLITE_PATH),
         "sqlite_ok": SQLITE_PATH.is_file(),
         "sqlite_bytes": SQLITE_PATH.stat().st_size if SQLITE_PATH.is_file() else 0,
+        "sqlite_tables": tables,
+        "meta": meta,
     }
 
 
@@ -65,12 +100,12 @@ def list_panels():
     if not PANELS_DIR.is_dir():
         raise HTTPException(503, "panels directory missing")
     files = sorted(p.name for p in PANELS_DIR.glob("*.json"))
-    return {"count": len(files), "panels": files}
+    return {"count": len(files), "panels": files, "source": "static"}
 
 
 @router.get("/panels/{name}")
 def get_panel(name: str):
-    """Serve a panel JSON file from gem-html panels (static source of truth for UI)."""
+    """Always static — UI charts / defs / geo."""
     fname = _safe_panel_name(name)
     path = PANELS_DIR / fname
     if not path.is_file():
@@ -80,33 +115,28 @@ def get_panel(name: str):
 
 @router.get("/tables")
 def list_tables():
-    if not SQLITE_PATH.is_file():
-        raise HTTPException(503, "sqlite missing")
-    conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
+    conn = _sqlite_ro()
     try:
-        rows = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
-        ).fetchall()
         out = {}
-        for (name,) in rows:
+        for (name,) in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name"
+        ):
             out[name] = conn.execute(f"SELECT COUNT(1) FROM {name}").fetchone()[0]
-        return {"tables": out}
+        return {"tables": out, "source": "sqlite"}
     finally:
         conn.close()
 
 
 @router.get("/indicators")
 def indicators(
-    dataset: str = Query("aps", pattern="^(aps|nes)$"),
+    dataset: str = Query("aps", pattern="^(aps|nes|exec|exec3)$"),
     country: Optional[str] = None,
     type: Optional[str] = Query(None, alias="type"),
     lang: str = Query("EN"),
     year: Optional[int] = None,
     limit: int = Query(500, ge=1, le=5000),
 ):
-    """Filtered APS/NES rows from SQLite (large store)."""
-    if not SQLITE_PATH.is_file():
-        raise HTTPException(503, "sqlite missing")
+    """APS / NES / exec from SQLite (large / filterable)."""
     clauses = ["dataset = ?", "lang = ?"]
     params: list[Any] = [dataset, lang.upper()]
     if country:
@@ -119,41 +149,12 @@ def indicators(
         clauses.append("year = ?")
         params.append(year)
     sql = (
-        "SELECT year, country, type, value, langtype, lang, langcountry, iso3, id "
+        "SELECT dataset, year, country, type, value, langtype, lang, langcountry, iso3, id "
         f"FROM indicators WHERE {' AND '.join(clauses)} "
         "ORDER BY year, country, type LIMIT ?"
     )
     params.append(limit)
-    conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
-    conn.row_factory = sqlite3.Row
-    try:
-        rows = [dict(r) for r in conn.execute(sql, params)]
-    finally:
-        conn.close()
-    return {"count": len(rows), "rows": rows}
-
-
-@router.get("/upcoming")
-def upcoming(cat: Optional[str] = None, limit: int = Query(50, ge=1, le=500)):
-    if not SQLITE_PATH.is_file():
-        # fallback static
-        path = PANELS_DIR / "upcoming.json"
-        if path.is_file():
-            data = json.loads(path.read_text(encoding="utf-8"))
-            if cat:
-                data = [r for r in data if cat in str(r.get("cat", ""))]
-            return {"count": len(data[:limit]), "rows": data[:limit], "source": "static"}
-        raise HTTPException(503, "no upcoming source")
-    clauses = []
-    params: list[Any] = []
-    if cat:
-        clauses.append("cat LIKE ?")
-        params.append(f"%{cat}%")
-    where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
-    sql = f"SELECT date, cat, close, desc, link FROM upcoming {where} ORDER BY date LIMIT ?"
-    params.append(limit)
-    conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
-    conn.row_factory = sqlite3.Row
+    conn = _sqlite_ro()
     try:
         rows = [dict(r) for r in conn.execute(sql, params)]
     finally:
@@ -161,33 +162,105 @@ def upcoming(cat: Optional[str] = None, limit: int = Query(50, ge=1, le=500)):
     return {"count": len(rows), "rows": rows, "source": "sqlite"}
 
 
+@router.get("/upcoming")
+def upcoming(cat: Optional[str] = None, limit: int = Query(50, ge=1, le=500)):
+    """Funding list — static JSON (same file the Next UI uses)."""
+    data = _load_static("upcoming.json")
+    if not isinstance(data, list):
+        data = data.get("data", [])
+    if cat:
+        data = [r for r in data if cat in str(r.get("cat", ""))]
+    return {"count": len(data[:limit]), "rows": data[:limit], "source": "static"}
+
+
 @router.get("/news")
 def news(lang: Optional[str] = None, limit: int = Query(50, ge=1, le=500)):
-    path = PANELS_DIR / "news.json"
-    if path.is_file() and (lang is None or True):
-        data = json.loads(path.read_text(encoding="utf-8"))
-        if lang:
-            wanted = lang.upper()
-            filtered = [r for r in data if str(r.get("lang", "")).upper() == wanted]
-            data = filtered or data
-        return {"count": len(data[:limit]), "rows": data[:limit], "source": "static"}
-    raise HTTPException(404, "news.json missing")
+    """Press list — static JSON."""
+    data = _load_static("news.json")
+    if not isinstance(data, list):
+        data = data.get("data", [])
+    if lang:
+        wanted = lang.upper()
+        filtered = [r for r in data if str(r.get("lang", "")).upper() == wanted]
+        data = filtered or data
+    return {"count": len(data[:limit]), "rows": data[:limit], "source": "static"}
+
+
+@router.get("/legal")
+def legal(
+    county: Optional[str] = None,
+    lang: str = Query("EN"),
+    metric: Optional[str] = None,
+    limit: int = Query(500, ge=1, le=5000),
+):
+    """County legal metrics — SQLite (melted from legal_unstacked)."""
+    clauses = ["lang = ?"]
+    params: list[Any] = [lang.upper()]
+    if county:
+        clauses.append("county = ?")
+        params.append(county)
+    if metric:
+        clauses.append("metric = ?")
+        params.append(metric)
+    sql = (
+        "SELECT date, county, id, lang, langcounty, metric, value "
+        f"FROM legal WHERE {' AND '.join(clauses)} "
+        "ORDER BY county, metric LIMIT ?"
+    )
+    params.append(limit)
+    conn = _sqlite_ro()
+    try:
+        rows = [dict(r) for r in conn.execute(sql, params)]
+    finally:
+        conn.close()
+    return {"count": len(rows), "rows": rows, "source": "sqlite"}
+
+
+@router.get("/rostats")
+def rostats(
+    county: Optional[str] = None,
+    lang: str = Query("EN"),
+    metric: Optional[str] = None,
+    year: Optional[int] = None,
+    limit: int = Query(500, ge=1, le=5000),
+):
+    """County enterprise stats — SQLite (melted from rostats_unstacked)."""
+    clauses = ["lang = ?"]
+    params: list[Any] = [lang.upper()]
+    if county:
+        clauses.append("county = ?")
+        params.append(county)
+    if metric:
+        clauses.append("metric = ?")
+        params.append(metric)
+    if year is not None:
+        clauses.append("year = ?")
+        params.append(year)
+    sql = (
+        "SELECT year, county, id, lang, langcounty, metric, value "
+        f"FROM rostats WHERE {' AND '.join(clauses)} "
+        "ORDER BY year, county, metric LIMIT ?"
+    )
+    params.append(limit)
+    conn = _sqlite_ro()
+    try:
+        rows = [dict(r) for r in conn.execute(sql, params)]
+    finally:
+        conn.close()
+    return {"count": len(rows), "rows": rows, "source": "sqlite"}
 
 
 @router.post("/sql")
 def run_sql(body: dict):
-    """Read-only SELECT against SQLite (for tooling / agent)."""
+    """Read-only SELECT against SQLite (tooling / agent)."""
     sql = (body.get("sql") or "").strip().rstrip(";")
     if not sql.lower().startswith("select") or _FORBIDDEN.search(sql):
         raise HTTPException(400, "only SELECT allowed")
-    if not SQLITE_PATH.is_file():
-        raise HTTPException(503, "sqlite missing")
-    conn = sqlite3.connect(f"file:{SQLITE_PATH}?mode=ro", uri=True)
-    conn.row_factory = sqlite3.Row
+    conn = _sqlite_ro()
     try:
         rows = [dict(r) for r in conn.execute(sql)]
     except sqlite3.Error as e:
         raise HTTPException(400, str(e)) from e
     finally:
         conn.close()
-    return JSONResponse({"count": len(rows), "rows": rows[:2000]})
+    return JSONResponse({"count": len(rows), "rows": rows[:2000], "source": "sqlite"})

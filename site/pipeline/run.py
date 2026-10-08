@@ -46,7 +46,7 @@ def ensure_container_deps(container: str, logger) -> None:
         [
             "python",
             "-c",
-            "import importlib,subprocess,sys;need=[];"
+            "import importlib.util,subprocess,sys;need=[];"
             "mods=[('nbclient','nbclient'),('nbformat','nbformat'),('yaml','pyyaml')];"
             "[need.append(pkg) for mod,pkg in mods if not importlib.util.find_spec(mod)];"
             "need and subprocess.check_call([sys.executable,'-m','pip','install','-q',*need]);"
@@ -86,7 +86,7 @@ def run_job(job: str, stages_only: list[str], dry_run: bool, publish_only: bool)
             "--job",
             job,
             "--log-dir",
-            f"{cfg['container_pipeline']}/logs",
+            cfg.get("container_logs", f"{cfg['container_pipeline']}/logs"),
         ]
         for s in stages_only:
             cmd.extend(["--stage", s])

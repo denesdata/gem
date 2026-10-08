@@ -1,18 +1,40 @@
 # GEM SQLite data layer
 
-Source of truth on the VM: `~/gem/db/gem.sqlite`.
+File on the VM: `~/gem/db/gem.sqlite`.
+
+## Triple write (daily / weekly)
+
+```
+Google Sheets / surveys / ONRC
+        │
+        ▼  Jupyter notebooks (formatter_daily / long_term)
+   ┌────┴────┐
+   ▼         ▼
+ Influx    html/panels/*.json     ← Grafana + Next UI
+   │              │
+   │              ▼  migrate_panels.py (publish step)
+   │         gem.sqlite           ← Ask GEM + /api/data filters
+   └── exec/exec3 also mirrored into indicators via Influx pull
+```
+
+| Store | Consumer |
+|-------|----------|
+| Influx `base` | Grafana (`gem-new`) |
+| `html/panels/*.json` | Next UI, `/api/data/panels/*`, `/news`, `/upcoming` |
+| `gem.sqlite` | Ask GEM, `/api/data/indicators|legal|rostats|sql` |
+
+## Scripts
 
 | Path | Role |
 |------|------|
-| `schema.sql` | Tables: indicators, upcoming, news, legal, rostats |
-| `migrate_panels.py` | `html/panels/*.json` → SQLite |
-| `export_panels.py` | SQLite → panel JSON (frontend / httpd) |
+| `schema.sql` | indicators, upcoming, news, legal, rostats, meta |
+| `migrate_panels.py` | panels JSON → SQLite (+ exec/exec3 from Influx) |
+| `export_panels.py` | SQLite → panel JSON (only if DB was edited by hand) |
 
-## Daily flow
+## Commands
 
-1. Jupyter `formatter_daily` refreshes panel JSON (existing cron).
-2. `migrate_panels.py` reloads SQLite from those panels.
-3. Ask GEM (`portal-agent`) queries SQLite.
-4. Optional: `export_panels.py` if the DB was edited directly.
-
-Frontend (Next / GH Pages) keeps reading JSON from `gem-html.csaladen.es/panels`.
+```bash
+# after notebooks (or via pipeline publish)
+python3 ~/gem/db/migrate_panels.py
+~/gem/jupyter/pipeline/run.sh publish   # sync panels + migrate + audit + gembot
+```

@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Load ~/gem/html/panels JSON into ~/gem/db/gem.sqlite (source of truth bootstrap)."""
+"""Load panel JSON (+ optional Influx extras) into gem.sqlite.
+
+Canonical daily path:
+  Google Sheets / surveys → notebooks → Influx + html/panels JSON
+  then this script → SQLite for Ask GEM /api/data.
+"""
 from __future__ import annotations
 
 import argparse
 import json
 import sqlite3
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -121,9 +127,12 @@ def migrate_legal(conn: sqlite3.Connection, panels: Path) -> int:
 
 
 def migrate_rostats(conn: sqlite3.Connection, panels: Path) -> int:
+    """Prefer unstacked (richer metrics); fall back to stacked county files."""
     rows = []
     for lang in ("EN", "RO", "HU"):
-        path = panels / f"rostats_{lang}.json"
+        path = panels / f"rostats_unstacked_{lang}.json"
+        if not path.exists():
+            path = panels / f"rostats_{lang}.json"
         if not path.exists():
             path = panels / f"ro_stats_{lang}.json"
         if not path.exists():
@@ -136,6 +145,10 @@ def migrate_rostats(conn: sqlite3.Connection, panels: Path) -> int:
                 year = int(year) if year is not None else None
             except (TypeError, ValueError):
                 year = None
+            try:
+                fval = float(value)
+            except (TypeError, ValueError):
+                continue
             rows.append(
                 (
                     year,
@@ -144,7 +157,7 @@ def migrate_rostats(conn: sqlite3.Connection, panels: Path) -> int:
                     base.get("lang") or lang,
                     base.get("langcounty") or base.get("langcountry"),
                     metric,
-                    float(value) if value is not None else None,
+                    fval,
                 )
             )
     conn.execute("DELETE FROM rostats")
@@ -170,17 +183,88 @@ def migrate_list(conn: sqlite3.Connection, table: str, path: Path, columns: list
     return len(rows)
 
 
+def _influx_csv(measurement: str) -> list[dict]:
+    """Pull a measurement via dockerized influx CLI (host-side migrate)."""
+    cmd = [
+        "sudo",
+        "docker",
+        "exec",
+        "influxdb",
+        "influx",
+        "-database",
+        "base",
+        "-format",
+        "json",
+        "-execute",
+        f'SELECT * FROM "{measurement}"',
+    ]
+    try:
+        out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, text=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return []
+    try:
+        payload = json.loads(out)
+    except json.JSONDecodeError:
+        return []
+    rows = []
+    for result in payload.get("results", []):
+        for series in result.get("series", []):
+            cols = series.get("columns", [])
+            for values in series.get("values", []):
+                rows.append(dict(zip(cols, values)))
+    return rows
+
+
+def migrate_exec_from_influx(conn: sqlite3.Connection) -> int:
+    """exec / exec3 live in Influx only (no panel JSON). Mirror into indicators."""
+    rows = []
+    for measurement, dataset in (("exec", "exec"), ("exec3", "exec3")):
+        for row in _influx_csv(measurement):
+            val = row.get("value")
+            if val is None:
+                # exec3 sometimes stores TEA/EBO as separate fields
+                for alt in ("TEA", "EBO"):
+                    if row.get(alt) is not None:
+                        val = row[alt]
+                        break
+            if val is None:
+                continue
+            try:
+                fval = float(val)
+            except (TypeError, ValueError):
+                continue
+            rows.append(
+                (
+                    dataset,
+                    None,  # year not tagged on exec
+                    "RO",
+                    row.get("type") or measurement,
+                    fval,
+                    (row.get("lang") or "EN").upper(),
+                    row.get("xlangtype") or row.get("langtype"),
+                    None,
+                    None,
+                    None,
+                )
+            )
+    conn.execute("DELETE FROM indicators WHERE dataset IN ('exec','exec3')")
+    conn.executemany(
+        """INSERT INTO indicators
+           (dataset, year, country, type, value, lang, langtype, langcountry, iso3, id)
+           VALUES (?,?,?,?,?,?,?,?,?,?)""",
+        rows,
+    )
+    return len(rows)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--panels", default="/home/ec2-user/gem/html/panels")
+    parser.add_argument("--db", default="/home/ec2-user/gem/db/gem.sqlite")
     parser.add_argument(
-        "--panels",
-        default="/home/ec2-user/gem/html/panels",
-        help="Panel JSON directory",
-    )
-    parser.add_argument(
-        "--db",
-        default="/home/ec2-user/gem/db/gem.sqlite",
-        help="SQLite database path",
+        "--skip-influx",
+        action="store_true",
+        help="Do not mirror exec/exec3 from Influx",
     )
     args = parser.parse_args()
     panels = Path(args.panels)
@@ -190,7 +274,7 @@ def main() -> int:
         return 1
 
     conn = connect(db_path)
-    counts = {}
+    counts: dict[str, int] = {}
     try:
         for dataset in STACKED_DATASETS:
             counts[dataset] = migrate_stacked(conn, panels, dataset)
@@ -202,6 +286,8 @@ def main() -> int:
         )
         counts["legal"] = migrate_legal(conn, panels)
         counts["rostats"] = migrate_rostats(conn, panels)
+        if not args.skip_influx:
+            counts["exec_influx"] = migrate_exec_from_influx(conn)
         conn.execute(
             "INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
             ("migrated_at", datetime.now(timezone.utc).isoformat()),

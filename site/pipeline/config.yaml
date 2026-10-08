@@ -6,13 +6,14 @@ jupyter_work: /home/jovyan/work
 host_gem: /home/ec2-user/gem
 host_html_panels: /home/ec2-user/gem/html/panels
 host_db: /home/ec2-user/gem/db
-host_github: /home/ec2-user/gem/jupyter/github
+host_github: /home/ec2-user/gem/gembot
 host_auth: /home/ec2-user/gem/jupyter/auth
-host_logs: /home/ec2-user/gem/pipeline/logs
+host_logs: /home/ec2-user/gem/jupyter/logs
 
-# Inside jupyter container
-container_pipeline: /home/jovyan/pipeline
+# Inside jupyter container (/home/jovyan/work == ~/gem/jupyter)
+container_pipeline: /home/jovyan/work/pipeline
 container_work: /home/jovyan/work
+container_logs: /home/jovyan/work/logs
 container_html_panels: /home/jovyan/html/panels
 
 gembot:

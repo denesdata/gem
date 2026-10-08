@@ -91,8 +91,8 @@ class DataAgent:
 User question: {user_query}
 
 TABLES:
-1) indicators — APS / NES survey metrics
-   columns: dataset TEXT ('aps'|'nes'), year INT, country TEXT, type TEXT, value REAL,
+1) indicators — APS / NES / exec survey metrics
+   columns: dataset TEXT ('aps'|'nes'|'exec'|'exec3'), year INT, country TEXT, type TEXT, value REAL,
             lang TEXT ('EN'|'RO'|'HU'), langtype TEXT, langcountry TEXT, iso3 TEXT, id TEXT
 2) upcoming — funding calls (Romanian titles; NO lang column)
    columns: date TEXT, cat TEXT, close TEXT, desc TEXT, link TEXT
@@ -106,6 +106,7 @@ TABLES:
 INDICATOR type values (indicators.type):
 APS (dataset='aps'): TEA, EBO, Intent, Opport, Suskil, Frfail, TEAgenderrate, TEAoppgenderrate
 NES (dataset='nes'): EFC1a..EFC9, NECI, and related EFC codes
+exec/exec3: executive dashboard point metrics (type like execd1a); country usually RO
 
 upcoming.cat values (a row may list several comma-separated):
   Agricultura_op_fin, Productie_op_fin, Start-up_op_fin, IT_op_fin,
